@@ -25600,7 +25600,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st562
 	tr194:
-		// line internal/php8/scanner.rl:489
+		// line internal/php8/scanner.rl:490
 		(lex.p) = (lex.te) - 1
 		{
 			lex.ungetCnt(1)
@@ -25640,7 +25640,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st563
 	tr851:
-		// line internal/php8/scanner.rl:489
+		// line internal/php8/scanner.rl:490
 		lex.te = (lex.p) + 1
 		{
 			lex.ungetCnt(1)
@@ -25652,7 +25652,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st563
 	tr856:
-		// line internal/php8/scanner.rl:488
+		// line internal/php8/scanner.rl:489
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -25662,7 +25662,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st563
 	tr857:
-		// line internal/php8/scanner.rl:489
+		// line internal/php8/scanner.rl:490
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -25689,17 +25689,14 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st563
 	tr862:
-		// line internal/php8/scanner.rl:487
+		// line internal/php8/scanner.rl:488
 		lex.te = (lex.p)
 		(lex.p)--
 		{
 			lex.setTokenPosition(tkn)
 			tok = token.T_STRING
-			{
-				(lex.p)++
-				lex.cs = 563
-				goto _out
-			}
+			lex.ret(1)
+			goto _out
 		}
 		goto st563
 	st563:
@@ -25894,7 +25891,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st568
 	tr198:
-		// line internal/php8/scanner.rl:493
+		// line internal/php8/scanner.rl:494
 		(lex.p) = (lex.te) - 1
 		{
 			lex.setTokenPosition(tkn)
@@ -25907,7 +25904,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr863:
-		// line internal/php8/scanner.rl:499
+		// line internal/php8/scanner.rl:500
 		lex.te = (lex.p) + 1
 		{
 			c := lex.data[lex.p]
@@ -25915,7 +25912,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr864:
-		// line internal/php8/scanner.rl:496
+		// line internal/php8/scanner.rl:497
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -25925,7 +25922,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr867:
-		// line internal/php8/scanner.rl:497
+		// line internal/php8/scanner.rl:498
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -25938,7 +25935,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr871:
-		// line internal/php8/scanner.rl:498
+		// line internal/php8/scanner.rl:499
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -25950,7 +25947,7 @@ func (lex *Lexer) Lex() *token.Token {
 	tr872:
 		// line internal/php8/scanner.rl:52
 
-		// line internal/php8/scanner.rl:496
+		// line internal/php8/scanner.rl:497
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -25961,7 +25958,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr873:
-		// line internal/php8/scanner.rl:499
+		// line internal/php8/scanner.rl:500
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -25970,7 +25967,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr874:
-		// line internal/php8/scanner.rl:497
+		// line internal/php8/scanner.rl:498
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -25984,7 +25981,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr876:
-		// line internal/php8/scanner.rl:494
+		// line internal/php8/scanner.rl:495
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -25998,7 +25995,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr877:
-		// line internal/php8/scanner.rl:493
+		// line internal/php8/scanner.rl:494
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26012,7 +26009,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st569
 	tr882:
-		// line internal/php8/scanner.rl:495
+		// line internal/php8/scanner.rl:496
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26376,7 +26373,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st579
 	tr203:
 		lex.cs = 580
-		// line internal/php8/scanner.rl:507
+		// line internal/php8/scanner.rl:508
 		(lex.p) = (lex.te) - 1
 		{
 			lex.ungetCnt(1)
@@ -26385,7 +26382,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto _again
 	tr205:
 		lex.cs = 580
-		// line internal/php8/scanner.rl:506
+		// line internal/php8/scanner.rl:507
 		lex.te = (lex.p) + 1
 		{
 			lex.ungetCnt(1)
@@ -26400,7 +26397,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto _again
 	tr883:
 		lex.cs = 580
-		// line internal/php8/scanner.rl:507
+		// line internal/php8/scanner.rl:508
 		lex.te = (lex.p) + 1
 		{
 			lex.ungetCnt(1)
@@ -26409,7 +26406,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto _again
 	tr885:
 		lex.cs = 580
-		// line internal/php8/scanner.rl:507
+		// line internal/php8/scanner.rl:508
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26514,7 +26511,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st138
 	tr206:
-		// line internal/php8/scanner.rl:511
+		// line internal/php8/scanner.rl:512
 		(lex.p) = (lex.te) - 1
 		{
 			lex.addFreeFloatingToken(tkn, token.T_WHITESPACE, lex.ts, lex.te)
@@ -26522,7 +26519,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st582
 	tr886:
 		lex.cs = 582
-		// line internal/php8/scanner.rl:513
+		// line internal/php8/scanner.rl:514
 		lex.te = (lex.p) + 1
 		{
 			lex.ungetCnt(1)
@@ -26531,7 +26528,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto _again
 	tr889:
 		lex.cs = 582
-		// line internal/php8/scanner.rl:512
+		// line internal/php8/scanner.rl:513
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -26544,7 +26541,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto _again
 	tr890:
-		// line internal/php8/scanner.rl:511
+		// line internal/php8/scanner.rl:512
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26554,7 +26551,7 @@ func (lex *Lexer) Lex() *token.Token {
 	tr892:
 		// line internal/php8/scanner.rl:52
 
-		// line internal/php8/scanner.rl:511
+		// line internal/php8/scanner.rl:512
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26563,7 +26560,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st582
 	tr896:
 		lex.cs = 582
-		// line internal/php8/scanner.rl:513
+		// line internal/php8/scanner.rl:514
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26736,7 +26733,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto tr896
 	tr208:
-		// line internal/php8/scanner.rl:517
+		// line internal/php8/scanner.rl:518
 		(lex.p) = (lex.te) - 1
 		{
 			lex.addFreeFloatingToken(tkn, token.T_WHITESPACE, lex.ts, lex.te)
@@ -26744,7 +26741,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st586
 	tr897:
 		lex.cs = 586
-		// line internal/php8/scanner.rl:519
+		// line internal/php8/scanner.rl:520
 		lex.te = (lex.p) + 1
 		{
 			lex.ungetCnt(1)
@@ -26753,7 +26750,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto _again
 	tr900:
 		lex.cs = 586
-		// line internal/php8/scanner.rl:518
+		// line internal/php8/scanner.rl:519
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -26766,7 +26763,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto _again
 	tr901:
-		// line internal/php8/scanner.rl:517
+		// line internal/php8/scanner.rl:518
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26776,7 +26773,7 @@ func (lex *Lexer) Lex() *token.Token {
 	tr903:
 		// line internal/php8/scanner.rl:52
 
-		// line internal/php8/scanner.rl:517
+		// line internal/php8/scanner.rl:518
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26785,7 +26782,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st586
 	tr907:
 		lex.cs = 586
-		// line internal/php8/scanner.rl:519
+		// line internal/php8/scanner.rl:520
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26958,7 +26955,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto tr907
 	tr210:
-		// line internal/php8/scanner.rl:523
+		// line internal/php8/scanner.rl:524
 		(lex.p) = (lex.te) - 1
 		{
 			lex.addFreeFloatingToken(tkn, token.T_WHITESPACE, lex.ts, lex.te)
@@ -26966,7 +26963,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st590
 	tr908:
 		lex.cs = 590
-		// line internal/php8/scanner.rl:525
+		// line internal/php8/scanner.rl:526
 		lex.te = (lex.p) + 1
 		{
 			lex.ungetCnt(1)
@@ -26975,7 +26972,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto _again
 	tr911:
 		lex.cs = 590
-		// line internal/php8/scanner.rl:524
+		// line internal/php8/scanner.rl:525
 		lex.te = (lex.p) + 1
 		{
 			lex.setTokenPosition(tkn)
@@ -26988,7 +26985,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto _again
 	tr912:
-		// line internal/php8/scanner.rl:523
+		// line internal/php8/scanner.rl:524
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -26998,7 +26995,7 @@ func (lex *Lexer) Lex() *token.Token {
 	tr914:
 		// line internal/php8/scanner.rl:52
 
-		// line internal/php8/scanner.rl:523
+		// line internal/php8/scanner.rl:524
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -27007,7 +27004,7 @@ func (lex *Lexer) Lex() *token.Token {
 		goto st590
 	tr918:
 		lex.cs = 590
-		// line internal/php8/scanner.rl:525
+		// line internal/php8/scanner.rl:526
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -27199,7 +27196,7 @@ func (lex *Lexer) Lex() *token.Token {
 	tr923:
 		// line internal/php8/scanner.rl:52
 
-		// line internal/php8/scanner.rl:529
+		// line internal/php8/scanner.rl:530
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -27207,7 +27204,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 		goto st594
 	tr927:
-		// line internal/php8/scanner.rl:529
+		// line internal/php8/scanner.rl:530
 		lex.te = (lex.p)
 		(lex.p)--
 		{
@@ -27240,7 +27237,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.te = (lex.p) + 1
 
-		// line internal/php8/scanner.rl:529
+		// line internal/php8/scanner.rl:530
 		lex.act = 211
 		goto st595
 	tr924:
@@ -27249,7 +27246,7 @@ func (lex *Lexer) Lex() *token.Token {
 
 		// line internal/php8/scanner.rl:52
 
-		// line internal/php8/scanner.rl:529
+		// line internal/php8/scanner.rl:530
 		lex.act = 211
 		goto st595
 	st595:
@@ -30299,7 +30296,7 @@ func (lex *Lexer) Lex() *token.Token {
 		}
 	}
 
-	// line internal/php8/scanner.rl:533
+	// line internal/php8/scanner.rl:534
 
 	tkn.Value = lex.data[lex.ts:lex.te]
 	tkn.ID = token.ID(tok)
