@@ -30,6 +30,19 @@ func NewParser(lexer *Lexer, config conf.Config) *Parser {
 	return p
 }
 
+// NewArenaParser returns a Parser whose AST nodes and positions come from a;
+// lexer should come from NewArenaLexer with the same Arena. The tree stays
+// valid until a.Reset.
+func NewArenaParser(lexer *Lexer, config conf.Config, a *Arena) *Parser {
+	p := &Parser{
+		Lexer:          lexer,
+		errHandlerFunc: config.ErrorHandlerFunc,
+	}
+	p.builder = NewBuilder(position.NewBuilderWithPool(a.nodePos), p)
+	p.builder.alloc = &a.nodes
+	return p
+}
+
 func (p *Parser) Lex(lval *yySymType) int {
 	t := p.Lexer.Lex()
 

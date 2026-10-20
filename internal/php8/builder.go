@@ -15,6 +15,7 @@ import (
 type Builder struct {
 	Pos    *position.Builder
 	Parser *Parser
+	alloc  *nodeAlloc // nil: plain heap allocation
 }
 
 // NewBuilder creates a new Builder.
@@ -81,9 +82,9 @@ func (b *Builder) SeparatedListItems(list ast.Vertex) (items []ast.Vertex, sepTk
 
 // namespace\Foo
 func (b *Builder) parseNameRelativeToken(t *token.Token) *ast.NameRelative {
-	n := &ast.NameRelative{
+	n := b.alloc.NameRelative(ast.NameRelative{
 		Position: b.Pos.NewTokenPosition(t),
-	}
+	})
 	s := t.Position.StartPos
 	v := t.Value
 
@@ -139,7 +140,7 @@ func (b *Builder) parseNameRelativeToken(t *token.Token) *ast.NameRelative {
 		p2 := b.Parser.Lexer.positionPool.Get()
 		*p2 = *p1
 
-		n.Parts = append(n.Parts, &ast.NamePart{
+		n.Parts = append(n.Parts, b.alloc.NamePart(ast.NamePart{
 			Position: p1,
 			StringTkn: &token.Token{
 				ID:       token.T_STRING,
@@ -147,7 +148,7 @@ func (b *Builder) parseNameRelativeToken(t *token.Token) *ast.NameRelative {
 				Position: p2,
 			},
 			Value: v[:i],
-		})
+		}))
 		t.FreeFloating = nil
 		s = s + i
 		v = v[i:]
@@ -177,7 +178,7 @@ func (b *Builder) parseNameRelativeToken(t *token.Token) *ast.NameRelative {
 	p2 := b.Parser.Lexer.positionPool.Get()
 	*p2 = *p1
 
-	n.Parts = append(n.Parts, &ast.NamePart{
+	n.Parts = append(n.Parts, b.alloc.NamePart(ast.NamePart{
 		Position: p1,
 		StringTkn: &token.Token{
 			ID:       token.T_STRING,
@@ -185,16 +186,16 @@ func (b *Builder) parseNameRelativeToken(t *token.Token) *ast.NameRelative {
 			Position: p2,
 		},
 		Value: v,
-	})
+	}))
 
 	return n
 }
 
 // \Foo\Boo
 func (b *Builder) parseNameFullyQualifiedToken(t *token.Token) *ast.NameFullyQualified {
-	n := &ast.NameFullyQualified{
+	n := b.alloc.NameFullyQualified(ast.NameFullyQualified{
 		Position: b.Pos.NewTokenPosition(t),
-	}
+	})
 	s := t.Position.StartPos
 	v := t.Value
 
@@ -233,7 +234,7 @@ func (b *Builder) parseNameFullyQualifiedToken(t *token.Token) *ast.NameFullyQua
 		p2 := b.Parser.Lexer.positionPool.Get()
 		*p2 = *p1
 
-		n.Parts = append(n.Parts, &ast.NamePart{
+		n.Parts = append(n.Parts, b.alloc.NamePart(ast.NamePart{
 			Position: p1,
 			StringTkn: &token.Token{
 				ID:       token.T_STRING,
@@ -241,7 +242,7 @@ func (b *Builder) parseNameFullyQualifiedToken(t *token.Token) *ast.NameFullyQua
 				Position: p2,
 			},
 			Value: v[:i],
-		})
+		}))
 		t.FreeFloating = nil
 		s = s + i
 		v = v[i:]
@@ -271,7 +272,7 @@ func (b *Builder) parseNameFullyQualifiedToken(t *token.Token) *ast.NameFullyQua
 	p2 := b.Parser.Lexer.positionPool.Get()
 	*p2 = *p1
 
-	n.Parts = append(n.Parts, &ast.NamePart{
+	n.Parts = append(n.Parts, b.alloc.NamePart(ast.NamePart{
 		Position: p1,
 		StringTkn: &token.Token{
 			ID:       token.T_STRING,
@@ -279,16 +280,16 @@ func (b *Builder) parseNameFullyQualifiedToken(t *token.Token) *ast.NameFullyQua
 			Position: p2,
 		},
 		Value: v,
-	})
+	}))
 
 	return n
 }
 
 // Foo\Boo
 func (b *Builder) parseNameToken(t *token.Token) *ast.NameRelative {
-	n := &ast.NameRelative{
+	n := b.alloc.NameRelative(ast.NameRelative{
 		Position: b.Pos.NewTokenPosition(t),
-	}
+	})
 	s := t.Position.StartPos
 	v := t.Value
 
@@ -341,7 +342,7 @@ func (b *Builder) parseNameToken(t *token.Token) *ast.NameRelative {
 		p2 := b.Parser.Lexer.positionPool.Get()
 		*p2 = *p1
 
-		n.Parts = append(n.Parts, &ast.NamePart{
+		n.Parts = append(n.Parts, b.alloc.NamePart(ast.NamePart{
 			Position: p1,
 			StringTkn: &token.Token{
 				ID:           token.T_STRING,
@@ -350,7 +351,7 @@ func (b *Builder) parseNameToken(t *token.Token) *ast.NameRelative {
 				FreeFloating: t.FreeFloating,
 			},
 			Value: v[:i],
-		})
+		}))
 		t.FreeFloating = nil
 		s = s + i
 		v = v[i:]
@@ -378,7 +379,7 @@ func (b *Builder) parseNameToken(t *token.Token) *ast.NameRelative {
 	p2 := b.Parser.Lexer.positionPool.Get()
 	*p2 = *p1
 
-	n.Parts = append(n.Parts, &ast.NamePart{
+	n.Parts = append(n.Parts, b.alloc.NamePart(ast.NamePart{
 		Position: p1,
 		StringTkn: &token.Token{
 			ID:           token.T_STRING,
@@ -387,7 +388,7 @@ func (b *Builder) parseNameToken(t *token.Token) *ast.NameRelative {
 			FreeFloating: t.FreeFloating,
 		},
 		Value: v,
-	})
+	}))
 
 	return n
 }
@@ -395,11 +396,11 @@ func (b *Builder) parseNameToken(t *token.Token) *ast.NameRelative {
 func (b *Builder) NewScalarMagicConstant(
 	MagicConstantTkn *token.Token,
 ) *ast.ScalarMagicConstant {
-	return &ast.ScalarMagicConstant{
+	return b.alloc.ScalarMagicConstant(ast.ScalarMagicConstant{
 		Position:      b.Pos.NewTokenPosition(MagicConstantTkn),
 		MagicConstTkn: MagicConstantTkn,
 		Value:         MagicConstantTkn.Value,
-	}
+	})
 }
 
 func (b *Builder) NewBracket(
@@ -407,12 +408,12 @@ func (b *Builder) NewBracket(
 	Expr ast.Vertex,
 	CloseParenthesisTkn *token.Token,
 ) *ast.ExprBrackets {
-	return &ast.ExprBrackets{
+	return b.alloc.ExprBrackets(ast.ExprBrackets{
 		Position:            b.Pos.NewTokensPosition(OpenParenthesisTkn, CloseParenthesisTkn),
 		OpenParenthesisTkn:  OpenParenthesisTkn,
 		Expr:                Expr,
 		CloseParenthesisTkn: CloseParenthesisTkn,
-	}
+	})
 }
 
 func (b *Builder) NewExpressionStmt(
@@ -422,19 +423,19 @@ func (b *Builder) NewExpressionStmt(
 	if throwExpr, ok := Expr.(*ast.ExprThrow); ok {
 		// For backwards-compatibility reasons, convert throw in statement position into
 		// StmtThrow rather than StmtExpression(ExprThrow).
-		return &ast.StmtThrow{
+		return b.alloc.StmtThrow(ast.StmtThrow{
 			Position:     b.Pos.NewTokensPosition(throwExpr.ThrowTkn, SemiColonTkn),
 			ThrowTkn:     throwExpr.ThrowTkn,
 			Expr:         throwExpr.Expr,
 			SemiColonTkn: SemiColonTkn,
-		}
+		})
 	}
 
-	return &ast.StmtExpression{
+	return b.alloc.StmtExpression(ast.StmtExpression{
 		Position:     b.Pos.NewNodeTokenPosition(Expr, SemiColonTkn),
 		Expr:         Expr,
 		SemiColonTkn: SemiColonTkn,
-	}
+	})
 }
 
 func (b *Builder) NewIdentifier(
@@ -444,26 +445,26 @@ func (b *Builder) NewIdentifier(
 		return nil
 	}
 
-	return &ast.Identifier{
+	return b.alloc.Identifier(ast.Identifier{
 		Position:      b.Pos.NewTokenPosition(IdentifierTkn),
 		IdentifierTkn: IdentifierTkn,
 		Value:         IdentifierTkn.Value,
-	}
+	})
 }
 
 func (b *Builder) NewName(
 	NameTkn *token.Token,
 ) *ast.Name {
-	return &ast.Name{
+	return b.alloc.Name(ast.Name{
 		Position: b.Pos.NewTokenPosition(NameTkn),
 		Parts: []ast.Vertex{
-			&ast.NamePart{
+			b.alloc.NamePart(ast.NamePart{
 				Position:  b.Pos.NewTokenPosition(NameTkn),
 				StringTkn: NameTkn,
 				Value:     NameTkn.Value,
-			},
+			}),
 		},
-	}
+	})
 }
 
 func (b *Builder) NewNameQualified(
@@ -471,11 +472,11 @@ func (b *Builder) NewNameQualified(
 ) *ast.Name {
 	name := b.parseNameToken(NameTkn)
 
-	return &ast.Name{
+	return b.alloc.Name(ast.Name{
 		Position:      b.Pos.NewTokenPosition(NameTkn),
 		Parts:         name.Parts,
 		SeparatorTkns: name.SeparatorTkns,
-	}
+	})
 }
 
 func (b *Builder) NewNameFullyQualified(
@@ -493,20 +494,20 @@ func (b *Builder) NewNameRelative(
 func (b *Builder) NewNamePart(
 	NameTkn *token.Token,
 ) *ast.NamePart {
-	return &ast.NamePart{
+	return b.alloc.NamePart(ast.NamePart{
 		Position:  b.Pos.NewTokenPosition(NameTkn),
 		StringTkn: NameTkn,
 		Value:     NameTkn.Value,
-	}
+	})
 }
 
 func (b *Builder) NewConstFetch(
 	Name ast.Vertex,
 ) *ast.ExprConstFetch {
-	return &ast.ExprConstFetch{
+	return b.alloc.ExprConstFetch(ast.ExprConstFetch{
 		Position: b.Pos.NewNodePosition(Name),
 		Const:    Name,
-	}
+	})
 }
 
 func (b *Builder) NewMethodCall(
@@ -516,7 +517,7 @@ func (b *Builder) NewMethodCall(
 	ArgList ast.Vertex,
 ) *ast.ExprMethodCall {
 	argumentList := ArgList.(*ArgumentList)
-	methodCall := &ast.ExprMethodCall{
+	methodCall := b.alloc.ExprMethodCall(ast.ExprMethodCall{
 		Position:            b.Pos.NewNodesPosition(Expr, ArgList),
 		Var:                 Expr,
 		ObjectOperatorTkn:   ObjectOperatorTkn,
@@ -526,7 +527,7 @@ func (b *Builder) NewMethodCall(
 		SeparatorTkns:       argumentList.SeparatorTkns,
 		EllipsisTkn:         argumentList.EllipsisTkn,
 		CloseParenthesisTkn: argumentList.CloseParenthesisTkn,
-	}
+	})
 
 	if brackets, ok := PropertyName.(*ParserBrackets); ok {
 		methodCall.OpenCurlyBracketTkn = brackets.OpenBracketTkn
@@ -544,7 +545,7 @@ func (b *Builder) NewNullsafeMethodCall(
 	ArgList ast.Vertex,
 ) *ast.ExprNullsafeMethodCall {
 	argumentList := ArgList.(*ArgumentList)
-	methodCall := &ast.ExprNullsafeMethodCall{
+	methodCall := b.alloc.ExprNullsafeMethodCall(ast.ExprNullsafeMethodCall{
 		Position:            b.Pos.NewNodesPosition(Expr, ArgList),
 		Var:                 Expr,
 		ObjectOperatorTkn:   ObjectOperatorTkn,
@@ -554,7 +555,7 @@ func (b *Builder) NewNullsafeMethodCall(
 		SeparatorTkns:       argumentList.SeparatorTkns,
 		EllipsisTkn:         argumentList.EllipsisTkn,
 		CloseParenthesisTkn: argumentList.CloseParenthesisTkn,
-	}
+	})
 
 	if brackets, ok := PropertyName.(*ParserBrackets); ok {
 		methodCall.OpenCurlyBracketTkn = brackets.OpenBracketTkn
@@ -570,12 +571,12 @@ func (b *Builder) NewPropertyFetch(
 	ObjectOperatorTkn *token.Token,
 	PropertyName ast.Vertex,
 ) *ast.ExprPropertyFetch {
-	propertyFetch := &ast.ExprPropertyFetch{
+	propertyFetch := b.alloc.ExprPropertyFetch(ast.ExprPropertyFetch{
 		Position:          b.Pos.NewNodesPosition(Expr, PropertyName),
 		Var:               Expr,
 		ObjectOperatorTkn: ObjectOperatorTkn,
 		Prop:              PropertyName,
-	}
+	})
 
 	if brackets, ok := PropertyName.(*ParserBrackets); ok {
 		propertyFetch.OpenCurlyBracketTkn = brackets.OpenBracketTkn
@@ -591,23 +592,23 @@ func (b *Builder) NewPropertyFetchFromTokens(
 	ObjectOperatorTkn *token.Token,
 	StringTkn *token.Token,
 ) *ast.ExprPropertyFetch {
-	return &ast.ExprPropertyFetch{
+	return b.alloc.ExprPropertyFetch(ast.ExprPropertyFetch{
 		Position: b.Pos.NewTokensPosition(VariableTkn, StringTkn),
-		Var: &ast.ExprVariable{
+		Var: b.alloc.ExprVariable(ast.ExprVariable{
 			Position: b.Pos.NewTokenPosition(VariableTkn),
-			Name: &ast.Identifier{
+			Name: b.alloc.Identifier(ast.Identifier{
 				Position:      b.Pos.NewTokenPosition(VariableTkn),
 				IdentifierTkn: VariableTkn,
 				Value:         VariableTkn.Value,
-			},
-		},
+			}),
+		}),
 		ObjectOperatorTkn: ObjectOperatorTkn,
-		Prop: &ast.Identifier{
+		Prop: b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(StringTkn),
 			IdentifierTkn: StringTkn,
 			Value:         StringTkn.Value,
-		},
-	}
+		}),
+	})
 }
 
 func (b *Builder) NewNullsafePropertyFetch(
@@ -615,12 +616,12 @@ func (b *Builder) NewNullsafePropertyFetch(
 	ObjectOperatorTkn *token.Token,
 	PropertyName ast.Vertex,
 ) *ast.ExprNullsafePropertyFetch {
-	propertyFetch := &ast.ExprNullsafePropertyFetch{
+	propertyFetch := b.alloc.ExprNullsafePropertyFetch(ast.ExprNullsafePropertyFetch{
 		Position:          b.Pos.NewNodesPosition(Expr, PropertyName),
 		Var:               Expr,
 		ObjectOperatorTkn: ObjectOperatorTkn,
 		Prop:              PropertyName,
-	}
+	})
 
 	if brackets, ok := PropertyName.(*ParserBrackets); ok {
 		propertyFetch.OpenCurlyBracketTkn = brackets.OpenBracketTkn
@@ -636,43 +637,43 @@ func (b *Builder) NewNullsafePropertyFetchFromTokens(
 	ObjectOperatorTkn *token.Token,
 	StringTkn *token.Token,
 ) *ast.ExprNullsafePropertyFetch {
-	return &ast.ExprNullsafePropertyFetch{
+	return b.alloc.ExprNullsafePropertyFetch(ast.ExprNullsafePropertyFetch{
 		Position: b.Pos.NewTokensPosition(VariableTkn, StringTkn),
-		Var: &ast.ExprVariable{
+		Var: b.alloc.ExprVariable(ast.ExprVariable{
 			Position: b.Pos.NewTokenPosition(VariableTkn),
-			Name: &ast.Identifier{
+			Name: b.alloc.Identifier(ast.Identifier{
 				Position:      b.Pos.NewTokenPosition(VariableTkn),
 				IdentifierTkn: VariableTkn,
 				Value:         VariableTkn.Value,
-			},
-		},
+			}),
+		}),
 		ObjectOperatorTkn: ObjectOperatorTkn,
-		Prop: &ast.Identifier{
+		Prop: b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(StringTkn),
 			IdentifierTkn: StringTkn,
 			Value:         StringTkn.Value,
-		},
-	}
+		}),
+	})
 }
 
 func (b *Builder) NewArgument(
 	Expr ast.Vertex,
 ) *ast.Argument {
-	return &ast.Argument{
+	return b.alloc.Argument(ast.Argument{
 		Position: b.Pos.NewNodePosition(Expr),
 		Expr:     Expr,
-	}
+	})
 }
 
 func (b *Builder) NewVariadicArgument(
 	VariadicTkn *token.Token,
 	Expr ast.Vertex,
 ) *ast.Argument {
-	return &ast.Argument{
+	return b.alloc.Argument(ast.Argument{
 		Position:    b.Pos.NewTokenNodePosition(VariadicTkn, Expr),
 		VariadicTkn: VariadicTkn,
 		Expr:        Expr,
-	}
+	})
 }
 
 func (b *Builder) NewNamedArgument(
@@ -680,16 +681,16 @@ func (b *Builder) NewNamedArgument(
 	ColonTkn *token.Token,
 	Expr ast.Vertex,
 ) *ast.Argument {
-	return &ast.Argument{
+	return b.alloc.Argument(ast.Argument{
 		Position: b.Pos.NewTokenNodePosition(Name, Expr),
-		Name: &ast.Identifier{
+		Name: b.alloc.Identifier(ast.Identifier{
 			Position:      Name.Position,
 			IdentifierTkn: Name,
 			Value:         Name.Value,
-		},
+		}),
 		ColonTkn: ColonTkn,
 		Expr:     Expr,
-	}
+	})
 }
 
 func (b *Builder) NewMatch(
@@ -709,7 +710,7 @@ func (b *Builder) NewMatch(
 		sepTkns = cases.SeparatorTkns
 	}
 
-	return &ast.ExprMatch{
+	return b.alloc.ExprMatch(ast.ExprMatch{
 		Position:             b.Pos.NewTokensPosition(MatchTkn, CloseCurlyBracketTkn),
 		MatchTkn:             MatchTkn,
 		OpenParenthesisTkn:   OpenParenthesisTkn,
@@ -719,7 +720,7 @@ func (b *Builder) NewMatch(
 		Arms:                 arms,
 		SeparatorTkns:        sepTkns,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 }
 
 func (b *Builder) NewMatchArm(
@@ -731,44 +732,44 @@ func (b *Builder) NewMatchArm(
 ) *ast.MatchArm {
 	// Default branch.
 	if Exprs == nil {
-		return &ast.MatchArm{
+		return b.alloc.MatchArm(ast.MatchArm{
 			Position:        b.Pos.NewTokenNodePosition(DefaultTkn, ReturnExpr),
 			DefaultTkn:      DefaultTkn,
 			DefaultCommaTkn: DefaultCommaTkn,
 			DoubleArrowTkn:  DoubleArrowTkn,
 			ReturnExpr:      ReturnExpr,
-		}
+		})
 	}
 	list := Exprs.(*ParserSeparatedList)
-	return &ast.MatchArm{
+	return b.alloc.MatchArm(ast.MatchArm{
 		Position:       b.Pos.NewNodeListNodePosition(list.Items, ReturnExpr),
 		DefaultTkn:     nil,
 		Exprs:          list.Items,
 		SeparatorTkns:  list.SeparatorTkns,
 		DoubleArrowTkn: DoubleArrowTkn,
 		ReturnExpr:     ReturnExpr,
-	}
+	})
 }
 
 func (b *Builder) NewNameType(
 	IdentifierTkn *token.Token,
 ) *ast.Identifier {
-	return &ast.Identifier{
+	return b.alloc.Identifier(ast.Identifier{
 		Position:      b.Pos.NewTokenPosition(IdentifierTkn),
 		IdentifierTkn: IdentifierTkn,
 		Value:         IdentifierTkn.Value,
-	}
+	})
 }
 
 func (b *Builder) NewNullableType(
 	QuestionTkn *token.Token,
 	Expr ast.Vertex,
 ) *ast.Nullable {
-	return &ast.Nullable{
+	return b.alloc.Nullable(ast.Nullable{
 		Position:    b.Pos.NewTokenNodePosition(QuestionTkn, Expr),
 		QuestionTkn: QuestionTkn,
 		Expr:        Expr,
-	}
+	})
 }
 
 func (b *Builder) NewUnionType(
@@ -782,11 +783,11 @@ func (b *Builder) NewUnionType(
 		sepTkns = cases.SeparatorTkns
 	}
 
-	return &ast.Union{
+	return b.alloc.Union(ast.Union{
 		Position:      b.Pos.NewNodeListPosition(types),
 		Types:         types,
 		SeparatorTkns: sepTkns,
-	}
+	})
 }
 
 func (b *Builder) NewIntersectionType(
@@ -800,11 +801,11 @@ func (b *Builder) NewIntersectionType(
 		sepTkns = cases.SeparatorTkns
 	}
 
-	return &ast.Intersection{
+	return b.alloc.Intersection(ast.Intersection{
 		Position:      b.Pos.NewNodeListPosition(types),
 		Types:         types,
 		SeparatorTkns: sepTkns,
-	}
+	})
 }
 
 func (b *Builder) NewReturnType(
@@ -839,7 +840,7 @@ func (b *Builder) NewTry(
 		pos = b.Pos.NewTokenNodeListPosition(TryTkn, catches)
 	}
 
-	return &ast.StmtTry{
+	return b.alloc.StmtTry(ast.StmtTry{
 		Position:             pos,
 		TryTkn:               TryTkn,
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
@@ -847,7 +848,7 @@ func (b *Builder) NewTry(
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
 		Catches:              catches,
 		Finally:              Finally,
-	}
+	})
 }
 
 func (b *Builder) NewCatch(
@@ -871,17 +872,17 @@ func (b *Builder) NewCatch(
 	var variable ast.Vertex
 
 	if Variable != nil {
-		variable = &ast.ExprVariable{
+		variable = b.alloc.ExprVariable(ast.ExprVariable{
 			Position: b.Pos.NewTokenPosition(Variable),
-			Name: &ast.Identifier{
+			Name: b.alloc.Identifier(ast.Identifier{
 				Position:      b.Pos.NewTokenPosition(Variable),
 				IdentifierTkn: Variable,
 				Value:         Variable.Value,
-			},
-		}
+			}),
+		})
 	}
 
-	return &ast.StmtCatch{
+	return b.alloc.StmtCatch(ast.StmtCatch{
 		Position:             b.Pos.NewTokensPosition(CatchTkn, CloseCurlyBracketTkn),
 		CatchTkn:             CatchTkn,
 		OpenParenthesisTkn:   OpenParenthesisTkn,
@@ -892,29 +893,29 @@ func (b *Builder) NewCatch(
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 }
 
 func (b *Builder) NewThrowStmt(
 	ThrowTkn *token.Token,
 	Expr ast.Vertex,
 ) *ast.StmtThrow {
-	return &ast.StmtThrow{
+	return b.alloc.StmtThrow(ast.StmtThrow{
 		Position: b.Pos.NewTokenNodePosition(ThrowTkn, Expr),
 		ThrowTkn: ThrowTkn,
 		Expr:     Expr,
-	}
+	})
 }
 
 func (b *Builder) NewThrowExpr(
 	ThrowTkn *token.Token,
 	Expr ast.Vertex,
 ) *ast.ExprThrow {
-	return &ast.ExprThrow{
+	return b.alloc.ExprThrow(ast.ExprThrow{
 		Position: b.Pos.NewTokenNodePosition(ThrowTkn, Expr),
 		ThrowTkn: ThrowTkn,
 		Expr:     Expr,
-	}
+	})
 }
 
 func (b *Builder) NewParameter(
@@ -960,24 +961,24 @@ func (b *Builder) NewParameter(
 		}
 	}
 
-	return &ast.Parameter{
+	return b.alloc.Parameter(ast.Parameter{
 		Position:     pos,
 		AttrGroups:   AttrGroups,
 		Modifiers:    Modifiers,
 		Type:         Type,
 		AmpersandTkn: AmpersandTkn,
 		VariadicTkn:  VariadicTkn,
-		Var: &ast.ExprVariable{
+		Var: b.alloc.ExprVariable(ast.ExprVariable{
 			Position: b.Pos.NewTokenPosition(VarTkn),
-			Name: &ast.Identifier{
+			Name: b.alloc.Identifier(ast.Identifier{
 				Position:      b.Pos.NewTokenPosition(VarTkn),
 				IdentifierTkn: VarTkn,
 				Value:         VarTkn.Value,
-			},
-		},
+			}),
+		}),
 		EqualTkn:     EqualTkn,
 		DefaultValue: DefaultValue,
-	}
+	})
 }
 
 func (b *Builder) NewAttribute(
@@ -985,21 +986,21 @@ func (b *Builder) NewAttribute(
 	ArgList ast.Vertex,
 ) *ast.Attribute {
 	if ArgList == nil {
-		return &ast.Attribute{
+		return b.alloc.Attribute(ast.Attribute{
 			Position: b.Pos.NewNodePosition(Name),
 			Name:     Name,
-		}
+		})
 	}
 
 	argList := ArgList.(*ArgumentList)
-	return &ast.Attribute{
+	return b.alloc.Attribute(ast.Attribute{
 		Position:            b.Pos.NewNodeTokenPosition(Name, argList.CloseParenthesisTkn),
 		Name:                Name,
 		OpenParenthesisTkn:  argList.OpenParenthesisTkn,
 		Args:                argList.Arguments,
 		SeparatorTkns:       argList.SeparatorTkns,
 		CloseParenthesisTkn: argList.CloseParenthesisTkn,
-	}
+	})
 }
 
 func (b *Builder) NewAttributeGroup(
@@ -1012,13 +1013,13 @@ func (b *Builder) NewAttributeGroup(
 	if OptionalCommaTkn != nil {
 		attrList.SeparatorTkns = append(attrList.SeparatorTkns, OptionalCommaTkn)
 	}
-	return &ast.AttributeGroup{
+	return b.alloc.AttributeGroup(ast.AttributeGroup{
 		Position:          b.Pos.NewTokensPosition(OpenAttributeTkn, CloseAttributeTkn),
 		OpenAttributeTkn:  OpenAttributeTkn,
 		Attrs:             attrList.Items,
 		SeparatorTkns:     attrList.SeparatorTkns,
 		CloseAttributeTkn: CloseAttributeTkn,
-	}
+	})
 }
 
 func (b *Builder) NewClass(
@@ -1046,14 +1047,14 @@ func (b *Builder) NewClass(
 	var name ast.Vertex
 
 	if Name != nil {
-		name = &ast.Identifier{
+		name = b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(Name),
 			IdentifierTkn: Name,
 			Value:         Name.Value,
-		}
+		})
 	}
 
-	class := &ast.StmtClass{
+	class := b.alloc.StmtClass(ast.StmtClass{
 		Position:             pos,
 		AttrGroups:           AttrGroups,
 		Modifiers:            Modifiers,
@@ -1062,7 +1063,7 @@ func (b *Builder) NewClass(
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 
 	if ExtendsFrom != nil {
 		class.ExtendsTkn = ExtendsFrom.(*ast.StmtClass).ExtendsTkn
@@ -1125,19 +1126,19 @@ func (b *Builder) NewTrait(
 	Stmts []ast.Vertex,
 	CloseCurlyBracketTkn *token.Token,
 ) *ast.StmtTrait {
-	return &ast.StmtTrait{
+	return b.alloc.StmtTrait(ast.StmtTrait{
 		Position:   b.Pos.NewOptionalListTokensPosition(AttrGroups, TraitTkn, CloseCurlyBracketTkn),
 		AttrGroups: AttrGroups,
 		TraitTkn:   TraitTkn,
-		Name: &ast.Identifier{
+		Name: b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(Name),
 			IdentifierTkn: Name,
 			Value:         Name.Value,
-		},
+		}),
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 }
 
 func (b *Builder) NewInterface(
@@ -1149,19 +1150,19 @@ func (b *Builder) NewInterface(
 	Stmts []ast.Vertex,
 	CloseCurlyBracketTkn *token.Token,
 ) *ast.StmtInterface {
-	iface := &ast.StmtInterface{
+	iface := b.alloc.StmtInterface(ast.StmtInterface{
 		Position:     b.Pos.NewOptionalListTokensPosition(AttrGroups, InterfaceTkn, CloseCurlyBracketTkn),
 		AttrGroups:   AttrGroups,
 		InterfaceTkn: InterfaceTkn,
-		Name: &ast.Identifier{
+		Name: b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(Name),
 			IdentifierTkn: Name,
 			Value:         Name.Value,
-		},
+		}),
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 
 	if ExtendsFrom != nil {
 		iface.ExtendsTkn = ExtendsFrom.(*ast.StmtInterface).ExtendsTkn
@@ -1212,7 +1213,7 @@ func (b *Builder) NewEnum(
 		pos = b.Pos.NewTokensPosition(EnumTkn, CloseCurlyBracketTkn)
 	}
 
-	enum := &ast.StmtEnum{
+	enum := b.alloc.StmtEnum(ast.StmtEnum{
 		Position:             pos,
 		AttrGroups:           AttrGroups,
 		EnumTkn:              EnumTkn,
@@ -1220,7 +1221,7 @@ func (b *Builder) NewEnum(
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 
 	if EnumScalarType != nil {
 		enumType := EnumScalarType.(*ReturnType)
@@ -1260,7 +1261,7 @@ func (b *Builder) NewEnumCase(
 		pos = b.Pos.NewTokensPosition(CaseTkn, SemiColonTkn)
 	}
 
-	return &ast.EnumCase{
+	return b.alloc.EnumCase(ast.EnumCase{
 		Position:     pos,
 		CaseTkn:      CaseTkn,
 		AttrGroups:   AttrGroups,
@@ -1268,7 +1269,7 @@ func (b *Builder) NewEnumCase(
 		EqualTkn:     equalTkn,
 		Expr:         expr,
 		SemiColonTkn: SemiColonTkn,
-	}
+	})
 }
 
 func (b *Builder) NewFunction(
@@ -1294,16 +1295,16 @@ func (b *Builder) NewFunction(
 
 	returnType := RetType.(*ReturnType)
 
-	return &ast.StmtFunction{
+	return b.alloc.StmtFunction(ast.StmtFunction{
 		Position:     b.Pos.NewOptionalListTokensPosition(AttrGroups, FunctionTkn, CloseCurlyBracketTkn),
 		AttrGroups:   AttrGroups,
 		FunctionTkn:  FunctionTkn,
 		AmpersandTkn: AmpersandTkn,
-		Name: &ast.Identifier{
+		Name: b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(Name),
 			IdentifierTkn: Name,
 			Value:         Name.Value,
-		},
+		}),
 		OpenParenthesisTkn:   OpenParenthesisTkn,
 		Params:               params,
 		SeparatorTkns:        sepTkns,
@@ -1313,7 +1314,7 @@ func (b *Builder) NewFunction(
 		OpenCurlyBracketTkn:  OpenCurlyBracketTkn,
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
-	}
+	})
 }
 
 func (b *Builder) NewPropertyList(
@@ -1333,7 +1334,7 @@ func (b *Builder) NewPropertyList(
 		pos = b.Pos.NewNodeListTokenPosition(Modifiers, SemiColonTkn)
 	}
 
-	return &ast.StmtPropertyList{
+	return b.alloc.StmtPropertyList(ast.StmtPropertyList{
 		Position:      pos,
 		AttrGroups:    AttrGroups,
 		Modifiers:     Modifiers,
@@ -1341,7 +1342,7 @@ func (b *Builder) NewPropertyList(
 		Props:         props,
 		SeparatorTkns: sepTkns,
 		SemiColonTkn:  SemiColonTkn,
-	}
+	})
 }
 
 func (b *Builder) NewClassConstList(
@@ -1361,7 +1362,7 @@ func (b *Builder) NewClassConstList(
 		pos = b.Pos.NewOptionalListTokensPosition(Modifiers, ConstTkn, SemiColonTkn)
 	}
 
-	return &ast.StmtClassConstList{
+	return b.alloc.StmtClassConstList(ast.StmtClassConstList{
 		Position:      pos,
 		AttrGroups:    AttrGroups,
 		Modifiers:     Modifiers,
@@ -1369,7 +1370,7 @@ func (b *Builder) NewClassConstList(
 		Consts:        consts,
 		SeparatorTkns: sepTkns,
 		SemiColonTkn:  SemiColonTkn,
-	}
+	})
 }
 
 func (b *Builder) NewClassMethod(
@@ -1400,17 +1401,17 @@ func (b *Builder) NewClassMethod(
 		pos = b.Pos.NewTokenNodePosition(FunctionTkn, Stmt)
 	}
 
-	return &ast.StmtClassMethod{
+	return b.alloc.StmtClassMethod(ast.StmtClassMethod{
 		Position:     pos,
 		AttrGroups:   AttrGroups,
 		Modifiers:    Modifiers,
 		FunctionTkn:  FunctionTkn,
 		AmpersandTkn: AmpersandTkn,
-		Name: &ast.Identifier{
+		Name: b.alloc.Identifier(ast.Identifier{
 			Position:      b.Pos.NewTokenPosition(Name),
 			IdentifierTkn: Name,
 			Value:         Name.Value,
-		},
+		}),
 		OpenParenthesisTkn:  OpenParenthesisTkn,
 		Params:              params,
 		SeparatorTkns:       sepTkns,
@@ -1418,7 +1419,7 @@ func (b *Builder) NewClassMethod(
 		ColonTkn:            returnType.ColonTkn,
 		ReturnType:          returnType.Type,
 		Stmt:                Stmt,
-	}
+	})
 }
 
 func (b *Builder) NewNamespace(
@@ -1437,7 +1438,7 @@ func (b *Builder) NewNamespace(
 		pos = b.Pos.NewTokensPosition(NsTkn, CloseCurlyBracketTkn)
 	}
 
-	return &ast.StmtNamespace{
+	return b.alloc.StmtNamespace(ast.StmtNamespace{
 		Position:             pos,
 		NsTkn:                NsTkn,
 		Name:                 Name,
@@ -1445,7 +1446,7 @@ func (b *Builder) NewNamespace(
 		Stmts:                Stmts,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
 		SemiColonTkn:         SemiColonTkn,
-	}
+	})
 }
 
 func (b *Builder) NewUseList(
@@ -1456,14 +1457,14 @@ func (b *Builder) NewUseList(
 ) *ast.StmtUseList {
 	uses, sepTkns := b.SeparatedListItems(UsesList)
 
-	return &ast.StmtUseList{
+	return b.alloc.StmtUseList(ast.StmtUseList{
 		Position:      b.Pos.NewTokensPosition(UseTkn, SemiColonTkn),
 		UseTkn:        UseTkn,
 		Type:          b.NewIdentifier(Type),
 		Uses:          uses,
 		SeparatorTkns: sepTkns,
 		SemiColonTkn:  SemiColonTkn,
-	}
+	})
 }
 
 func (b *Builder) NewGroupUseList(
@@ -1483,7 +1484,7 @@ func (b *Builder) NewGroupUseList(
 ) *ast.StmtGroupUseList {
 	uses, sepTkns := b.SeparatedListItems(UsesList)
 
-	groupUse := &ast.StmtGroupUseList{
+	groupUse := b.alloc.StmtGroupUseList(ast.StmtGroupUseList{
 		Position:             b.Pos.NewTokensPosition(UseTkn, SemiColonTkn),
 		UseTkn:               UseTkn,
 		Type:                 b.NewIdentifier(Type),
@@ -1494,16 +1495,16 @@ func (b *Builder) NewGroupUseList(
 		SeparatorTkns:        sepTkns,
 		CloseCurlyBracketTkn: CloseCurlyBracketTkn,
 		SemiColonTkn:         SemiColonTkn,
-	}
+	})
 
 	if n, ok := Prefix.(*ast.NameFullyQualified); ok {
 		groupUse.LeadingNsSeparatorTkn = n.NsSeparatorTkn
 
-		prefix := &ast.Name{
+		prefix := b.alloc.Name(ast.Name{
 			Position:      n.Position,
 			Parts:         n.Parts,
 			SeparatorTkns: n.SeparatorTkns,
-		}
+		})
 		prefix.Position.StartPos++
 
 		groupUse.Prefix = prefix
@@ -1520,12 +1521,12 @@ func (b *Builder) NewUse(
 	AsTkn *token.Token,
 	Alias *token.Token,
 ) *ast.StmtUse {
-	use := &ast.StmtUse{
+	use := b.alloc.StmtUse(ast.StmtUse{
 		Type:  Type,
 		Use:   UseName,
 		AsTkn: AsTkn,
 		Alias: b.NewIdentifier(Alias),
-	}
+	})
 
 	if Alias != nil {
 		use.Position = b.Pos.NewNodeTokenPosition(UseName, Alias)
@@ -1536,11 +1537,11 @@ func (b *Builder) NewUse(
 	if n, ok := UseName.(*ast.NameFullyQualified); ok {
 		use.NsSeparatorTkn = n.NsSeparatorTkn
 
-		name := &ast.Name{
+		name := b.alloc.Name(ast.Name{
 			Position:      n.Position,
 			Parts:         n.Parts,
 			SeparatorTkns: n.SeparatorTkns,
-		}
+		})
 		name.Position.StartPos++
 
 		use.Use = name
@@ -1619,7 +1620,7 @@ func (b *Builder) NewPropertyHook(
 	}
 
 	body := Body.(*PropertyHookBody)
-	hook := &ast.PropertyHook{
+	hook := b.alloc.PropertyHook(ast.PropertyHook{
 		Position:       pos,
 		AttrGroups:     AttrGroups,
 		Modifiers:      Modifiers,
@@ -1629,7 +1630,7 @@ func (b *Builder) NewPropertyHook(
 		Expr:           body.Expr,
 		Stmt:           body.Stmt,
 		SemiColonTkn:   body.SemiColonTkn,
-	}
+	})
 
 	if Params != nil {
 		params := Params.(*ParserParenthesizedList)
@@ -1653,22 +1654,22 @@ func (b *Builder) NewHookedProperty(
 ) *ast.StmtProperty {
 	hooks := HookList.(*PropertyHookList)
 
-	return &ast.StmtProperty{
+	return b.alloc.StmtProperty(ast.StmtProperty{
 		Position: b.Pos.NewTokensPosition(VarTkn, hooks.CloseCurlyBracketTkn),
-		Var: &ast.ExprVariable{
+		Var: b.alloc.ExprVariable(ast.ExprVariable{
 			Position: b.Pos.NewTokenPosition(VarTkn),
-			Name: &ast.Identifier{
+			Name: b.alloc.Identifier(ast.Identifier{
 				Position:      b.Pos.NewTokenPosition(VarTkn),
 				IdentifierTkn: VarTkn,
 				Value:         VarTkn.Value,
-			},
-		},
+			}),
+		}),
 		EqualTkn:             EqualTkn,
 		Expr:                 Expr,
 		OpenCurlyBracketTkn:  hooks.OpenCurlyBracketTkn,
 		Hooks:                hooks.Hooks,
 		CloseCurlyBracketTkn: hooks.CloseCurlyBracketTkn,
-	}
+	})
 }
 
 // NewHookedPropertyList wraps a single hooked property; unlike a plain
@@ -1687,13 +1688,13 @@ func (b *Builder) NewHookedPropertyList(
 		pos = b.Pos.NewNodeListNodePosition(Modifiers, Prop)
 	}
 
-	return &ast.StmtPropertyList{
+	return b.alloc.StmtPropertyList(ast.StmtPropertyList{
 		Position:   pos,
 		AttrGroups: AttrGroups,
 		Modifiers:  Modifiers,
 		Type:       Type,
 		Props:      []ast.Vertex{Prop},
-	}
+	})
 }
 
 // WithHooks attaches a PHP 8.4 hook list to a promoted constructor parameter.
@@ -1719,13 +1720,13 @@ func (b *Builder) NewCloneWithArgs(
 	EllipsisTkn *token.Token,
 	CloseParenthesisTkn *token.Token,
 ) *ast.ExprClone {
-	n := &ast.ExprClone{
+	n := b.alloc.ExprClone(ast.ExprClone{
 		Position:            b.Pos.NewTokensPosition(CloneTkn, CloseParenthesisTkn),
 		CloneTkn:            CloneTkn,
 		OpenParenthesisTkn:  OpenParenthesisTkn,
 		EllipsisTkn:         EllipsisTkn,
 		CloseParenthesisTkn: CloseParenthesisTkn,
-	}
+	})
 
 	if First != nil {
 		n.Args = []ast.Vertex{b.NewArgument(First)}

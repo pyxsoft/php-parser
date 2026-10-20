@@ -1,6 +1,7 @@
 package parser_test
 
 import (
+	"reflect"
 	"strings"
 	"testing"
 	"time"
@@ -26,9 +27,18 @@ func FuzzParse(f *testing.F) {
 	f.Add([]byte("<?php $a = <<<EOT\n{$x[0]}\n  EOT;\n"))
 	f.Add([]byte("<?php class A { public int $x { get => 1; } }"))
 
+	// One Arena per fuzz worker process, reused across inputs: the arena tree
+	// must always equal a fresh Parse (differential check for leaked state).
+	arena := parser.NewArena()
+
 	f.Fuzz(func(t *testing.T, src []byte) {
 		for _, skip := range []bool{false, true} {
-			_, _ = parser.Parse(src, conf.Config{Version: php85, SkipFreeFloating: skip})
+			want := parseWithErrs(parser.Parse, src, php85, skip)
+			got := parseWithErrs(arena.Parse, src, php85, skip)
+			if !reflect.DeepEqual(want, got) {
+				t.Fatalf("arena tree differs from Parse (skip=%v)", skip)
+			}
+			arena.Reset()
 		}
 	})
 }

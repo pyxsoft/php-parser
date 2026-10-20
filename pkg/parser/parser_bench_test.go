@@ -95,3 +95,82 @@ func BenchmarkParseExternal(b *testing.B) {
 		}
 	}
 }
+
+func parseArena(tb testing.TB, arena *parser.Arena, src []byte) {
+	_, err := arena.Parse(src, conf.Config{
+		Version:          benchVersion,
+		SkipFreeFloating: true,
+		ErrorHandlerFunc: func(e *errors.Error) {
+			tb.Fatalf("unexpected parse error: %s", e)
+		},
+	})
+	if err != nil {
+		tb.Fatal(err)
+	}
+	arena.Reset()
+}
+
+// BenchmarkParseArena reuses one Arena across iterations, the way a scanner
+// worker parses file after file.
+func BenchmarkParseArena(b *testing.B) {
+	for _, f := range benchcorpus.Synthetic() {
+		b.Run(f.Name, func(b *testing.B) {
+			arena := parser.NewArena()
+			b.SetBytes(int64(len(f.Src)))
+			b.ReportAllocs()
+			for i := 0; i < b.N; i++ {
+				parseArena(b, arena, f.Src)
+			}
+		})
+	}
+}
+
+// BenchmarkParseArenaParallel: one Arena per goroutine.
+func BenchmarkParseArenaParallel(b *testing.B) {
+	for _, f := range benchcorpus.Synthetic() {
+		b.Run(f.Name, func(b *testing.B) {
+			b.SetBytes(int64(len(f.Src)))
+			b.ReportAllocs()
+			b.RunParallel(func(pb *testing.PB) {
+				arena := parser.NewArena()
+				for pb.Next() {
+					parseArena(b, arena, f.Src)
+				}
+			})
+		})
+	}
+}
+
+// BenchmarkParseExternalArena is BenchmarkParseExternal with a reused Arena
+// and SkipFreeFloating, i.e. the scanner configuration.
+func BenchmarkParseExternalArena(b *testing.B) {
+	files := benchcorpus.External(b)
+	if len(files) == 0 {
+		b.Skip(benchcorpus.EnvCorpusDir + " not set")
+	}
+	arena := parser.NewArena()
+	b.SetBytes(benchcorpus.Size(files))
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		for _, f := range files {
+			_, _ = arena.Parse(f.Src, conf.Config{Version: benchVersion, SkipFreeFloating: true})
+			arena.Reset()
+		}
+	}
+}
+
+// BenchmarkParseExternalSkipFreeFloating is the non-arena baseline for
+// BenchmarkParseExternalArena.
+func BenchmarkParseExternalSkipFreeFloating(b *testing.B) {
+	files := benchcorpus.External(b)
+	if len(files) == 0 {
+		b.Skip(benchcorpus.EnvCorpusDir + " not set")
+	}
+	b.SetBytes(benchcorpus.Size(files))
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		for _, f := range files {
+			_, _ = parser.Parse(f.Src, conf.Config{Version: benchVersion, SkipFreeFloating: true})
+		}
+	}
+}

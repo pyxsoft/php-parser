@@ -37,20 +37,47 @@ const (
 )
 
 func NewLexer(data []byte, config conf.Config) *Lexer {
+	return newLexer(
+		data,
+		config,
+		token.NewPoolFor(len(data)/tokenSizeHint, token.DefaultBlockSize),
+		position.NewPoolFor(len(data)/tokenSizeHint, position.DefaultBlockSize),
+		make([]int, 0, max(16, len(data)/lineSizeHint)),
+		nil,
+	)
+}
+
+// NewArenaLexer returns a Lexer whose tokens, positions and line table come
+// from a. They stay valid until a.Reset.
+func NewArenaLexer(data []byte, config conf.Config, a *Arena) *Lexer {
+	lex := newLexer(data, config, a.tokens, a.lexPos, a.newLines[:0], a.stack[:0])
+	a.lexer = lex
+
+	return lex
+}
+
+func newLexer(
+	data []byte,
+	config conf.Config,
+	tokens *token.Pool,
+	positions *position.Pool,
+	newLines []int,
+	stack []int,
+) *Lexer {
 	lex := &Lexer{
 		data:           data,
 		phpVersion:     config.Version,
 		errHandlerFunc: config.ErrorHandlerFunc,
 
 		pe:    len(data),
-		stack: make([]int, 0),
+		stack: stack,
 
 		heredocSince73:   config.Version == nil || config.Version.GreaterOrEqual(&version.Version{Major: 7, Minor: 3}),
 		skipFreeFloating: config.SkipFreeFloating,
 
-		tokenPool:    token.NewPoolFor(len(data)/tokenSizeHint, token.DefaultBlockSize),
-		positionPool: position.NewPoolFor(len(data)/tokenSizeHint, position.DefaultBlockSize),
-		newLines:     NewLines{make([]int, 0, max(16, len(data)/lineSizeHint))},
+		tokenPool:    tokens,
+		positionPool: positions,
+		newLines:     NewLines{newLines},
 	}
 
 	initLexer(lex)
