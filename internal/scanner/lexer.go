@@ -21,11 +21,20 @@ type Lexer struct {
 	stack       []int
 	top         int
 
-	heredocLabel []byte
-	tokenPool    *token.Pool
+	heredocLabel     []byte
+	heredocSince73   bool
+	skipFreeFloating bool
+	tokenPool        *token.Pool
 	positionPool *position.Pool
 	newLines     NewLines
 }
+
+// Average source bytes per token and per line, used to size the initial
+// pools so that small inputs do not pay for full blocks.
+const (
+	tokenSizeHint = 4
+	lineSizeHint  = 40
+)
 
 func NewLexer(data []byte, config conf.Config) *Lexer {
 	lex := &Lexer{
@@ -36,9 +45,12 @@ func NewLexer(data []byte, config conf.Config) *Lexer {
 		pe:    len(data),
 		stack: make([]int, 0),
 
-		tokenPool:    token.NewPool(position.DefaultBlockSize),
-		positionPool: position.NewPool(token.DefaultBlockSize),
-		newLines:     NewLines{make([]int, 0, 128)},
+		heredocSince73:   config.Version == nil || config.Version.GreaterOrEqual(&version.Version{Major: 7, Minor: 3}),
+		skipFreeFloating: config.SkipFreeFloating,
+
+		tokenPool:    token.NewPoolFor(len(data)/tokenSizeHint, token.DefaultBlockSize),
+		positionPool: position.NewPoolFor(len(data)/tokenSizeHint, position.DefaultBlockSize),
+		newLines:     NewLines{make([]int, 0, max(16, len(data)/lineSizeHint))},
 	}
 
 	initLexer(lex)
@@ -58,6 +70,10 @@ func (lex *Lexer) setTokenPosition(token *token.Token) {
 }
 
 func (lex *Lexer) addFreeFloatingToken(t *token.Token, id token.ID, ps, pe int) {
+	if lex.skipFreeFloating {
+		return
+	}
+
 	skippedTkn := lex.tokenPool.Get()
 	skippedTkn.ID = id
 	skippedTkn.Value = lex.data[ps:pe]
@@ -102,12 +118,7 @@ func (lex *Lexer) isNotStringEnd(s byte) bool {
 }
 
 func (lex *Lexer) isHeredocEnd(p int) bool {
-	o, err := version.New("7.3")
-	if err != nil {
-		panic(err)
-	}
-
-	if lex.phpVersion.GreaterOrEqual(o) {
+	if lex.heredocSince73 {
 		return lex.isHeredocEndSince73(p)
 	}
 
@@ -156,11 +167,6 @@ func (lex *Lexer) isHeredocEndSince73(p int) bool {
 	if len(lex.data) > p+l && isValidVarName(lex.data[p+l]) {
 		return false
 	}
-
-	a := string(lex.heredocLabel)
-	b := string(lex.data[p : p+l])
-
-	_, _ = a, b
 
 	if bytes.Equal(lex.heredocLabel, lex.data[p:p+l]) {
 		lex.p = p

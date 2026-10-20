@@ -2,8 +2,6 @@ package php8
 
 import (
     "fmt"
-    "strconv"
-    "strings"
 
     "github.com/pyxsoft/php-parser/pkg/token"
 )
@@ -165,45 +163,33 @@ func (lex *Lexer) Lex() *token.Token {
 
             (dnum | exponent_dnum)          => {lex.setTokenPosition(tkn); tok = token.T_DNUMBER; fbreak;};
             bnum => {
-                s := strings.ReplaceAll(string(lex.data[lex.ts+2:lex.te]), "_", "")
-                _, err := strconv.ParseInt(s, 2, 0)
-
-                if err == nil {
+                if fitsInt64(lex.data[lex.ts+2:lex.te], 2) {
                     lex.setTokenPosition(tkn); tok = token.T_LNUMBER; fbreak;
                 }
 
                 lex.setTokenPosition(tkn); tok = token.T_DNUMBER; fbreak;
             };
             lnum => {
-                base := 10
+                base := uint64(10)
                 if lex.data[lex.ts] == '0' {
                     base = 8
                 }
 
-                s := strings.ReplaceAll(string(lex.data[lex.ts:lex.te]), "_", "")
-                _, err := strconv.ParseInt(s, base, 0)
-
-                if err == nil {
+                if fitsInt64(lex.data[lex.ts:lex.te], base) {
                     lex.setTokenPosition(tkn); tok = token.T_LNUMBER; fbreak;
                 }
 
                 lex.setTokenPosition(tkn); tok = token.T_DNUMBER; fbreak;
             };
             hnum => {
-                s := strings.ReplaceAll(string(lex.data[lex.ts+2:lex.te]), "_", "")
-                _, err := strconv.ParseInt(s, 16, 0)
-
-                if err == nil {
+                if fitsInt64(lex.data[lex.ts+2:lex.te], 16) {
                     lex.setTokenPosition(tkn); tok = token.T_LNUMBER; fbreak;
                 }
 
                 lex.setTokenPosition(tkn); tok = token.T_DNUMBER; fbreak;
             };
             onum => {
-                s := strings.ReplaceAll(string(lex.data[lex.ts+2:lex.te]), "_", "")
-                _, err := strconv.ParseInt(s, 8, 0)
-
-                if err == nil {
+                if fitsInt64(lex.data[lex.ts+2:lex.te], 8) {
                     lex.setTokenPosition(tkn); tok = token.T_LNUMBER; fbreak;
                 }
 

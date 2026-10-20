@@ -26,6 +26,14 @@ func NewBuilder() *Builder {
 	}
 }
 
+// NewBuilderFor returns a Builder whose position pool is sized for about hint
+// nodes, so that small inputs do not allocate a full block.
+func NewBuilderFor(hint int) *Builder {
+	return &Builder{
+		pool: position.NewPoolFor(hint, position.DefaultBlockSize),
+	}
+}
+
 func getListStartPos(l []ast.Vertex) startPos {
 	if l == nil {
 		return startPos{-1, -1}

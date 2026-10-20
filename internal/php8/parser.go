@@ -8,6 +8,9 @@ import (
 	"github.com/pyxsoft/php-parser/pkg/token"
 )
 
+// nodeSizeHint is the average number of source bytes per AST node.
+const nodeSizeHint = 8
+
 // Parser structure
 type Parser struct {
 	Lexer          *Lexer
@@ -23,7 +26,7 @@ func NewParser(lexer *Lexer, config conf.Config) *Parser {
 		Lexer:          lexer,
 		errHandlerFunc: config.ErrorHandlerFunc,
 	}
-	p.builder = NewBuilder(position.NewBuilder(), p)
+	p.builder = NewBuilder(position.NewBuilderFor(len(lexer.data)/nodeSizeHint), p)
 	return p
 }
 

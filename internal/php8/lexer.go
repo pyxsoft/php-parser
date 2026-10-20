@@ -2,6 +2,7 @@ package php8
 
 import (
 	"bytes"
+	"math"
 	"strings"
 
 	"github.com/pyxsoft/php-parser/pkg/conf"
@@ -21,11 +22,20 @@ type Lexer struct {
 	stack       []int
 	top         int
 
-	heredocLabel []byte
-	tokenPool    *token.Pool
-	positionPool *position.Pool
-	newLines     NewLines
+	heredocLabel     []byte
+	heredocSince73   bool
+	skipFreeFloating bool
+	tokenPool        *token.Pool
+	positionPool     *position.Pool
+	newLines         NewLines
 }
+
+// Average source bytes per token and per line, used to size the initial
+// pools so that small inputs do not pay for full blocks.
+const (
+	tokenSizeHint = 4
+	lineSizeHint  = 40
+)
 
 func NewLexer(data []byte, config conf.Config) *Lexer {
 	lex := &Lexer{
@@ -36,9 +46,12 @@ func NewLexer(data []byte, config conf.Config) *Lexer {
 		pe:    len(data),
 		stack: make([]int, 0),
 
-		tokenPool:    token.NewPool(position.DefaultBlockSize),
-		positionPool: position.NewPool(token.DefaultBlockSize),
-		newLines:     NewLines{make([]int, 0, 128)},
+		heredocSince73:   config.Version == nil || config.Version.GreaterOrEqual(&version.Version{Major: 7, Minor: 3}),
+		skipFreeFloating: config.SkipFreeFloating,
+
+		tokenPool:    token.NewPoolFor(len(data)/tokenSizeHint, token.DefaultBlockSize),
+		positionPool: position.NewPoolFor(len(data)/tokenSizeHint, position.DefaultBlockSize),
+		newLines:     NewLines{make([]int, 0, max(16, len(data)/lineSizeHint))},
 	}
 
 	initLexer(lex)
@@ -58,6 +71,10 @@ func (lex *Lexer) setTokenPosition(token *token.Token) {
 }
 
 func (lex *Lexer) addFreeFloatingToken(t *token.Token, id token.ID, ps, pe int) {
+	if lex.skipFreeFloating {
+		return
+	}
+
 	skippedTkn := lex.tokenPool.Get()
 	skippedTkn.ID = id
 	skippedTkn.Value = lex.data[ps:pe]
@@ -102,12 +119,7 @@ func (lex *Lexer) isNotStringEnd(s byte) bool {
 }
 
 func (lex *Lexer) isHeredocEnd(p int) bool {
-	o, err := version.New("7.3")
-	if err != nil {
-		panic(err)
-	}
-
-	if lex.phpVersion.GreaterOrEqual(o) {
+	if lex.heredocSince73 {
 		return lex.isHeredocEndSince73(p)
 	}
 
@@ -156,11 +168,6 @@ func (lex *Lexer) isHeredocEndSince73(p int) bool {
 	if len(lex.data) > p+l && isValidVarName(lex.data[p+l]) {
 		return false
 	}
-
-	a := string(lex.heredocLabel)
-	b := string(lex.data[p : p+l])
-
-	_, _ = a, b
 
 	if bytes.Equal(lex.heredocLabel, lex.data[p:p+l]) {
 		lex.p = p
@@ -263,4 +270,37 @@ func isValidVarNameStart(r byte) bool {
 
 func isValidVarName(r byte) bool {
 	return (r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') || r == '_' || r >= 0x80
+}
+
+// fitsInt64 reports whether digits (with optional '_' separators) form a valid
+// integer in base that fits in an int64, without allocating. Values that do not
+// fit are lexed as T_DNUMBER, matching PHP.
+func fitsInt64(digits []byte, base uint64) bool {
+	var v uint64
+	seen := false
+
+	for _, c := range digits {
+		var d uint64
+		switch {
+		case c == '_':
+			continue
+		case '0' <= c && c <= '9':
+			d = uint64(c - '0')
+		case 'a' <= c && c <= 'f':
+			d = uint64(c-'a') + 10
+		case 'A' <= c && c <= 'F':
+			d = uint64(c-'A') + 10
+		default:
+			return false
+		}
+
+		if d >= base || v > (math.MaxInt64-d)/base {
+			return false
+		}
+
+		v = v*base + d
+		seen = true
+	}
+
+	return seen
 }

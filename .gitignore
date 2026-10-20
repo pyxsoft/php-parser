@@ -8,3 +8,5 @@ php-parser
 cpu.pprof
 mem.pprof
 trace.out
+# benchmark results (machine specific)
+bench/*.txt
