@@ -240,7 +240,7 @@ import (
 
 %type <token> reserved_non_modifiers
 %type <token> semi_reserved
-%type <token> identifier identifier_ex
+%type <token> identifier identifier_ex function_name
 %type <token> plain_variable optional_plain_variable
 %type <token> optional_comma
 %type <token> case_separator
@@ -878,11 +878,17 @@ unset_variable:
 ;
 
 function_declaration_statement:
-        T_FUNCTION optional_ref identifier '(' parameter_list ')' optional_return_type '{' inner_statement_list '}'
+        T_FUNCTION optional_ref function_name '(' parameter_list ')' optional_return_type '{' inner_statement_list '}'
             { $$ = yylex.(*Parser).builder.NewFunction(nil, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) }
     |   attributes
-        T_FUNCTION optional_ref identifier '(' parameter_list ')' optional_return_type '{' inner_statement_list '}'
+        T_FUNCTION optional_ref function_name '(' parameter_list ')' optional_return_type '{' inner_statement_list '}'
             { $$ = yylex.(*Parser).builder.NewFunction($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) }
+;
+
+/* as in PHP, readonly is still a valid function name (WordPress declares one) */
+function_name:
+        identifier                     { $$ = $1 }
+    |   T_READONLY                     { $$ = $1 }
 ;
 
 optional_ref:
@@ -916,9 +922,16 @@ class_modifier:
     |   T_READONLY                     { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
 ;
 
+/* without an empty optional_attributes first, so that a statement starting
+   with readonly can still be a call to a function named readonly */
 class_declaration_statement:
-    optional_attributes optional_class_modifiers
-    T_CLASS identifier extends_from implements_list '{' class_statement_list '}'
+        class_modifiers
+        T_CLASS identifier extends_from implements_list '{' class_statement_list '}'
+            { $$ = yylex.(*Parser).builder.NewClass(nil, $1, $2, $3, $4, $5, $6, $7, $8) }
+    |   T_CLASS identifier extends_from implements_list '{' class_statement_list '}'
+            { $$ = yylex.(*Parser).builder.NewClass(nil, nil, $1, $2, $3, $4, $5, $6, $7) }
+    |   attributes optional_class_modifiers
+        T_CLASS identifier extends_from implements_list '{' class_statement_list '}'
             { $$ = yylex.(*Parser).builder.NewClass($1, $2, $3, $4, $5, $6, $7, $8, $9) }
 ;
 
@@ -2866,6 +2879,19 @@ function_call:
                 $$ = yylex.(*Parser).builder.alloc.ExprFunctionCall(ast.ExprFunctionCall{
                     Position: yylex.(*Parser).builder.Pos.NewNodesPosition($1, $2),
                     Function:            $1,
+                    OpenParenthesisTkn:  $2.(*ArgumentList).OpenParenthesisTkn,
+                    Args:                $2.(*ArgumentList).Arguments,
+                    SeparatorTkns:       $2.(*ArgumentList).SeparatorTkns,
+                    EllipsisTkn:         $2.(*ArgumentList).EllipsisTkn,
+                    CloseParenthesisTkn: $2.(*ArgumentList).CloseParenthesisTkn,
+                })
+            }
+    |   T_READONLY argument_list
+            {
+                name := yylex.(*Parser).builder.NewName($1)
+                $$ = yylex.(*Parser).builder.alloc.ExprFunctionCall(ast.ExprFunctionCall{
+                    Position: yylex.(*Parser).builder.Pos.NewNodesPosition(name, $2),
+                    Function:            name,
                     OpenParenthesisTkn:  $2.(*ArgumentList).OpenParenthesisTkn,
                     Args:                $2.(*ArgumentList).Arguments,
                     SeparatorTkns:       $2.(*ArgumentList).SeparatorTkns,
