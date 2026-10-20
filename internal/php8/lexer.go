@@ -229,6 +229,49 @@ func (lex *Lexer) growCallStack() {
 	}
 }
 
+// enumToken returns the token for the word "enum" just scanned. As in PHP, it
+// is the keyword only when whitespace or comments and a name other than
+// extends or implements follow it, so that a class may still be called Enum.
+func (lex *Lexer) enumToken() token.ID {
+	p := lex.skipWhitespaceAndComments(lex.te)
+	if p == lex.te || !isValidVarNameStart(lex.at(p)) {
+		return token.T_STRING
+	}
+
+	for _, word := range [...]string{"extends", "implements"} {
+		if p+len(word) <= len(lex.data) && bytes.EqualFold(lex.data[p:p+len(word)], []byte(word)) {
+			return token.T_STRING
+		}
+	}
+
+	return token.T_ENUM
+}
+
+// skipWhitespaceAndComments returns the offset of the first byte from p on
+// that is neither whitespace nor part of a comment.
+func (lex *Lexer) skipWhitespaceAndComments(p int) int {
+	for p < len(lex.data) {
+		switch c := lex.data[p]; {
+		case c == ' ' || c == '\t' || c == '\n' || c == '\r':
+			p++
+		case c == '/' && lex.at(p+1) == '*':
+			end := bytes.Index(lex.data[p+2:], []byte("*/"))
+			if end < 0 {
+				return len(lex.data)
+			}
+			p += end + 4
+		case c == '#' && lex.at(p+1) != '[', c == '/' && lex.at(p+1) == '/':
+			for p < len(lex.data) && lex.data[p] != '\n' && lex.data[p] != '\r' && (lex.data[p] != '?' || lex.at(p+1) != '>') {
+				p++
+			}
+		default:
+			return p
+		}
+	}
+
+	return p
+}
+
 func (lex *Lexer) isNotPhpCloseToken() bool {
 	return lex.at(lex.p) != '?' || lex.at(lex.p+1) != '>'
 }
