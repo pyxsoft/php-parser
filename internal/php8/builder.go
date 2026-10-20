@@ -3,10 +3,10 @@ package php8
 import (
 	"bytes"
 
-	"github.com/VKCOM/php-parser/internal/position"
-	"github.com/VKCOM/php-parser/pkg/ast"
-	position2 "github.com/VKCOM/php-parser/pkg/position"
-	"github.com/VKCOM/php-parser/pkg/token"
+	"github.com/pyxsoft/php-parser/internal/position"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	position2 "github.com/pyxsoft/php-parser/pkg/position"
+	"github.com/pyxsoft/php-parser/pkg/token"
 )
 
 // Builder is responsible for creating nodes inside grammar rules.

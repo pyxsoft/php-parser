@@ -5,8 +5,8 @@ import (
 
 	"gotest.tools/assert"
 
-	"github.com/VKCOM/php-parser/pkg/errors"
-	"github.com/VKCOM/php-parser/pkg/position"
+	"github.com/pyxsoft/php-parser/pkg/errors"
+	"github.com/pyxsoft/php-parser/pkg/position"
 )
 
 func TestConstructor(t *testing.T) {

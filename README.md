@@ -5,9 +5,9 @@ PHP Parser written in Go
 
 <img src="./parser.jpg" alt="PHP Parser written in Go" width="980"/>
 
-[![GoDoc](https://godoc.org/github.com/VKCOM/php-parser?status.svg)](https://godoc.org/github.com/VKCOM/php-parser)
-[![Build Status](https://github.com/VKCOM/php-parser/workflows/Go/badge.svg)](https://github.com/VKCOM/php-parser/workflows/Go)
-[![Go Report Card](https://goreportcard.com/badge/github.com/VKCOM/php-parser)](https://goreportcard.com/report/github.com/VKCOM/php-parser)
+[![GoDoc](https://godoc.org/github.com/pyxsoft/php-parser?status.svg)](https://godoc.org/github.com/pyxsoft/php-parser)
+[![Build Status](https://github.com/pyxsoft/php-parser/workflows/Go/badge.svg)](https://github.com/pyxsoft/php-parser/workflows/Go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/pyxsoft/php-parser)](https://goreportcard.com/report/github.com/pyxsoft/php-parser)
 
 This project uses [goyacc](https://godoc.org/golang.org/x/tools/cmd/goyacc) and [ragel](https://www.colm.net/open-source/ragel/) tools to create PHP parser. It parses source code into [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree). It can be used to write static analysis, refactoring, metrics, code style formatting tools.
 
@@ -38,11 +38,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/errors"
-	"github.com/VKCOM/php-parser/pkg/parser"
-	"github.com/VKCOM/php-parser/pkg/version"
-	"github.com/VKCOM/php-parser/pkg/visitor/dumper"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/errors"
+	"github.com/pyxsoft/php-parser/pkg/parser"
+	"github.com/pyxsoft/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/pkg/visitor/dumper"
 )
 
 func main() {
@@ -87,7 +87,7 @@ Install
 -------
 
 ```
-go get github.com/VKCOM/php-parser/cmd/php-parser
+go get github.com/pyxsoft/php-parser/cmd/php-parser
 ```
 
 CLI

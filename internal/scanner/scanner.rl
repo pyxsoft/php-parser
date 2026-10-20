@@ -5,7 +5,7 @@ import (
     "strconv"
     "strings"
 
-    "github.com/VKCOM/php-parser/pkg/token"
+    "github.com/pyxsoft/php-parser/pkg/token"
 )
 
 %%{ 

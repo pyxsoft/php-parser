@@ -1,7 +1,7 @@
 package traverser
 
 import (
-	"github.com/VKCOM/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/ast"
 )
 
 type Traverser struct {

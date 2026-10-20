@@ -1,13 +1,13 @@
 package nsresolver_test
 
 import (
-	"github.com/VKCOM/php-parser/pkg/visitor/nsresolver"
-	"github.com/VKCOM/php-parser/pkg/visitor/traverser"
+	"github.com/pyxsoft/php-parser/pkg/visitor/nsresolver"
+	"github.com/pyxsoft/php-parser/pkg/visitor/traverser"
 	"testing"
 
 	"gotest.tools/assert"
 
-	"github.com/VKCOM/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/ast"
 )
 
 func TestResolveStaticCall(t *testing.T) {

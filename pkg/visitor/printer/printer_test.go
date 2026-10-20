@@ -2,11 +2,11 @@ package printer_test
 
 import (
 	"bytes"
-	"github.com/VKCOM/php-parser/pkg/token"
-	"github.com/VKCOM/php-parser/pkg/visitor/printer"
+	"github.com/pyxsoft/php-parser/pkg/token"
+	"github.com/pyxsoft/php-parser/pkg/visitor/printer"
 	"testing"
 
-	"github.com/VKCOM/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/ast"
 )
 
 func TestPrinterPrintFile(t *testing.T) {

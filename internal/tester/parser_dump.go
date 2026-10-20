@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/parser"
-	"github.com/VKCOM/php-parser/pkg/version"
-	"github.com/VKCOM/php-parser/pkg/visitor/dumper"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/parser"
+	"github.com/pyxsoft/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/pkg/visitor/dumper"
 	"gotest.tools/assert"
 )
 

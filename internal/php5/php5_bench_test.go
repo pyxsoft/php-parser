@@ -4,10 +4,10 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/VKCOM/php-parser/internal/php5"
-	"github.com/VKCOM/php-parser/internal/scanner"
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/internal/php5"
+	"github.com/pyxsoft/php-parser/internal/scanner"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/version"
 )
 
 func BenchmarkPhp5(b *testing.B) {

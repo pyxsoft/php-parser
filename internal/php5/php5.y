@@ -4,9 +4,9 @@ package php5
 import (
     "strconv"
 
-    "github.com/VKCOM/php-parser/pkg/ast"
-    "github.com/VKCOM/php-parser/pkg/errors"
-    "github.com/VKCOM/php-parser/pkg/token"
+    "github.com/pyxsoft/php-parser/pkg/ast"
+    "github.com/pyxsoft/php-parser/pkg/errors"
+    "github.com/pyxsoft/php-parser/pkg/token"
 )
 
 %}

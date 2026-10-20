@@ -5,15 +5,15 @@ import (
 	"os"
 	"testing"
 
-	"github.com/VKCOM/php-parser/internal/php7"
-	"github.com/VKCOM/php-parser/internal/scanner"
-	"github.com/VKCOM/php-parser/pkg/ast"
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/version"
-	"github.com/VKCOM/php-parser/pkg/visitor/printer"
+	"github.com/pyxsoft/php-parser/internal/php7"
+	"github.com/pyxsoft/php-parser/internal/scanner"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/pkg/visitor/printer"
 )
 
-func ExamplePrinter() {
+func Example_printer() {
 	src := `<?php
 
 namespace Foo;

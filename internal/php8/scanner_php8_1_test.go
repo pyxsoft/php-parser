@@ -3,8 +3,8 @@ package php8_test
 import (
 	"testing"
 
-	"github.com/VKCOM/php-parser/internal/tester"
-	"github.com/VKCOM/php-parser/pkg/token"
+	"github.com/pyxsoft/php-parser/internal/tester"
+	"github.com/pyxsoft/php-parser/pkg/token"
 )
 
 func TestReadonlyTokens(t *testing.T) {

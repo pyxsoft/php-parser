@@ -17,15 +17,15 @@ import (
 	"github.com/pkg/profile"
 	"github.com/yookoala/realpath"
 
-	"github.com/VKCOM/php-parser/pkg/ast"
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/errors"
-	"github.com/VKCOM/php-parser/pkg/parser"
-	"github.com/VKCOM/php-parser/pkg/version"
-	"github.com/VKCOM/php-parser/pkg/visitor/dumper"
-	"github.com/VKCOM/php-parser/pkg/visitor/nsresolver"
-	"github.com/VKCOM/php-parser/pkg/visitor/printer"
-	"github.com/VKCOM/php-parser/pkg/visitor/traverser"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/errors"
+	"github.com/pyxsoft/php-parser/pkg/parser"
+	"github.com/pyxsoft/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/pkg/visitor/dumper"
+	"github.com/pyxsoft/php-parser/pkg/visitor/nsresolver"
+	"github.com/pyxsoft/php-parser/pkg/visitor/printer"
+	"github.com/pyxsoft/php-parser/pkg/visitor/traverser"
 )
 
 var wg sync.WaitGroup

@@ -3,13 +3,13 @@ package parser
 import (
 	"errors"
 
-	"github.com/VKCOM/php-parser/internal/php5"
-	"github.com/VKCOM/php-parser/internal/php7"
-	"github.com/VKCOM/php-parser/internal/php8"
-	"github.com/VKCOM/php-parser/internal/scanner"
-	"github.com/VKCOM/php-parser/pkg/ast"
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/internal/php5"
+	"github.com/pyxsoft/php-parser/internal/php7"
+	"github.com/pyxsoft/php-parser/internal/php8"
+	"github.com/pyxsoft/php-parser/internal/scanner"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/version"
 )
 
 var (

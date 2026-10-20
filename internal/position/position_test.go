@@ -4,10 +4,10 @@ import (
 	"gotest.tools/assert"
 	"testing"
 
-	builder "github.com/VKCOM/php-parser/internal/position"
-	"github.com/VKCOM/php-parser/pkg/ast"
-	"github.com/VKCOM/php-parser/pkg/position"
-	"github.com/VKCOM/php-parser/pkg/token"
+	builder "github.com/pyxsoft/php-parser/internal/position"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/position"
+	"github.com/pyxsoft/php-parser/pkg/token"
 )
 
 func TestNewTokenPosition(t *testing.T) {

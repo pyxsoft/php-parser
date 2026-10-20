@@ -4,11 +4,11 @@ import (
 	"gotest.tools/assert"
 	"testing"
 
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/errors"
-	"github.com/VKCOM/php-parser/pkg/position"
-	"github.com/VKCOM/php-parser/pkg/token"
-	"github.com/VKCOM/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/errors"
+	"github.com/pyxsoft/php-parser/pkg/position"
+	"github.com/pyxsoft/php-parser/pkg/token"
+	"github.com/pyxsoft/php-parser/pkg/version"
 )
 
 func TestTokens(t *testing.T) {

@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/VKCOM/php-parser/pkg/ast"
-	"github.com/VKCOM/php-parser/pkg/token"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/token"
 )
 
 type printerState int

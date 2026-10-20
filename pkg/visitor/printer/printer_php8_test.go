@@ -5,16 +5,16 @@ import (
 	"os"
 	"testing"
 
-	"github.com/VKCOM/php-parser/internal/php8"
-	"github.com/VKCOM/php-parser/internal/tester"
-	"github.com/VKCOM/php-parser/pkg/ast"
-	"github.com/VKCOM/php-parser/pkg/conf"
-	"github.com/VKCOM/php-parser/pkg/version"
-	"github.com/VKCOM/php-parser/pkg/visitor/printer"
+	"github.com/pyxsoft/php-parser/internal/php8"
+	"github.com/pyxsoft/php-parser/internal/tester"
+	"github.com/pyxsoft/php-parser/pkg/ast"
+	"github.com/pyxsoft/php-parser/pkg/conf"
+	"github.com/pyxsoft/php-parser/pkg/version"
+	"github.com/pyxsoft/php-parser/pkg/visitor/printer"
 	"gotest.tools/assert"
 )
 
-func ExamplePrinterPHP8() {
+func Example_printerPHP8() {
 	src := `<?php
 
 namespace Foo;
