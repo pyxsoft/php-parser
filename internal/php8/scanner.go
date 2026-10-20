@@ -9,7 +9,7 @@ import (
 	"github.com/pyxsoft/php-parser/pkg/token"
 )
 
-// line internal/php8/scanner.go:15
+// line internal/php8/scanner.go:13
 const lexer_start int = 125
 const lexer_first_final int = 125
 const lexer_error int = 0
@@ -35,7 +35,7 @@ const lexer_en_halt_compiller_end int = 565
 
 func initLexer(lex *Lexer) {
 
-	// line internal/php8/scanner.go:43
+	// line internal/php8/scanner.go:39
 	{
 		lex.cs = lexer_start
 		lex.top = 0
@@ -58,7 +58,7 @@ func (lex *Lexer) Lex() *token.Token {
 
 	_, _ = lblStart, lblEnd
 
-	// line internal/php8/scanner.go:67
+	// line internal/php8/scanner.go:61
 	{
 		var _widec int16
 		if (lex.p) == (lex.pe) {
@@ -2402,7 +2402,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:2411
+		// line internal/php8/scanner.go:2405
 		if lex.data[(lex.p)] == 35 {
 			goto tr191
 		}
@@ -2417,7 +2417,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof126
 		}
 	st_case_126:
-		// line internal/php8/scanner.go:2426
+		// line internal/php8/scanner.go:2420
 		if lex.data[(lex.p)] == 33 {
 			goto st1
 		}
@@ -2439,7 +2439,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof1
 		}
 	st_case_1:
-		// line internal/php8/scanner.go:2448
+		// line internal/php8/scanner.go:2442
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr2
@@ -2464,7 +2464,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof127
 		}
 	st_case_127:
-		// line internal/php8/scanner.go:2473
+		// line internal/php8/scanner.go:2467
 		goto tr193
 	tr4:
 		lex.cs = 128
@@ -2565,7 +2565,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:2563
+		// line internal/php8/scanner.go:2557
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr195
@@ -2610,7 +2610,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof129
 		}
 	st_case_129:
-		// line internal/php8/scanner.go:2608
+		// line internal/php8/scanner.go:2602
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr195
@@ -2651,7 +2651,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof130
 		}
 	st_case_130:
-		// line internal/php8/scanner.go:2649
+		// line internal/php8/scanner.go:2643
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr202
@@ -2670,7 +2670,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof131
 		}
 	st_case_131:
-		// line internal/php8/scanner.go:2668
+		// line internal/php8/scanner.go:2662
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr195
@@ -2708,7 +2708,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof133
 		}
 	st_case_133:
-		// line internal/php8/scanner.go:2706
+		// line internal/php8/scanner.go:2700
 		switch lex.data[(lex.p)] {
 		case 61:
 			goto tr207
@@ -2775,7 +2775,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof134
 		}
 	st_case_134:
-		// line internal/php8/scanner.go:2773
+		// line internal/php8/scanner.go:2767
 		goto tr209
 	tr9:
 		// line internal/php8/scanner.rl:38
@@ -2794,7 +2794,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof5
 		}
 	st_case_5:
-		// line internal/php8/scanner.go:2792
+		// line internal/php8/scanner.go:2786
 		if lex.data[(lex.p)] == 10 {
 			goto tr8
 		}
@@ -5177,7 +5177,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:3817
+		// line internal/php8/scanner.go:3811
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr11
@@ -5374,7 +5374,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof136
 		}
 	st_case_136:
-		// line internal/php8/scanner.go:4014
+		// line internal/php8/scanner.go:4008
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr11
@@ -5424,7 +5424,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof137
 		}
 	st_case_137:
-		// line internal/php8/scanner.go:4064
+		// line internal/php8/scanner.go:4058
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr267
@@ -5468,7 +5468,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof6
 		}
 	st_case_6:
-		// line internal/php8/scanner.go:4108
+		// line internal/php8/scanner.go:4102
 		if lex.data[(lex.p)] == 10 {
 			goto tr11
 		}
@@ -5490,7 +5490,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof138
 		}
 	st_case_138:
-		// line internal/php8/scanner.go:4130
+		// line internal/php8/scanner.go:4124
 		if lex.data[(lex.p)] == 10 {
 			goto tr11
 		}
@@ -5525,7 +5525,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof141
 		}
 	st_case_141:
-		// line internal/php8/scanner.go:4165
+		// line internal/php8/scanner.go:4159
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr14
@@ -5558,7 +5558,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof7
 		}
 	st_case_7:
-		// line internal/php8/scanner.go:4198
+		// line internal/php8/scanner.go:4192
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr14
@@ -5716,7 +5716,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof143
 		}
 	st_case_143:
-		// line internal/php8/scanner.go:4356
+		// line internal/php8/scanner.go:4350
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -5796,7 +5796,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof144
 		}
 	st_case_144:
-		// line internal/php8/scanner.go:4436
+		// line internal/php8/scanner.go:4430
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -5862,7 +5862,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof145
 		}
 	st_case_145:
-		// line internal/php8/scanner.go:4502
+		// line internal/php8/scanner.go:4496
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -5933,7 +5933,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof146
 		}
 	st_case_146:
-		// line internal/php8/scanner.go:4573
+		// line internal/php8/scanner.go:4567
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -6072,7 +6072,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof151
 		}
 	st_case_151:
-		// line internal/php8/scanner.go:4712
+		// line internal/php8/scanner.go:4706
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr294
@@ -6120,7 +6120,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof152
 		}
 	st_case_152:
-		// line internal/php8/scanner.go:4760
+		// line internal/php8/scanner.go:4754
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr22
@@ -6174,7 +6174,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof153
 		}
 	st_case_153:
-		// line internal/php8/scanner.go:4814
+		// line internal/php8/scanner.go:4808
 		if lex.data[(lex.p)] == 10 {
 			goto tr301
 		}
@@ -6196,7 +6196,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof11
 		}
 	st_case_11:
-		// line internal/php8/scanner.go:4836
+		// line internal/php8/scanner.go:4830
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr22
@@ -6230,7 +6230,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof154
 		}
 	st_case_154:
-		// line internal/php8/scanner.go:4870
+		// line internal/php8/scanner.go:4864
 		if lex.data[(lex.p)] == 46 {
 			goto st12
 		}
@@ -6254,7 +6254,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof155
 		}
 	st_case_155:
-		// line internal/php8/scanner.go:4894
+		// line internal/php8/scanner.go:4888
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr29
@@ -6283,7 +6283,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof13
 		}
 	st_case_13:
-		// line internal/php8/scanner.go:4923
+		// line internal/php8/scanner.go:4917
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr29
@@ -6317,7 +6317,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof156
 		}
 	st_case_156:
-		// line internal/php8/scanner.go:4957
+		// line internal/php8/scanner.go:4951
 		switch lex.data[(lex.p)] {
 		case 9:
 			goto st15
@@ -7182,7 +7182,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof161
 		}
 	st_case_161:
-		// line internal/php8/scanner.go:5822
+		// line internal/php8/scanner.go:5816
 		switch lex.data[(lex.p)] {
 		case 46:
 			goto st70
@@ -7214,7 +7214,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof162
 		}
 	st_case_162:
-		// line internal/php8/scanner.go:5854
+		// line internal/php8/scanner.go:5848
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto st71
@@ -7263,7 +7263,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof163
 		}
 	st_case_163:
-		// line internal/php8/scanner.go:5903
+		// line internal/php8/scanner.go:5897
 		if lex.data[(lex.p)] == 95 {
 			goto st72
 		}
@@ -7290,7 +7290,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof164
 		}
 	st_case_164:
-		// line internal/php8/scanner.go:5930
+		// line internal/php8/scanner.go:5924
 		switch lex.data[(lex.p)] {
 		case 42:
 			goto st74
@@ -7335,7 +7335,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof74
 		}
 	st_case_74:
-		// line internal/php8/scanner.go:5975
+		// line internal/php8/scanner.go:5969
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr101
@@ -7376,7 +7376,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof75
 		}
 	st_case_75:
-		// line internal/php8/scanner.go:6016
+		// line internal/php8/scanner.go:6010
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr105
@@ -7395,7 +7395,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof76
 		}
 	st_case_76:
-		// line internal/php8/scanner.go:6035
+		// line internal/php8/scanner.go:6029
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr101
@@ -7419,7 +7419,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof165
 		}
 	st_case_165:
-		// line internal/php8/scanner.go:6059
+		// line internal/php8/scanner.go:6053
 		switch lex.data[(lex.p)] {
 		case 46:
 			goto tr319
@@ -7458,7 +7458,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof166
 		}
 	st_case_166:
-		// line internal/php8/scanner.go:6098
+		// line internal/php8/scanner.go:6092
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto st71
@@ -7481,7 +7481,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof167
 		}
 	st_case_167:
-		// line internal/php8/scanner.go:6121
+		// line internal/php8/scanner.go:6115
 		switch lex.data[(lex.p)] {
 		case 46:
 			goto tr319
@@ -7526,7 +7526,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof168
 		}
 	st_case_168:
-		// line internal/php8/scanner.go:6166
+		// line internal/php8/scanner.go:6160
 		if lex.data[(lex.p)] == 95 {
 			goto st78
 		}
@@ -7555,7 +7555,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof169
 		}
 	st_case_169:
-		// line internal/php8/scanner.go:6195
+		// line internal/php8/scanner.go:6189
 		if lex.data[(lex.p)] == 95 {
 			goto st79
 		}
@@ -7593,7 +7593,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof170
 		}
 	st_case_170:
-		// line internal/php8/scanner.go:6233
+		// line internal/php8/scanner.go:6227
 		if lex.data[(lex.p)] == 95 {
 			goto st80
 		}
@@ -7629,7 +7629,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof172
 		}
 	st_case_172:
-		// line internal/php8/scanner.go:6269
+		// line internal/php8/scanner.go:6263
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr115
@@ -7653,7 +7653,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof81
 		}
 	st_case_81:
-		// line internal/php8/scanner.go:6293
+		// line internal/php8/scanner.go:6287
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr115
@@ -7699,7 +7699,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof82
 		}
 	st_case_82:
-		// line internal/php8/scanner.go:6339
+		// line internal/php8/scanner.go:6333
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr119
@@ -7745,7 +7745,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof83
 		}
 	st_case_83:
-		// line internal/php8/scanner.go:6385
+		// line internal/php8/scanner.go:6379
 		if lex.data[(lex.p)] == 10 {
 			goto tr115
 		}
@@ -7759,7 +7759,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof84
 		}
 	st_case_84:
-		// line internal/php8/scanner.go:6399
+		// line internal/php8/scanner.go:6393
 		if lex.data[(lex.p)] == 62 {
 			goto tr122
 		}
@@ -7774,7 +7774,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof173
 		}
 	st_case_173:
-		// line internal/php8/scanner.go:6414
+		// line internal/php8/scanner.go:6408
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr124
@@ -7799,7 +7799,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof174
 		}
 	st_case_174:
-		// line internal/php8/scanner.go:6439
+		// line internal/php8/scanner.go:6433
 		goto tr330
 	tr329:
 		// line internal/php8/scanner.rl:38
@@ -7818,7 +7818,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof85
 		}
 	st_case_85:
-		// line internal/php8/scanner.go:6458
+		// line internal/php8/scanner.go:6452
 		if lex.data[(lex.p)] == 10 {
 			goto tr124
 		}
@@ -7849,7 +7849,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof176
 		}
 	st_case_176:
-		// line internal/php8/scanner.go:6489
+		// line internal/php8/scanner.go:6483
 		switch lex.data[(lex.p)] {
 		case 60:
 			goto st86
@@ -7917,7 +7917,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof88
 		}
 	st_case_88:
-		// line internal/php8/scanner.go:6557
+		// line internal/php8/scanner.go:6551
 		switch lex.data[(lex.p)] {
 		case 34:
 			goto tr130
@@ -7951,7 +7951,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof89
 		}
 	st_case_89:
-		// line internal/php8/scanner.go:6591
+		// line internal/php8/scanner.go:6585
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr132
@@ -7990,7 +7990,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof177
 		}
 	st_case_177:
-		// line internal/php8/scanner.go:6630
+		// line internal/php8/scanner.go:6624
 		goto tr336
 	tr133:
 		// line internal/php8/scanner.rl:38
@@ -8023,7 +8023,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof90
 		}
 	st_case_90:
-		// line internal/php8/scanner.go:6663
+		// line internal/php8/scanner.go:6657
 		if lex.data[(lex.p)] == 10 {
 			goto tr132
 		}
@@ -8058,7 +8058,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof92
 		}
 	st_case_92:
-		// line internal/php8/scanner.go:6698
+		// line internal/php8/scanner.go:6692
 		switch lex.data[(lex.p)] {
 		case 39:
 			goto tr130
@@ -8092,7 +8092,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof93
 		}
 	st_case_93:
-		// line internal/php8/scanner.go:6732
+		// line internal/php8/scanner.go:6726
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr136
@@ -8180,7 +8180,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof183
 		}
 	st_case_183:
-		// line internal/php8/scanner.go:6820
+		// line internal/php8/scanner.go:6814
 		switch lex.data[(lex.p)] {
 		case 45:
 			goto st94
@@ -8209,7 +8209,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof184
 		}
 	st_case_184:
-		// line internal/php8/scanner.go:6849
+		// line internal/php8/scanner.go:6843
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr141
@@ -8234,7 +8234,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof185
 		}
 	st_case_185:
-		// line internal/php8/scanner.go:6874
+		// line internal/php8/scanner.go:6868
 		goto tr352
 	tr351:
 		// line internal/php8/scanner.rl:38
@@ -8253,7 +8253,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof95
 		}
 	st_case_95:
-		// line internal/php8/scanner.go:6893
+		// line internal/php8/scanner.go:6887
 		if lex.data[(lex.p)] == 10 {
 			goto tr141
 		}
@@ -8279,7 +8279,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof187
 		}
 	st_case_187:
-		// line internal/php8/scanner.go:6919
+		// line internal/php8/scanner.go:6913
 		switch lex.data[(lex.p)] {
 		case 66:
 			goto tr356
@@ -8822,7 +8822,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof188
 		}
 	st_case_188:
-		// line internal/php8/scanner.go:7462
+		// line internal/php8/scanner.go:7456
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -8880,7 +8880,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof189
 		}
 	st_case_189:
-		// line internal/php8/scanner.go:7520
+		// line internal/php8/scanner.go:7514
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -8917,7 +8917,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof190
 		}
 	st_case_190:
-		// line internal/php8/scanner.go:7557
+		// line internal/php8/scanner.go:7551
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr362
@@ -8958,7 +8958,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof191
 		}
 	st_case_191:
-		// line internal/php8/scanner.go:7598
+		// line internal/php8/scanner.go:7592
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr363
@@ -8999,7 +8999,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof192
 		}
 	st_case_192:
-		// line internal/php8/scanner.go:7639
+		// line internal/php8/scanner.go:7633
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr364
@@ -9040,7 +9040,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof193
 		}
 	st_case_193:
-		// line internal/php8/scanner.go:7680
+		// line internal/php8/scanner.go:7674
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr365
@@ -9081,7 +9081,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof194
 		}
 	st_case_194:
-		// line internal/php8/scanner.go:7721
+		// line internal/php8/scanner.go:7715
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr366
@@ -9122,7 +9122,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof195
 		}
 	st_case_195:
-		// line internal/php8/scanner.go:7762
+		// line internal/php8/scanner.go:7756
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr367
@@ -9163,7 +9163,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof196
 		}
 	st_case_196:
-		// line internal/php8/scanner.go:7803
+		// line internal/php8/scanner.go:7797
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr368
@@ -9204,7 +9204,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof197
 		}
 	st_case_197:
-		// line internal/php8/scanner.go:7844
+		// line internal/php8/scanner.go:7838
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr369
@@ -9245,7 +9245,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof198
 		}
 	st_case_198:
-		// line internal/php8/scanner.go:7885
+		// line internal/php8/scanner.go:7879
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr370
@@ -9286,7 +9286,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof199
 		}
 	st_case_199:
-		// line internal/php8/scanner.go:7926
+		// line internal/php8/scanner.go:7920
 		switch lex.data[(lex.p)] {
 		case 89:
 			goto tr371
@@ -9327,7 +9327,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof200
 		}
 	st_case_200:
-		// line internal/php8/scanner.go:7967
+		// line internal/php8/scanner.go:7961
 		switch lex.data[(lex.p)] {
 		case 34:
 			goto st7
@@ -9390,7 +9390,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof201
 		}
 	st_case_201:
-		// line internal/php8/scanner.go:8030
+		// line internal/php8/scanner.go:8024
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr374
@@ -9431,7 +9431,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof202
 		}
 	st_case_202:
-		// line internal/php8/scanner.go:8071
+		// line internal/php8/scanner.go:8065
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr375
@@ -9472,7 +9472,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof203
 		}
 	st_case_203:
-		// line internal/php8/scanner.go:8112
+		// line internal/php8/scanner.go:8106
 		switch lex.data[(lex.p)] {
 		case 75:
 			goto tr376
@@ -9513,7 +9513,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof204
 		}
 	st_case_204:
-		// line internal/php8/scanner.go:8153
+		// line internal/php8/scanner.go:8147
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr377
@@ -9566,7 +9566,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof205
 		}
 	st_case_205:
-		// line internal/php8/scanner.go:8206
+		// line internal/php8/scanner.go:8200
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr381
@@ -9615,7 +9615,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof206
 		}
 	st_case_206:
-		// line internal/php8/scanner.go:8255
+		// line internal/php8/scanner.go:8249
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr384
@@ -9656,7 +9656,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof207
 		}
 	st_case_207:
-		// line internal/php8/scanner.go:8296
+		// line internal/php8/scanner.go:8290
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr385
@@ -9697,7 +9697,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof208
 		}
 	st_case_208:
-		// line internal/php8/scanner.go:8337
+		// line internal/php8/scanner.go:8331
 		switch lex.data[(lex.p)] {
 		case 66:
 			goto tr386
@@ -9738,7 +9738,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof209
 		}
 	st_case_209:
-		// line internal/php8/scanner.go:8378
+		// line internal/php8/scanner.go:8372
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr387
@@ -9779,7 +9779,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof210
 		}
 	st_case_210:
-		// line internal/php8/scanner.go:8419
+		// line internal/php8/scanner.go:8413
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr388
@@ -9820,7 +9820,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof211
 		}
 	st_case_211:
-		// line internal/php8/scanner.go:8460
+		// line internal/php8/scanner.go:8454
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr389
@@ -9861,7 +9861,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof212
 		}
 	st_case_212:
-		// line internal/php8/scanner.go:8501
+		// line internal/php8/scanner.go:8495
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr390
@@ -9902,7 +9902,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof213
 		}
 	st_case_213:
-		// line internal/php8/scanner.go:8542
+		// line internal/php8/scanner.go:8536
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr391
@@ -9943,7 +9943,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof214
 		}
 	st_case_214:
-		// line internal/php8/scanner.go:8583
+		// line internal/php8/scanner.go:8577
 		switch lex.data[(lex.p)] {
 		case 85:
 			goto tr392
@@ -9984,7 +9984,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof215
 		}
 	st_case_215:
-		// line internal/php8/scanner.go:8624
+		// line internal/php8/scanner.go:8618
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr393
@@ -10025,7 +10025,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof216
 		}
 	st_case_216:
-		// line internal/php8/scanner.go:8665
+		// line internal/php8/scanner.go:8659
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr394
@@ -10066,7 +10066,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof217
 		}
 	st_case_217:
-		// line internal/php8/scanner.go:8706
+		// line internal/php8/scanner.go:8700
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr395
@@ -10107,7 +10107,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof218
 		}
 	st_case_218:
-		// line internal/php8/scanner.go:8747
+		// line internal/php8/scanner.go:8741
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr396
@@ -10148,7 +10148,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof219
 		}
 	st_case_219:
-		// line internal/php8/scanner.go:8788
+		// line internal/php8/scanner.go:8782
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr397
@@ -10189,7 +10189,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof220
 		}
 	st_case_220:
-		// line internal/php8/scanner.go:8829
+		// line internal/php8/scanner.go:8823
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr398
@@ -10230,7 +10230,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof221
 		}
 	st_case_221:
-		// line internal/php8/scanner.go:8870
+		// line internal/php8/scanner.go:8864
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr399
@@ -10275,7 +10275,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof222
 		}
 	st_case_222:
-		// line internal/php8/scanner.go:8915
+		// line internal/php8/scanner.go:8909
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr401
@@ -10316,7 +10316,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof223
 		}
 	st_case_223:
-		// line internal/php8/scanner.go:8956
+		// line internal/php8/scanner.go:8950
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr402
@@ -10357,7 +10357,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof224
 		}
 	st_case_224:
-		// line internal/php8/scanner.go:8997
+		// line internal/php8/scanner.go:8991
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr403
@@ -10398,7 +10398,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof225
 		}
 	st_case_225:
-		// line internal/php8/scanner.go:9038
+		// line internal/php8/scanner.go:9032
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr404
@@ -10439,7 +10439,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof226
 		}
 	st_case_226:
-		// line internal/php8/scanner.go:9079
+		// line internal/php8/scanner.go:9073
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr405
@@ -10480,7 +10480,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof227
 		}
 	st_case_227:
-		// line internal/php8/scanner.go:9120
+		// line internal/php8/scanner.go:9114
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr406
@@ -10525,7 +10525,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof228
 		}
 	st_case_228:
-		// line internal/php8/scanner.go:9165
+		// line internal/php8/scanner.go:9159
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr408
@@ -10566,7 +10566,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof229
 		}
 	st_case_229:
-		// line internal/php8/scanner.go:9206
+		// line internal/php8/scanner.go:9200
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr409
@@ -10607,7 +10607,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof230
 		}
 	st_case_230:
-		// line internal/php8/scanner.go:9247
+		// line internal/php8/scanner.go:9241
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr410
@@ -10648,7 +10648,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof231
 		}
 	st_case_231:
-		// line internal/php8/scanner.go:9288
+		// line internal/php8/scanner.go:9282
 		switch lex.data[(lex.p)] {
 		case 85:
 			goto tr411
@@ -10689,7 +10689,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof232
 		}
 	st_case_232:
-		// line internal/php8/scanner.go:9329
+		// line internal/php8/scanner.go:9323
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr412
@@ -10730,7 +10730,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof233
 		}
 	st_case_233:
-		// line internal/php8/scanner.go:9370
+		// line internal/php8/scanner.go:9364
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr413
@@ -10779,7 +10779,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof234
 		}
 	st_case_234:
-		// line internal/php8/scanner.go:9419
+		// line internal/php8/scanner.go:9413
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr416
@@ -10824,7 +10824,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof235
 		}
 	st_case_235:
-		// line internal/php8/scanner.go:9464
+		// line internal/php8/scanner.go:9458
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr418
@@ -10865,7 +10865,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof236
 		}
 	st_case_236:
-		// line internal/php8/scanner.go:9505
+		// line internal/php8/scanner.go:9499
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr419
@@ -10906,7 +10906,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof237
 		}
 	st_case_237:
-		// line internal/php8/scanner.go:9546
+		// line internal/php8/scanner.go:9540
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr420
@@ -10947,7 +10947,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof238
 		}
 	st_case_238:
-		// line internal/php8/scanner.go:9587
+		// line internal/php8/scanner.go:9581
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr421
@@ -10988,7 +10988,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof239
 		}
 	st_case_239:
-		// line internal/php8/scanner.go:9628
+		// line internal/php8/scanner.go:9622
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr422
@@ -11029,7 +11029,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof240
 		}
 	st_case_240:
-		// line internal/php8/scanner.go:9669
+		// line internal/php8/scanner.go:9663
 		switch lex.data[(lex.p)] {
 		case 85:
 			goto tr423
@@ -11070,7 +11070,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof241
 		}
 	st_case_241:
-		// line internal/php8/scanner.go:9710
+		// line internal/php8/scanner.go:9704
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr424
@@ -11111,7 +11111,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof242
 		}
 	st_case_242:
-		// line internal/php8/scanner.go:9751
+		// line internal/php8/scanner.go:9745
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr425
@@ -11152,7 +11152,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof243
 		}
 	st_case_243:
-		// line internal/php8/scanner.go:9792
+		// line internal/php8/scanner.go:9786
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr426
@@ -11193,7 +11193,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof244
 		}
 	st_case_244:
-		// line internal/php8/scanner.go:9833
+		// line internal/php8/scanner.go:9827
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr427
@@ -11254,7 +11254,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof245
 		}
 	st_case_245:
-		// line internal/php8/scanner.go:9894
+		// line internal/php8/scanner.go:9888
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr433
@@ -11295,7 +11295,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof246
 		}
 	st_case_246:
-		// line internal/php8/scanner.go:9935
+		// line internal/php8/scanner.go:9929
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr434
@@ -11336,7 +11336,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof247
 		}
 	st_case_247:
-		// line internal/php8/scanner.go:9976
+		// line internal/php8/scanner.go:9970
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr435
@@ -11377,7 +11377,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof248
 		}
 	st_case_248:
-		// line internal/php8/scanner.go:10017
+		// line internal/php8/scanner.go:10011
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr436
@@ -11418,7 +11418,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof249
 		}
 	st_case_249:
-		// line internal/php8/scanner.go:10058
+		// line internal/php8/scanner.go:10052
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr438
@@ -11459,7 +11459,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof250
 		}
 	st_case_250:
-		// line internal/php8/scanner.go:10099
+		// line internal/php8/scanner.go:10093
 		switch lex.data[(lex.p)] {
 		case 70:
 			goto tr439
@@ -11500,7 +11500,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof251
 		}
 	st_case_251:
-		// line internal/php8/scanner.go:10140
+		// line internal/php8/scanner.go:10134
 		switch lex.data[(lex.p)] {
 		case 80:
 			goto tr440
@@ -11541,7 +11541,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof252
 		}
 	st_case_252:
-		// line internal/php8/scanner.go:10181
+		// line internal/php8/scanner.go:10175
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr441
@@ -11582,7 +11582,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof253
 		}
 	st_case_253:
-		// line internal/php8/scanner.go:10222
+		// line internal/php8/scanner.go:10216
 		switch lex.data[(lex.p)] {
 		case 89:
 			goto tr442
@@ -11623,7 +11623,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof254
 		}
 	st_case_254:
-		// line internal/php8/scanner.go:10263
+		// line internal/php8/scanner.go:10257
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr443
@@ -11668,7 +11668,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof255
 		}
 	st_case_255:
-		// line internal/php8/scanner.go:10308
+		// line internal/php8/scanner.go:10302
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr445
@@ -11725,7 +11725,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof256
 		}
 	st_case_256:
-		// line internal/php8/scanner.go:10365
+		// line internal/php8/scanner.go:10359
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr450
@@ -11766,7 +11766,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof257
 		}
 	st_case_257:
-		// line internal/php8/scanner.go:10406
+		// line internal/php8/scanner.go:10400
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr451
@@ -11807,7 +11807,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof258
 		}
 	st_case_258:
-		// line internal/php8/scanner.go:10447
+		// line internal/php8/scanner.go:10441
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr452
@@ -11848,7 +11848,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof259
 		}
 	st_case_259:
-		// line internal/php8/scanner.go:10488
+		// line internal/php8/scanner.go:10482
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr453
@@ -11889,7 +11889,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof260
 		}
 	st_case_260:
-		// line internal/php8/scanner.go:10529
+		// line internal/php8/scanner.go:10523
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr454
@@ -11930,7 +11930,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof261
 		}
 	st_case_261:
-		// line internal/php8/scanner.go:10570
+		// line internal/php8/scanner.go:10564
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr455
@@ -11971,7 +11971,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof262
 		}
 	st_case_262:
-		// line internal/php8/scanner.go:10611
+		// line internal/php8/scanner.go:10605
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr456
@@ -12012,7 +12012,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof263
 		}
 	st_case_263:
-		// line internal/php8/scanner.go:10652
+		// line internal/php8/scanner.go:10646
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr457
@@ -12053,7 +12053,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof264
 		}
 	st_case_264:
-		// line internal/php8/scanner.go:10693
+		// line internal/php8/scanner.go:10687
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr459
@@ -12094,7 +12094,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof265
 		}
 	st_case_265:
-		// line internal/php8/scanner.go:10734
+		// line internal/php8/scanner.go:10728
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr460
@@ -12135,7 +12135,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof266
 		}
 	st_case_266:
-		// line internal/php8/scanner.go:10775
+		// line internal/php8/scanner.go:10769
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr461
@@ -12176,7 +12176,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof267
 		}
 	st_case_267:
-		// line internal/php8/scanner.go:10816
+		// line internal/php8/scanner.go:10810
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr462
@@ -12217,7 +12217,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof268
 		}
 	st_case_268:
-		// line internal/php8/scanner.go:10857
+		// line internal/php8/scanner.go:10851
 		switch lex.data[(lex.p)] {
 		case 70:
 			goto tr463
@@ -12258,7 +12258,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof269
 		}
 	st_case_269:
-		// line internal/php8/scanner.go:10898
+		// line internal/php8/scanner.go:10892
 		switch lex.data[(lex.p)] {
 		case 87:
 			goto tr464
@@ -12299,7 +12299,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof270
 		}
 	st_case_270:
-		// line internal/php8/scanner.go:10939
+		// line internal/php8/scanner.go:10933
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr465
@@ -12340,7 +12340,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof271
 		}
 	st_case_271:
-		// line internal/php8/scanner.go:10980
+		// line internal/php8/scanner.go:10974
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr466
@@ -12381,7 +12381,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof272
 		}
 	st_case_272:
-		// line internal/php8/scanner.go:11021
+		// line internal/php8/scanner.go:11015
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr467
@@ -12422,7 +12422,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof273
 		}
 	st_case_273:
-		// line internal/php8/scanner.go:11062
+		// line internal/php8/scanner.go:11056
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr468
@@ -12463,7 +12463,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof274
 		}
 	st_case_274:
-		// line internal/php8/scanner.go:11103
+		// line internal/php8/scanner.go:11097
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr469
@@ -12504,7 +12504,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof275
 		}
 	st_case_275:
-		// line internal/php8/scanner.go:11144
+		// line internal/php8/scanner.go:11138
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr470
@@ -12545,7 +12545,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof276
 		}
 	st_case_276:
-		// line internal/php8/scanner.go:11185
+		// line internal/php8/scanner.go:11179
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr471
@@ -12586,7 +12586,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof277
 		}
 	st_case_277:
-		// line internal/php8/scanner.go:11226
+		// line internal/php8/scanner.go:11220
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr472
@@ -12627,7 +12627,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof278
 		}
 	st_case_278:
-		// line internal/php8/scanner.go:11267
+		// line internal/php8/scanner.go:11261
 		switch lex.data[(lex.p)] {
 		case 77:
 			goto tr473
@@ -12668,7 +12668,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof279
 		}
 	st_case_279:
-		// line internal/php8/scanner.go:11308
+		// line internal/php8/scanner.go:11302
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr474
@@ -12709,7 +12709,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof280
 		}
 	st_case_280:
-		// line internal/php8/scanner.go:11349
+		// line internal/php8/scanner.go:11343
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr475
@@ -12750,7 +12750,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof281
 		}
 	st_case_281:
-		// line internal/php8/scanner.go:11390
+		// line internal/php8/scanner.go:11384
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr476
@@ -12795,7 +12795,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof282
 		}
 	st_case_282:
-		// line internal/php8/scanner.go:11435
+		// line internal/php8/scanner.go:11429
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr426
@@ -12836,7 +12836,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof283
 		}
 	st_case_283:
-		// line internal/php8/scanner.go:11476
+		// line internal/php8/scanner.go:11470
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr478
@@ -12877,7 +12877,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof284
 		}
 	st_case_284:
-		// line internal/php8/scanner.go:11517
+		// line internal/php8/scanner.go:11511
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr479
@@ -12918,7 +12918,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof285
 		}
 	st_case_285:
-		// line internal/php8/scanner.go:11558
+		// line internal/php8/scanner.go:11552
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr480
@@ -12959,7 +12959,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof286
 		}
 	st_case_286:
-		// line internal/php8/scanner.go:11599
+		// line internal/php8/scanner.go:11593
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr481
@@ -13000,7 +13000,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof287
 		}
 	st_case_287:
-		// line internal/php8/scanner.go:11640
+		// line internal/php8/scanner.go:11634
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr482
@@ -13053,7 +13053,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof288
 		}
 	st_case_288:
-		// line internal/php8/scanner.go:11693
+		// line internal/php8/scanner.go:11687
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr485
@@ -13094,7 +13094,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof289
 		}
 	st_case_289:
-		// line internal/php8/scanner.go:11734
+		// line internal/php8/scanner.go:11728
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr486
@@ -13135,7 +13135,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof290
 		}
 	st_case_290:
-		// line internal/php8/scanner.go:11775
+		// line internal/php8/scanner.go:11769
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr487
@@ -13176,7 +13176,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof291
 		}
 	st_case_291:
-		// line internal/php8/scanner.go:11816
+		// line internal/php8/scanner.go:11810
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr489
@@ -13217,7 +13217,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof292
 		}
 	st_case_292:
-		// line internal/php8/scanner.go:11857
+		// line internal/php8/scanner.go:11851
 		switch lex.data[(lex.p)] {
 		case 89:
 			goto tr490
@@ -13258,7 +13258,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof293
 		}
 	st_case_293:
-		// line internal/php8/scanner.go:11898
+		// line internal/php8/scanner.go:11892
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr491
@@ -13299,7 +13299,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof294
 		}
 	st_case_294:
-		// line internal/php8/scanner.go:11939
+		// line internal/php8/scanner.go:11933
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr493
@@ -13340,7 +13340,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof295
 		}
 	st_case_295:
-		// line internal/php8/scanner.go:11980
+		// line internal/php8/scanner.go:11974
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr494
@@ -13381,7 +13381,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof296
 		}
 	st_case_296:
-		// line internal/php8/scanner.go:12021
+		// line internal/php8/scanner.go:12015
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr495
@@ -13422,7 +13422,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof297
 		}
 	st_case_297:
-		// line internal/php8/scanner.go:12062
+		// line internal/php8/scanner.go:12056
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr496
@@ -13463,7 +13463,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof298
 		}
 	st_case_298:
-		// line internal/php8/scanner.go:12103
+		// line internal/php8/scanner.go:12097
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr497
@@ -13508,7 +13508,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof299
 		}
 	st_case_299:
-		// line internal/php8/scanner.go:12148
+		// line internal/php8/scanner.go:12142
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr499
@@ -13549,7 +13549,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof300
 		}
 	st_case_300:
-		// line internal/php8/scanner.go:12189
+		// line internal/php8/scanner.go:12183
 		switch lex.data[(lex.p)] {
 		case 66:
 			goto tr500
@@ -13590,7 +13590,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof301
 		}
 	st_case_301:
-		// line internal/php8/scanner.go:12230
+		// line internal/php8/scanner.go:12224
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr501
@@ -13631,7 +13631,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof302
 		}
 	st_case_302:
-		// line internal/php8/scanner.go:12271
+		// line internal/php8/scanner.go:12265
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr502
@@ -13672,7 +13672,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof303
 		}
 	st_case_303:
-		// line internal/php8/scanner.go:12312
+		// line internal/php8/scanner.go:12306
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr503
@@ -13713,7 +13713,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof304
 		}
 	st_case_304:
-		// line internal/php8/scanner.go:12353
+		// line internal/php8/scanner.go:12347
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr504
@@ -13754,7 +13754,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof305
 		}
 	st_case_305:
-		// line internal/php8/scanner.go:12394
+		// line internal/php8/scanner.go:12388
 		switch lex.data[(lex.p)] {
 		case 70:
 			goto tr505
@@ -13807,7 +13807,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof306
 		}
 	st_case_306:
-		// line internal/php8/scanner.go:12447
+		// line internal/php8/scanner.go:12441
 		switch lex.data[(lex.p)] {
 		case 80:
 			goto tr509
@@ -13848,7 +13848,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof307
 		}
 	st_case_307:
-		// line internal/php8/scanner.go:12488
+		// line internal/php8/scanner.go:12482
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr510
@@ -13889,7 +13889,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof308
 		}
 	st_case_308:
-		// line internal/php8/scanner.go:12529
+		// line internal/php8/scanner.go:12523
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr511
@@ -13930,7 +13930,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof309
 		}
 	st_case_309:
-		// line internal/php8/scanner.go:12570
+		// line internal/php8/scanner.go:12564
 		switch lex.data[(lex.p)] {
 		case 77:
 			goto tr512
@@ -13971,7 +13971,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof310
 		}
 	st_case_310:
-		// line internal/php8/scanner.go:12611
+		// line internal/php8/scanner.go:12605
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr513
@@ -14012,7 +14012,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof311
 		}
 	st_case_311:
-		// line internal/php8/scanner.go:12652
+		// line internal/php8/scanner.go:12646
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr514
@@ -14053,7 +14053,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof312
 		}
 	st_case_312:
-		// line internal/php8/scanner.go:12693
+		// line internal/php8/scanner.go:12687
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr515
@@ -14094,7 +14094,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof313
 		}
 	st_case_313:
-		// line internal/php8/scanner.go:12734
+		// line internal/php8/scanner.go:12728
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr516
@@ -14135,7 +14135,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof314
 		}
 	st_case_314:
-		// line internal/php8/scanner.go:12775
+		// line internal/php8/scanner.go:12769
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr517
@@ -14184,7 +14184,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof315
 		}
 	st_case_315:
-		// line internal/php8/scanner.go:12824
+		// line internal/php8/scanner.go:12818
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr520
@@ -14225,7 +14225,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof316
 		}
 	st_case_316:
-		// line internal/php8/scanner.go:12865
+		// line internal/php8/scanner.go:12859
 		switch lex.data[(lex.p)] {
 		case 85:
 			goto tr521
@@ -14266,7 +14266,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof317
 		}
 	st_case_317:
-		// line internal/php8/scanner.go:12906
+		// line internal/php8/scanner.go:12900
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr522
@@ -14307,7 +14307,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof318
 		}
 	st_case_318:
-		// line internal/php8/scanner.go:12947
+		// line internal/php8/scanner.go:12941
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr523
@@ -14348,7 +14348,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof319
 		}
 	st_case_319:
-		// line internal/php8/scanner.go:12988
+		// line internal/php8/scanner.go:12982
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -14385,7 +14385,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof320
 		}
 	st_case_320:
-		// line internal/php8/scanner.go:13025
+		// line internal/php8/scanner.go:13019
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr526
@@ -14426,7 +14426,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof321
 		}
 	st_case_321:
-		// line internal/php8/scanner.go:13066
+		// line internal/php8/scanner.go:13060
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr527
@@ -14467,7 +14467,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof322
 		}
 	st_case_322:
-		// line internal/php8/scanner.go:13107
+		// line internal/php8/scanner.go:13101
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr528
@@ -14508,7 +14508,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof323
 		}
 	st_case_323:
-		// line internal/php8/scanner.go:13148
+		// line internal/php8/scanner.go:13142
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr529
@@ -14549,7 +14549,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof324
 		}
 	st_case_324:
-		// line internal/php8/scanner.go:13189
+		// line internal/php8/scanner.go:13183
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr530
@@ -14590,7 +14590,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof325
 		}
 	st_case_325:
-		// line internal/php8/scanner.go:13230
+		// line internal/php8/scanner.go:13224
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr531
@@ -14635,7 +14635,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof326
 		}
 	st_case_326:
-		// line internal/php8/scanner.go:13275
+		// line internal/php8/scanner.go:13269
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr533
@@ -14676,7 +14676,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof327
 		}
 	st_case_327:
-		// line internal/php8/scanner.go:13316
+		// line internal/php8/scanner.go:13310
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr534
@@ -14717,7 +14717,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof328
 		}
 	st_case_328:
-		// line internal/php8/scanner.go:13357
+		// line internal/php8/scanner.go:13351
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr535
@@ -14758,7 +14758,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof329
 		}
 	st_case_329:
-		// line internal/php8/scanner.go:13398
+		// line internal/php8/scanner.go:13392
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr536
@@ -14799,7 +14799,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof330
 		}
 	st_case_330:
-		// line internal/php8/scanner.go:13439
+		// line internal/php8/scanner.go:13433
 		switch lex.data[(lex.p)] {
 		case 70:
 			goto tr537
@@ -14840,7 +14840,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof331
 		}
 	st_case_331:
-		// line internal/php8/scanner.go:13480
+		// line internal/php8/scanner.go:13474
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr538
@@ -14881,7 +14881,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof332
 		}
 	st_case_332:
-		// line internal/php8/scanner.go:13521
+		// line internal/php8/scanner.go:13515
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr539
@@ -14922,7 +14922,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof333
 		}
 	st_case_333:
-		// line internal/php8/scanner.go:13562
+		// line internal/php8/scanner.go:13556
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr540
@@ -14963,7 +14963,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof334
 		}
 	st_case_334:
-		// line internal/php8/scanner.go:13603
+		// line internal/php8/scanner.go:13597
 		switch lex.data[(lex.p)] {
 		case 70:
 			goto tr541
@@ -15004,7 +15004,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof335
 		}
 	st_case_335:
-		// line internal/php8/scanner.go:13644
+		// line internal/php8/scanner.go:13638
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr542
@@ -15045,7 +15045,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof336
 		}
 	st_case_336:
-		// line internal/php8/scanner.go:13685
+		// line internal/php8/scanner.go:13679
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr543
@@ -15086,7 +15086,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof337
 		}
 	st_case_337:
-		// line internal/php8/scanner.go:13726
+		// line internal/php8/scanner.go:13720
 		switch lex.data[(lex.p)] {
 		case 70:
 			goto tr544
@@ -15127,7 +15127,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof338
 		}
 	st_case_338:
-		// line internal/php8/scanner.go:13767
+		// line internal/php8/scanner.go:13761
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr545
@@ -15168,7 +15168,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof339
 		}
 	st_case_339:
-		// line internal/php8/scanner.go:13808
+		// line internal/php8/scanner.go:13802
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr546
@@ -15209,7 +15209,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof340
 		}
 	st_case_340:
-		// line internal/php8/scanner.go:13849
+		// line internal/php8/scanner.go:13843
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr547
@@ -15250,7 +15250,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof341
 		}
 	st_case_341:
-		// line internal/php8/scanner.go:13890
+		// line internal/php8/scanner.go:13884
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr548
@@ -15291,7 +15291,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof342
 		}
 	st_case_342:
-		// line internal/php8/scanner.go:13931
+		// line internal/php8/scanner.go:13925
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr549
@@ -15332,7 +15332,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof343
 		}
 	st_case_343:
-		// line internal/php8/scanner.go:13972
+		// line internal/php8/scanner.go:13966
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr550
@@ -15373,7 +15373,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof344
 		}
 	st_case_344:
-		// line internal/php8/scanner.go:14013
+		// line internal/php8/scanner.go:14007
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr551
@@ -15414,7 +15414,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof345
 		}
 	st_case_345:
-		// line internal/php8/scanner.go:14054
+		// line internal/php8/scanner.go:14048
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr552
@@ -15455,7 +15455,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof346
 		}
 	st_case_346:
-		// line internal/php8/scanner.go:14095
+		// line internal/php8/scanner.go:14089
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr553
@@ -15496,7 +15496,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof347
 		}
 	st_case_347:
-		// line internal/php8/scanner.go:14136
+		// line internal/php8/scanner.go:14130
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr554
@@ -15537,7 +15537,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof348
 		}
 	st_case_348:
-		// line internal/php8/scanner.go:14177
+		// line internal/php8/scanner.go:14171
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr555
@@ -15578,7 +15578,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof349
 		}
 	st_case_349:
-		// line internal/php8/scanner.go:14218
+		// line internal/php8/scanner.go:14212
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr556
@@ -15619,7 +15619,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof350
 		}
 	st_case_350:
-		// line internal/php8/scanner.go:14259
+		// line internal/php8/scanner.go:14253
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr557
@@ -15660,7 +15660,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof351
 		}
 	st_case_351:
-		// line internal/php8/scanner.go:14300
+		// line internal/php8/scanner.go:14294
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr558
@@ -15705,7 +15705,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof352
 		}
 	st_case_352:
-		// line internal/php8/scanner.go:14345
+		// line internal/php8/scanner.go:14339
 		switch lex.data[(lex.p)] {
 		case 77:
 			goto tr560
@@ -15746,7 +15746,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof353
 		}
 	st_case_353:
-		// line internal/php8/scanner.go:14386
+		// line internal/php8/scanner.go:14380
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr561
@@ -15787,7 +15787,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof354
 		}
 	st_case_354:
-		// line internal/php8/scanner.go:14427
+		// line internal/php8/scanner.go:14421
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr562
@@ -15828,7 +15828,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof355
 		}
 	st_case_355:
-		// line internal/php8/scanner.go:14468
+		// line internal/php8/scanner.go:14462
 		switch lex.data[(lex.p)] {
 		case 80:
 			goto tr563
@@ -15869,7 +15869,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof356
 		}
 	st_case_356:
-		// line internal/php8/scanner.go:14509
+		// line internal/php8/scanner.go:14503
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr564
@@ -15910,7 +15910,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof357
 		}
 	st_case_357:
-		// line internal/php8/scanner.go:14550
+		// line internal/php8/scanner.go:14544
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr565
@@ -15951,7 +15951,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof358
 		}
 	st_case_358:
-		// line internal/php8/scanner.go:14591
+		// line internal/php8/scanner.go:14585
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr566
@@ -15992,7 +15992,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof359
 		}
 	st_case_359:
-		// line internal/php8/scanner.go:14632
+		// line internal/php8/scanner.go:14626
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st99
@@ -16050,7 +16050,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof360
 		}
 	st_case_360:
-		// line internal/php8/scanner.go:14690
+		// line internal/php8/scanner.go:14684
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st99
@@ -16087,7 +16087,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof361
 		}
 	st_case_361:
-		// line internal/php8/scanner.go:14727
+		// line internal/php8/scanner.go:14721
 		switch lex.data[(lex.p)] {
 		case 87:
 			goto tr570
@@ -16128,7 +16128,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof362
 		}
 	st_case_362:
-		// line internal/php8/scanner.go:14768
+		// line internal/php8/scanner.go:14762
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr571
@@ -16169,7 +16169,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof363
 		}
 	st_case_363:
-		// line internal/php8/scanner.go:14809
+		// line internal/php8/scanner.go:14803
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr572
@@ -16214,7 +16214,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof364
 		}
 	st_case_364:
-		// line internal/php8/scanner.go:14854
+		// line internal/php8/scanner.go:14848
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr574
@@ -16259,7 +16259,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof365
 		}
 	st_case_365:
-		// line internal/php8/scanner.go:14899
+		// line internal/php8/scanner.go:14893
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr576
@@ -16304,7 +16304,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof366
 		}
 	st_case_366:
-		// line internal/php8/scanner.go:14944
+		// line internal/php8/scanner.go:14938
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr578
@@ -16345,7 +16345,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof367
 		}
 	st_case_367:
-		// line internal/php8/scanner.go:14985
+		// line internal/php8/scanner.go:14979
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr579
@@ -16386,7 +16386,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof368
 		}
 	st_case_368:
-		// line internal/php8/scanner.go:15026
+		// line internal/php8/scanner.go:15020
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr580
@@ -16427,7 +16427,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof369
 		}
 	st_case_369:
-		// line internal/php8/scanner.go:15067
+		// line internal/php8/scanner.go:15061
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr581
@@ -16468,7 +16468,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof370
 		}
 	st_case_370:
-		// line internal/php8/scanner.go:15108
+		// line internal/php8/scanner.go:15102
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr582
@@ -16509,7 +16509,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof371
 		}
 	st_case_371:
-		// line internal/php8/scanner.go:15149
+		// line internal/php8/scanner.go:15143
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr583
@@ -16550,7 +16550,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof372
 		}
 	st_case_372:
-		// line internal/php8/scanner.go:15190
+		// line internal/php8/scanner.go:15184
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr584
@@ -16591,7 +16591,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof373
 		}
 	st_case_373:
-		// line internal/php8/scanner.go:15231
+		// line internal/php8/scanner.go:15225
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr585
@@ -16632,7 +16632,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof374
 		}
 	st_case_374:
-		// line internal/php8/scanner.go:15272
+		// line internal/php8/scanner.go:15266
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr586
@@ -16673,7 +16673,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof375
 		}
 	st_case_375:
-		// line internal/php8/scanner.go:15313
+		// line internal/php8/scanner.go:15307
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr587
@@ -16714,7 +16714,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof376
 		}
 	st_case_376:
-		// line internal/php8/scanner.go:15354
+		// line internal/php8/scanner.go:15348
 		switch lex.data[(lex.p)] {
 		case 66:
 			goto tr588
@@ -16755,7 +16755,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof377
 		}
 	st_case_377:
-		// line internal/php8/scanner.go:15395
+		// line internal/php8/scanner.go:15389
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr589
@@ -16796,7 +16796,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof378
 		}
 	st_case_378:
-		// line internal/php8/scanner.go:15436
+		// line internal/php8/scanner.go:15430
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr590
@@ -16837,7 +16837,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof379
 		}
 	st_case_379:
-		// line internal/php8/scanner.go:15477
+		// line internal/php8/scanner.go:15471
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr591
@@ -16878,7 +16878,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof380
 		}
 	st_case_380:
-		// line internal/php8/scanner.go:15518
+		// line internal/php8/scanner.go:15512
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr592
@@ -16919,7 +16919,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof381
 		}
 	st_case_381:
-		// line internal/php8/scanner.go:15559
+		// line internal/php8/scanner.go:15553
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr593
@@ -16968,7 +16968,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof382
 		}
 	st_case_382:
-		// line internal/php8/scanner.go:15608
+		// line internal/php8/scanner.go:15602
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr596
@@ -17009,7 +17009,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof383
 		}
 	st_case_383:
-		// line internal/php8/scanner.go:15649
+		// line internal/php8/scanner.go:15643
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr597
@@ -17050,7 +17050,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof384
 		}
 	st_case_384:
-		// line internal/php8/scanner.go:15690
+		// line internal/php8/scanner.go:15684
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr598
@@ -17091,7 +17091,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof385
 		}
 	st_case_385:
-		// line internal/php8/scanner.go:15731
+		// line internal/php8/scanner.go:15725
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr599
@@ -17132,7 +17132,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof386
 		}
 	st_case_386:
-		// line internal/php8/scanner.go:15772
+		// line internal/php8/scanner.go:15766
 		switch lex.data[(lex.p)] {
 		case 89:
 			goto tr600
@@ -17173,7 +17173,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof387
 		}
 	st_case_387:
-		// line internal/php8/scanner.go:15813
+		// line internal/php8/scanner.go:15807
 		switch lex.data[(lex.p)] {
 		case 85:
 			goto tr601
@@ -17214,7 +17214,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof388
 		}
 	st_case_388:
-		// line internal/php8/scanner.go:15854
+		// line internal/php8/scanner.go:15848
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr602
@@ -17255,7 +17255,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof389
 		}
 	st_case_389:
-		// line internal/php8/scanner.go:15895
+		// line internal/php8/scanner.go:15889
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr603
@@ -17296,7 +17296,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof390
 		}
 	st_case_390:
-		// line internal/php8/scanner.go:15936
+		// line internal/php8/scanner.go:15930
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr604
@@ -17337,7 +17337,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof391
 		}
 	st_case_391:
-		// line internal/php8/scanner.go:15977
+		// line internal/php8/scanner.go:15971
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -17374,7 +17374,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof392
 		}
 	st_case_392:
-		// line internal/php8/scanner.go:16014
+		// line internal/php8/scanner.go:16008
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr607
@@ -17415,7 +17415,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof393
 		}
 	st_case_393:
-		// line internal/php8/scanner.go:16055
+		// line internal/php8/scanner.go:16049
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr608
@@ -17456,7 +17456,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof394
 		}
 	st_case_394:
-		// line internal/php8/scanner.go:16096
+		// line internal/php8/scanner.go:16090
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr609
@@ -17497,7 +17497,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof395
 		}
 	st_case_395:
-		// line internal/php8/scanner.go:16137
+		// line internal/php8/scanner.go:16131
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr610
@@ -17538,7 +17538,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof396
 		}
 	st_case_396:
-		// line internal/php8/scanner.go:16178
+		// line internal/php8/scanner.go:16172
 		switch lex.data[(lex.p)] {
 		case 85:
 			goto tr611
@@ -17579,7 +17579,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof397
 		}
 	st_case_397:
-		// line internal/php8/scanner.go:16219
+		// line internal/php8/scanner.go:16213
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr612
@@ -17620,7 +17620,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof398
 		}
 	st_case_398:
-		// line internal/php8/scanner.go:16260
+		// line internal/php8/scanner.go:16254
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr613
@@ -17661,7 +17661,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof399
 		}
 	st_case_399:
-		// line internal/php8/scanner.go:16301
+		// line internal/php8/scanner.go:16295
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr614
@@ -17706,7 +17706,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof400
 		}
 	st_case_400:
-		// line internal/php8/scanner.go:16346
+		// line internal/php8/scanner.go:16340
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr616
@@ -17747,7 +17747,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof401
 		}
 	st_case_401:
-		// line internal/php8/scanner.go:16387
+		// line internal/php8/scanner.go:16381
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr617
@@ -17788,7 +17788,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof402
 		}
 	st_case_402:
-		// line internal/php8/scanner.go:16428
+		// line internal/php8/scanner.go:16422
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr618
@@ -17829,7 +17829,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof403
 		}
 	st_case_403:
-		// line internal/php8/scanner.go:16469
+		// line internal/php8/scanner.go:16463
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr619
@@ -17870,7 +17870,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof404
 		}
 	st_case_404:
-		// line internal/php8/scanner.go:16510
+		// line internal/php8/scanner.go:16504
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr620
@@ -17911,7 +17911,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof405
 		}
 	st_case_405:
-		// line internal/php8/scanner.go:16551
+		// line internal/php8/scanner.go:16545
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr621
@@ -17952,7 +17952,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof406
 		}
 	st_case_406:
-		// line internal/php8/scanner.go:16592
+		// line internal/php8/scanner.go:16586
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr622
@@ -17993,7 +17993,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof407
 		}
 	st_case_407:
-		// line internal/php8/scanner.go:16633
+		// line internal/php8/scanner.go:16627
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr623
@@ -18034,7 +18034,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof408
 		}
 	st_case_408:
-		// line internal/php8/scanner.go:16674
+		// line internal/php8/scanner.go:16668
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr624
@@ -18079,7 +18079,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof409
 		}
 	st_case_409:
-		// line internal/php8/scanner.go:16719
+		// line internal/php8/scanner.go:16713
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr626
@@ -18120,7 +18120,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof410
 		}
 	st_case_410:
-		// line internal/php8/scanner.go:16760
+		// line internal/php8/scanner.go:16754
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr627
@@ -18161,7 +18161,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof411
 		}
 	st_case_411:
-		// line internal/php8/scanner.go:16801
+		// line internal/php8/scanner.go:16795
 		switch lex.data[(lex.p)] {
 		case 87:
 			goto tr628
@@ -18202,7 +18202,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof412
 		}
 	st_case_412:
-		// line internal/php8/scanner.go:16842
+		// line internal/php8/scanner.go:16836
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr629
@@ -18247,7 +18247,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof413
 		}
 	st_case_413:
-		// line internal/php8/scanner.go:16887
+		// line internal/php8/scanner.go:16881
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr631
@@ -18288,7 +18288,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof414
 		}
 	st_case_414:
-		// line internal/php8/scanner.go:16928
+		// line internal/php8/scanner.go:16922
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr632
@@ -18329,7 +18329,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof415
 		}
 	st_case_415:
-		// line internal/php8/scanner.go:16969
+		// line internal/php8/scanner.go:16963
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr633
@@ -18374,7 +18374,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof416
 		}
 	st_case_416:
-		// line internal/php8/scanner.go:17014
+		// line internal/php8/scanner.go:17008
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr635
@@ -18415,7 +18415,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof417
 		}
 	st_case_417:
-		// line internal/php8/scanner.go:17055
+		// line internal/php8/scanner.go:17049
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr636
@@ -18456,7 +18456,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof418
 		}
 	st_case_418:
-		// line internal/php8/scanner.go:17096
+		// line internal/php8/scanner.go:17090
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr637
@@ -18497,7 +18497,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof419
 		}
 	st_case_419:
-		// line internal/php8/scanner.go:17137
+		// line internal/php8/scanner.go:17131
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr638
@@ -18538,7 +18538,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof420
 		}
 	st_case_420:
-		// line internal/php8/scanner.go:17178
+		// line internal/php8/scanner.go:17172
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr639
@@ -18579,7 +18579,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof421
 		}
 	st_case_421:
-		// line internal/php8/scanner.go:17219
+		// line internal/php8/scanner.go:17213
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr640
@@ -18620,7 +18620,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof422
 		}
 	st_case_422:
-		// line internal/php8/scanner.go:17260
+		// line internal/php8/scanner.go:17254
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr641
@@ -18661,7 +18661,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof423
 		}
 	st_case_423:
-		// line internal/php8/scanner.go:17301
+		// line internal/php8/scanner.go:17295
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr642
@@ -18702,7 +18702,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof424
 		}
 	st_case_424:
-		// line internal/php8/scanner.go:17342
+		// line internal/php8/scanner.go:17336
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr643
@@ -18743,7 +18743,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof425
 		}
 	st_case_425:
-		// line internal/php8/scanner.go:17383
+		// line internal/php8/scanner.go:17377
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr644
@@ -18784,7 +18784,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof426
 		}
 	st_case_426:
-		// line internal/php8/scanner.go:17424
+		// line internal/php8/scanner.go:17418
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr645
@@ -18825,7 +18825,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof427
 		}
 	st_case_427:
-		// line internal/php8/scanner.go:17465
+		// line internal/php8/scanner.go:17459
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr646
@@ -18866,7 +18866,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof428
 		}
 	st_case_428:
-		// line internal/php8/scanner.go:17506
+		// line internal/php8/scanner.go:17500
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr647
@@ -18907,7 +18907,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof429
 		}
 	st_case_429:
-		// line internal/php8/scanner.go:17547
+		// line internal/php8/scanner.go:17541
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr648
@@ -18948,7 +18948,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof430
 		}
 	st_case_430:
-		// line internal/php8/scanner.go:17588
+		// line internal/php8/scanner.go:17582
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr649
@@ -18989,7 +18989,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof431
 		}
 	st_case_431:
-		// line internal/php8/scanner.go:17629
+		// line internal/php8/scanner.go:17623
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr650
@@ -19030,7 +19030,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof432
 		}
 	st_case_432:
-		// line internal/php8/scanner.go:17670
+		// line internal/php8/scanner.go:17664
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr148
@@ -19079,7 +19079,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof100
 		}
 	st_case_100:
-		// line internal/php8/scanner.go:17719
+		// line internal/php8/scanner.go:17713
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr148
@@ -19127,7 +19127,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof101
 		}
 	st_case_101:
-		// line internal/php8/scanner.go:17767
+		// line internal/php8/scanner.go:17761
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr152
@@ -19175,7 +19175,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof102
 		}
 	st_case_102:
-		// line internal/php8/scanner.go:17815
+		// line internal/php8/scanner.go:17809
 		if lex.data[(lex.p)] == 10 {
 			goto tr148
 		}
@@ -19189,7 +19189,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof103
 		}
 	st_case_103:
-		// line internal/php8/scanner.go:17829
+		// line internal/php8/scanner.go:17823
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto st104
@@ -19252,7 +19252,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof434
 		}
 	st_case_434:
-		// line internal/php8/scanner.go:17892
+		// line internal/php8/scanner.go:17886
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st106
@@ -19319,7 +19319,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof436
 		}
 	st_case_436:
-		// line internal/php8/scanner.go:17959
+		// line internal/php8/scanner.go:17953
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -19356,7 +19356,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof437
 		}
 	st_case_437:
-		// line internal/php8/scanner.go:17996
+		// line internal/php8/scanner.go:17990
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr657
@@ -19425,7 +19425,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof438
 		}
 	st_case_438:
-		// line internal/php8/scanner.go:18065
+		// line internal/php8/scanner.go:18059
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr665
@@ -19466,7 +19466,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof439
 		}
 	st_case_439:
-		// line internal/php8/scanner.go:18106
+		// line internal/php8/scanner.go:18100
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr666
@@ -19507,7 +19507,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof440
 		}
 	st_case_440:
-		// line internal/php8/scanner.go:18147
+		// line internal/php8/scanner.go:18141
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr667
@@ -19548,7 +19548,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof441
 		}
 	st_case_441:
-		// line internal/php8/scanner.go:18188
+		// line internal/php8/scanner.go:18182
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr668
@@ -19589,7 +19589,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof442
 		}
 	st_case_442:
-		// line internal/php8/scanner.go:18229
+		// line internal/php8/scanner.go:18223
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -19626,7 +19626,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof443
 		}
 	st_case_443:
-		// line internal/php8/scanner.go:18266
+		// line internal/php8/scanner.go:18260
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -19663,7 +19663,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof444
 		}
 	st_case_444:
-		// line internal/php8/scanner.go:18303
+		// line internal/php8/scanner.go:18297
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr671
@@ -19704,7 +19704,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof445
 		}
 	st_case_445:
-		// line internal/php8/scanner.go:18344
+		// line internal/php8/scanner.go:18338
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr672
@@ -19745,7 +19745,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof446
 		}
 	st_case_446:
-		// line internal/php8/scanner.go:18385
+		// line internal/php8/scanner.go:18379
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -19782,7 +19782,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof447
 		}
 	st_case_447:
-		// line internal/php8/scanner.go:18422
+		// line internal/php8/scanner.go:18416
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -19819,7 +19819,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof448
 		}
 	st_case_448:
-		// line internal/php8/scanner.go:18459
+		// line internal/php8/scanner.go:18453
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr675
@@ -19864,7 +19864,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof449
 		}
 	st_case_449:
-		// line internal/php8/scanner.go:18504
+		// line internal/php8/scanner.go:18498
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr677
@@ -19905,7 +19905,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof450
 		}
 	st_case_450:
-		// line internal/php8/scanner.go:18545
+		// line internal/php8/scanner.go:18539
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr678
@@ -19946,7 +19946,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof451
 		}
 	st_case_451:
-		// line internal/php8/scanner.go:18586
+		// line internal/php8/scanner.go:18580
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -19983,7 +19983,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof452
 		}
 	st_case_452:
-		// line internal/php8/scanner.go:18623
+		// line internal/php8/scanner.go:18617
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -20020,7 +20020,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof453
 		}
 	st_case_453:
-		// line internal/php8/scanner.go:18660
+		// line internal/php8/scanner.go:18654
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr681
@@ -20061,7 +20061,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof454
 		}
 	st_case_454:
-		// line internal/php8/scanner.go:18701
+		// line internal/php8/scanner.go:18695
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr682
@@ -20102,7 +20102,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof455
 		}
 	st_case_455:
-		// line internal/php8/scanner.go:18742
+		// line internal/php8/scanner.go:18736
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr683
@@ -20143,7 +20143,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof456
 		}
 	st_case_456:
-		// line internal/php8/scanner.go:18783
+		// line internal/php8/scanner.go:18777
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr684
@@ -20184,7 +20184,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof457
 		}
 	st_case_457:
-		// line internal/php8/scanner.go:18824
+		// line internal/php8/scanner.go:18818
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr685
@@ -20225,7 +20225,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof458
 		}
 	st_case_458:
-		// line internal/php8/scanner.go:18865
+		// line internal/php8/scanner.go:18859
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr686
@@ -20266,7 +20266,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof459
 		}
 	st_case_459:
-		// line internal/php8/scanner.go:18906
+		// line internal/php8/scanner.go:18900
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -20303,7 +20303,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof460
 		}
 	st_case_460:
-		// line internal/php8/scanner.go:18943
+		// line internal/php8/scanner.go:18937
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -20340,7 +20340,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof461
 		}
 	st_case_461:
-		// line internal/php8/scanner.go:18980
+		// line internal/php8/scanner.go:18974
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr689
@@ -20381,7 +20381,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof462
 		}
 	st_case_462:
-		// line internal/php8/scanner.go:19021
+		// line internal/php8/scanner.go:19015
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr690
@@ -20422,7 +20422,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof463
 		}
 	st_case_463:
-		// line internal/php8/scanner.go:19062
+		// line internal/php8/scanner.go:19056
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr691
@@ -20463,7 +20463,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof464
 		}
 	st_case_464:
-		// line internal/php8/scanner.go:19103
+		// line internal/php8/scanner.go:19097
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -20500,7 +20500,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof465
 		}
 	st_case_465:
-		// line internal/php8/scanner.go:19140
+		// line internal/php8/scanner.go:19134
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr693
@@ -20541,7 +20541,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof466
 		}
 	st_case_466:
-		// line internal/php8/scanner.go:19181
+		// line internal/php8/scanner.go:19175
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr694
@@ -20582,7 +20582,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof467
 		}
 	st_case_467:
-		// line internal/php8/scanner.go:19222
+		// line internal/php8/scanner.go:19216
 		switch lex.data[(lex.p)] {
 		case 77:
 			goto tr695
@@ -20623,7 +20623,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof468
 		}
 	st_case_468:
-		// line internal/php8/scanner.go:19263
+		// line internal/php8/scanner.go:19257
 		switch lex.data[(lex.p)] {
 		case 80:
 			goto tr696
@@ -20664,7 +20664,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof469
 		}
 	st_case_469:
-		// line internal/php8/scanner.go:19304
+		// line internal/php8/scanner.go:19298
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr697
@@ -20705,7 +20705,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof470
 		}
 	st_case_470:
-		// line internal/php8/scanner.go:19345
+		// line internal/php8/scanner.go:19339
 		switch lex.data[(lex.p)] {
 		case 76:
 			goto tr698
@@ -20746,7 +20746,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof471
 		}
 	st_case_471:
-		// line internal/php8/scanner.go:19386
+		// line internal/php8/scanner.go:19380
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr699
@@ -20787,7 +20787,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof472
 		}
 	st_case_472:
-		// line internal/php8/scanner.go:19427
+		// line internal/php8/scanner.go:19421
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr700
@@ -20828,7 +20828,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof473
 		}
 	st_case_473:
-		// line internal/php8/scanner.go:19468
+		// line internal/php8/scanner.go:19462
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr701
@@ -20869,7 +20869,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof474
 		}
 	st_case_474:
-		// line internal/php8/scanner.go:19509
+		// line internal/php8/scanner.go:19503
 		switch lex.data[(lex.p)] {
 		case 78:
 			goto tr702
@@ -20910,7 +20910,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof475
 		}
 	st_case_475:
-		// line internal/php8/scanner.go:19550
+		// line internal/php8/scanner.go:19544
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr703
@@ -20951,7 +20951,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof476
 		}
 	st_case_476:
-		// line internal/php8/scanner.go:19591
+		// line internal/php8/scanner.go:19585
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -20988,7 +20988,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof477
 		}
 	st_case_477:
-		// line internal/php8/scanner.go:19628
+		// line internal/php8/scanner.go:19622
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -21025,7 +21025,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof478
 		}
 	st_case_478:
-		// line internal/php8/scanner.go:19665
+		// line internal/php8/scanner.go:19659
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr706
@@ -21066,7 +21066,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof479
 		}
 	st_case_479:
-		// line internal/php8/scanner.go:19706
+		// line internal/php8/scanner.go:19700
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr707
@@ -21107,7 +21107,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof480
 		}
 	st_case_480:
-		// line internal/php8/scanner.go:19747
+		// line internal/php8/scanner.go:19741
 		switch lex.data[(lex.p)] {
 		case 72:
 			goto tr708
@@ -21148,7 +21148,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof481
 		}
 	st_case_481:
-		// line internal/php8/scanner.go:19788
+		// line internal/php8/scanner.go:19782
 		switch lex.data[(lex.p)] {
 		case 79:
 			goto tr709
@@ -21189,7 +21189,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof482
 		}
 	st_case_482:
-		// line internal/php8/scanner.go:19829
+		// line internal/php8/scanner.go:19823
 		switch lex.data[(lex.p)] {
 		case 68:
 			goto tr710
@@ -21230,7 +21230,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof483
 		}
 	st_case_483:
-		// line internal/php8/scanner.go:19870
+		// line internal/php8/scanner.go:19864
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -21267,7 +21267,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof484
 		}
 	st_case_484:
-		// line internal/php8/scanner.go:19907
+		// line internal/php8/scanner.go:19901
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -21304,7 +21304,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof485
 		}
 	st_case_485:
-		// line internal/php8/scanner.go:19944
+		// line internal/php8/scanner.go:19938
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr713
@@ -21345,7 +21345,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof486
 		}
 	st_case_486:
-		// line internal/php8/scanner.go:19985
+		// line internal/php8/scanner.go:19979
 		switch lex.data[(lex.p)] {
 		case 77:
 			goto tr714
@@ -21386,7 +21386,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof487
 		}
 	st_case_487:
-		// line internal/php8/scanner.go:20026
+		// line internal/php8/scanner.go:20020
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr715
@@ -21427,7 +21427,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof488
 		}
 	st_case_488:
-		// line internal/php8/scanner.go:20067
+		// line internal/php8/scanner.go:20061
 		switch lex.data[(lex.p)] {
 		case 83:
 			goto tr716
@@ -21468,7 +21468,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof489
 		}
 	st_case_489:
-		// line internal/php8/scanner.go:20108
+		// line internal/php8/scanner.go:20102
 		switch lex.data[(lex.p)] {
 		case 80:
 			goto tr717
@@ -21509,7 +21509,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof490
 		}
 	st_case_490:
-		// line internal/php8/scanner.go:20149
+		// line internal/php8/scanner.go:20143
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr718
@@ -21550,7 +21550,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof491
 		}
 	st_case_491:
-		// line internal/php8/scanner.go:20190
+		// line internal/php8/scanner.go:20184
 		switch lex.data[(lex.p)] {
 		case 67:
 			goto tr719
@@ -21591,7 +21591,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof492
 		}
 	st_case_492:
-		// line internal/php8/scanner.go:20231
+		// line internal/php8/scanner.go:20225
 		switch lex.data[(lex.p)] {
 		case 69:
 			goto tr720
@@ -21632,7 +21632,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof493
 		}
 	st_case_493:
-		// line internal/php8/scanner.go:20272
+		// line internal/php8/scanner.go:20266
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -21669,7 +21669,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof494
 		}
 	st_case_494:
-		// line internal/php8/scanner.go:20309
+		// line internal/php8/scanner.go:20303
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -21706,7 +21706,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof495
 		}
 	st_case_495:
-		// line internal/php8/scanner.go:20346
+		// line internal/php8/scanner.go:20340
 		switch lex.data[(lex.p)] {
 		case 82:
 			goto tr723
@@ -21747,7 +21747,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof496
 		}
 	st_case_496:
-		// line internal/php8/scanner.go:20387
+		// line internal/php8/scanner.go:20381
 		switch lex.data[(lex.p)] {
 		case 65:
 			goto tr724
@@ -21788,7 +21788,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof497
 		}
 	st_case_497:
-		// line internal/php8/scanner.go:20428
+		// line internal/php8/scanner.go:20422
 		switch lex.data[(lex.p)] {
 		case 73:
 			goto tr725
@@ -21829,7 +21829,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof498
 		}
 	st_case_498:
-		// line internal/php8/scanner.go:20469
+		// line internal/php8/scanner.go:20463
 		switch lex.data[(lex.p)] {
 		case 84:
 			goto tr726
@@ -21870,7 +21870,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof499
 		}
 	st_case_499:
-		// line internal/php8/scanner.go:20510
+		// line internal/php8/scanner.go:20504
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -21907,7 +21907,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof500
 		}
 	st_case_500:
-		// line internal/php8/scanner.go:20547
+		// line internal/php8/scanner.go:20541
 		switch lex.data[(lex.p)] {
 		case 92:
 			goto st96
@@ -22052,7 +22052,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:20647
+		// line internal/php8/scanner.go:20641
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr161
@@ -22107,7 +22107,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof503
 		}
 	st_case_503:
-		// line internal/php8/scanner.go:20702
+		// line internal/php8/scanner.go:20696
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr161
@@ -22157,7 +22157,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof504
 		}
 	st_case_504:
-		// line internal/php8/scanner.go:20752
+		// line internal/php8/scanner.go:20746
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr741
@@ -22201,7 +22201,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof107
 		}
 	st_case_107:
-		// line internal/php8/scanner.go:20796
+		// line internal/php8/scanner.go:20790
 		if lex.data[(lex.p)] == 10 {
 			goto tr161
 		}
@@ -22223,7 +22223,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof505
 		}
 	st_case_505:
-		// line internal/php8/scanner.go:20818
+		// line internal/php8/scanner.go:20812
 		if lex.data[(lex.p)] == 10 {
 			goto tr161
 		}
@@ -22247,7 +22247,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof507
 		}
 	st_case_507:
-		// line internal/php8/scanner.go:20842
+		// line internal/php8/scanner.go:20836
 		if lex.data[(lex.p)] == 45 {
 			goto st108
 		}
@@ -22358,7 +22358,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:20939
+		// line internal/php8/scanner.go:20933
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -22432,7 +22432,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof510
 		}
 	st_case_510:
-		// line internal/php8/scanner.go:21013
+		// line internal/php8/scanner.go:21007
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -22512,7 +22512,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof511
 		}
 	st_case_511:
-		// line internal/php8/scanner.go:21093
+		// line internal/php8/scanner.go:21087
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -22592,7 +22592,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof512
 		}
 	st_case_512:
-		// line internal/php8/scanner.go:21173
+		// line internal/php8/scanner.go:21167
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -22766,7 +22766,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:21305
+		// line internal/php8/scanner.go:21299
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -22876,7 +22876,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof515
 		}
 	st_case_515:
-		// line internal/php8/scanner.go:21415
+		// line internal/php8/scanner.go:21409
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -22956,7 +22956,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof516
 		}
 	st_case_516:
-		// line internal/php8/scanner.go:21495
+		// line internal/php8/scanner.go:21489
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -23036,7 +23036,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof517
 		}
 	st_case_517:
-		// line internal/php8/scanner.go:21575
+		// line internal/php8/scanner.go:21569
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -23349,7 +23349,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:21818
+		// line internal/php8/scanner.go:21812
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -23492,7 +23492,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof521
 		}
 	st_case_521:
-		// line internal/php8/scanner.go:21961
+		// line internal/php8/scanner.go:21955
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -23572,7 +23572,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof522
 		}
 	st_case_522:
-		// line internal/php8/scanner.go:22041
+		// line internal/php8/scanner.go:22035
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -23652,7 +23652,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof523
 		}
 	st_case_523:
-		// line internal/php8/scanner.go:22121
+		// line internal/php8/scanner.go:22115
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -24006,7 +24006,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:22405
+		// line internal/php8/scanner.go:22399
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -24149,7 +24149,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof527
 		}
 	st_case_527:
-		// line internal/php8/scanner.go:22548
+		// line internal/php8/scanner.go:22542
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -24229,7 +24229,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof528
 		}
 	st_case_528:
-		// line internal/php8/scanner.go:22628
+		// line internal/php8/scanner.go:22622
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -24309,7 +24309,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof529
 		}
 	st_case_529:
-		// line internal/php8/scanner.go:22708
+		// line internal/php8/scanner.go:22702
 		_widec = int16(lex.data[(lex.p)])
 		switch {
 		case lex.data[(lex.p)] < 11:
@@ -24539,7 +24539,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:22935
+		// line internal/php8/scanner.go:22929
 		if lex.data[(lex.p)] == 96 {
 			goto st0
 		}
@@ -24696,7 +24696,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:23032
+		// line internal/php8/scanner.go:23026
 		switch lex.data[(lex.p)] {
 		case 36:
 			goto st535
@@ -24779,7 +24779,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof537
 		}
 	st_case_537:
-		// line internal/php8/scanner.go:23115
+		// line internal/php8/scanner.go:23109
 		if lex.data[(lex.p)] == 62 {
 			goto st114
 		}
@@ -24815,7 +24815,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof538
 		}
 	st_case_538:
-		// line internal/php8/scanner.go:23151
+		// line internal/php8/scanner.go:23145
 		if lex.data[(lex.p)] == 45 {
 			goto st115
 		}
@@ -25019,7 +25019,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:23292
+		// line internal/php8/scanner.go:23286
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr825
@@ -25103,7 +25103,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof541
 		}
 	st_case_541:
-		// line internal/php8/scanner.go:23376
+		// line internal/php8/scanner.go:23370
 		goto tr832
 	tr826:
 		// line internal/php8/scanner.rl:38
@@ -25122,7 +25122,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof542
 		}
 	st_case_542:
-		// line internal/php8/scanner.go:23395
+		// line internal/php8/scanner.go:23389
 		if lex.data[(lex.p)] == 10 {
 			goto tr825
 		}
@@ -25184,7 +25184,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof545
 		}
 	st_case_545:
-		// line internal/php8/scanner.go:23457
+		// line internal/php8/scanner.go:23451
 		switch lex.data[(lex.p)] {
 		case 66:
 			goto st118
@@ -25215,7 +25215,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof546
 		}
 	st_case_546:
-		// line internal/php8/scanner.go:23488
+		// line internal/php8/scanner.go:23482
 		if lex.data[(lex.p)] == 95 {
 			goto st117
 		}
@@ -25251,7 +25251,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof547
 		}
 	st_case_547:
-		// line internal/php8/scanner.go:23524
+		// line internal/php8/scanner.go:23518
 		if lex.data[(lex.p)] == 95 {
 			goto st118
 		}
@@ -25278,7 +25278,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof548
 		}
 	st_case_548:
-		// line internal/php8/scanner.go:23551
+		// line internal/php8/scanner.go:23545
 		if lex.data[(lex.p)] == 95 {
 			goto st119
 		}
@@ -25314,7 +25314,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof549
 		}
 	st_case_549:
-		// line internal/php8/scanner.go:23587
+		// line internal/php8/scanner.go:23581
 		if lex.data[(lex.p)] == 95 {
 			goto st120
 		}
@@ -25411,7 +25411,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:23666
+		// line internal/php8/scanner.go:23660
 		if lex.data[(lex.p)] == 96 {
 			goto tr843
 		}
@@ -25438,7 +25438,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof552
 		}
 	st_case_552:
-		// line internal/php8/scanner.go:23693
+		// line internal/php8/scanner.go:23687
 		switch lex.data[(lex.p)] {
 		case 91:
 			goto tr183
@@ -25565,7 +25565,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:23800
+		// line internal/php8/scanner.go:23794
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr185
@@ -25597,7 +25597,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof554
 		}
 	st_case_554:
-		// line internal/php8/scanner.go:23832
+		// line internal/php8/scanner.go:23826
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr185
@@ -25647,7 +25647,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof555
 		}
 	st_case_555:
-		// line internal/php8/scanner.go:23882
+		// line internal/php8/scanner.go:23876
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr854
@@ -25691,7 +25691,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof122
 		}
 	st_case_122:
-		// line internal/php8/scanner.go:23926
+		// line internal/php8/scanner.go:23920
 		if lex.data[(lex.p)] == 10 {
 			goto tr185
 		}
@@ -25713,7 +25713,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof556
 		}
 	st_case_556:
-		// line internal/php8/scanner.go:23948
+		// line internal/php8/scanner.go:23942
 		if lex.data[(lex.p)] == 10 {
 			goto tr185
 		}
@@ -25787,7 +25787,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:24002
+		// line internal/php8/scanner.go:23996
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr187
@@ -25819,7 +25819,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof558
 		}
 	st_case_558:
-		// line internal/php8/scanner.go:24034
+		// line internal/php8/scanner.go:24028
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr187
@@ -25869,7 +25869,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof559
 		}
 	st_case_559:
-		// line internal/php8/scanner.go:24084
+		// line internal/php8/scanner.go:24078
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr865
@@ -25913,7 +25913,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof123
 		}
 	st_case_123:
-		// line internal/php8/scanner.go:24128
+		// line internal/php8/scanner.go:24122
 		if lex.data[(lex.p)] == 10 {
 			goto tr187
 		}
@@ -25935,7 +25935,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof560
 		}
 	st_case_560:
-		// line internal/php8/scanner.go:24150
+		// line internal/php8/scanner.go:24144
 		if lex.data[(lex.p)] == 10 {
 			goto tr187
 		}
@@ -26009,7 +26009,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:24204
+		// line internal/php8/scanner.go:24198
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr189
@@ -26041,7 +26041,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof562
 		}
 	st_case_562:
-		// line internal/php8/scanner.go:24236
+		// line internal/php8/scanner.go:24230
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr189
@@ -26091,7 +26091,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof563
 		}
 	st_case_563:
-		// line internal/php8/scanner.go:24286
+		// line internal/php8/scanner.go:24280
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr876
@@ -26135,7 +26135,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof124
 		}
 	st_case_124:
-		// line internal/php8/scanner.go:24330
+		// line internal/php8/scanner.go:24324
 		if lex.data[(lex.p)] == 10 {
 			goto tr189
 		}
@@ -26157,7 +26157,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof564
 		}
 	st_case_564:
-		// line internal/php8/scanner.go:24352
+		// line internal/php8/scanner.go:24346
 		if lex.data[(lex.p)] == 10 {
 			goto tr189
 		}
@@ -26211,7 +26211,7 @@ func (lex *Lexer) Lex() *token.Token {
 		// line NONE:1
 		lex.ts = (lex.p)
 
-		// line internal/php8/scanner.go:24396
+		// line internal/php8/scanner.go:24390
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr880
@@ -26240,7 +26240,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof566
 		}
 	st_case_566:
-		// line internal/php8/scanner.go:24425
+		// line internal/php8/scanner.go:24419
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr880
@@ -26279,7 +26279,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof567
 		}
 	st_case_567:
-		// line internal/php8/scanner.go:24464
+		// line internal/php8/scanner.go:24458
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr885
@@ -26318,7 +26318,7 @@ func (lex *Lexer) Lex() *token.Token {
 			goto _test_eof568
 		}
 	st_case_568:
-		// line internal/php8/scanner.go:24503
+		// line internal/php8/scanner.go:24497
 		switch lex.data[(lex.p)] {
 		case 10:
 			goto tr880
