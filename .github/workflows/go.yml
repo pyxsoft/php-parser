@@ -12,7 +12,7 @@
           uses: "actions/setup-go@v5",
           "with": {"go-version-file": "go.mod"},
         },
-        {name: "Tools", run: "sudo apt-get install -y ragel && go install golang.org/x/tools/cmd/goyacc@v0.38.0"},
+        {name: "Tools", run: "sudo apt-get install -y ragel && go install golang.org/x/tools/cmd/goyacc@v0.24.0"},
         {
           // The generated scanner/parser must match the committed .rl/.y sources.
           name: "Generated code is up to date",
