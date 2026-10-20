@@ -83,6 +83,10 @@ func (f *formatter) newToken(id token.ID, val []byte) *token.Token {
 }
 
 func (f *formatter) formatList(nodes []ast.Vertex, separator byte) []*token.Token {
+	if len(nodes) == 0 {
+		return nil
+	}
+
 	separatorTkns := make([]*token.Token, len(nodes)-1)
 	for i, v := range nodes {
 		v.Accept(f)
@@ -187,6 +191,22 @@ func (f *formatter) Parameter(n *ast.Parameter) {
 		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
 		n.DefaultValue.Accept(f)
 	}
+
+	if n.Hooks != nil {
+		f.formatHooks(&n.OpenCurlyBracketTkn, n.Hooks, &n.CloseCurlyBracketTkn)
+	}
+}
+
+// formatHooks formats a PHP 8.4 property hook list as `{ get ...; set ... }`.
+func (f *formatter) formatHooks(open **token.Token, hooks []ast.Vertex, close **token.Token) {
+	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+	*open = f.newToken('{', []byte("{"))
+	for _, h := range hooks {
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+		h.Accept(f)
+	}
+	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+	*close = f.newToken('}', []byte("}"))
 }
 
 func (f *formatter) Identifier(n *ast.Identifier) {
@@ -238,8 +258,14 @@ func (f *formatter) Union(n *ast.Union) {
 }
 
 func (f *formatter) Intersection(n *ast.Intersection) {
+	if n.OpenParenthesisTkn != nil {
+		n.OpenParenthesisTkn = f.newToken('(', []byte("("))
+	}
 	if len(n.Types) > 0 {
 		n.SeparatorTkns = f.formatList(n.Types, '&')
+	}
+	if n.CloseParenthesisTkn != nil {
+		n.CloseParenthesisTkn = f.newToken(')', []byte(")"))
 	}
 }
 
@@ -390,8 +416,10 @@ func (f *formatter) StmtClass(n *ast.StmtClass) {
 
 	n.ClassTkn = f.newToken(token.T_CLASS, []byte("class"))
 
-	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
-	n.Name.Accept(f)
+	if n.Name != nil { // nil for anonymous classes
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+		n.Name.Accept(f)
+	}
 
 	n.OpenParenthesisTkn = nil
 	n.CloseParenthesisTkn = nil
@@ -443,9 +471,54 @@ func (f *formatter) StmtClassConstList(n *ast.StmtClassConstList) {
 	n.ConstTkn = f.newToken(token.T_CONST, []byte("const"))
 	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
 
+	if n.Type != nil {
+		n.Type.Accept(f)
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+	}
+
 	n.SeparatorTkns = f.formatList(n.Consts, ',')
 
 	n.SemiColonTkn = f.newSemicolonTkn()
+}
+
+func (f *formatter) PropertyHook(n *ast.PropertyHook) {
+	for _, m := range n.AttrGroups {
+		m.Accept(f)
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+	}
+	for _, m := range n.Modifiers {
+		m.Accept(f)
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+	}
+
+	if n.AmpersandTkn != nil {
+		n.AmpersandTkn = f.newToken('&', []byte("&"))
+	}
+
+	n.Name.Accept(f)
+
+	if n.Params != nil {
+		n.OpenParenthesisTkn = f.newToken('(', []byte("("))
+		n.SeparatorTkns = nil
+		if len(n.Params) > 0 {
+			n.SeparatorTkns = f.formatList(n.Params, ',')
+		}
+		n.CloseParenthesisTkn = f.newToken(')', []byte(")"))
+	}
+
+	switch {
+	case n.Stmt != nil:
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+		n.Stmt.Accept(f)
+	case n.Expr != nil:
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+		n.DoubleArrowTkn = f.newToken(token.T_DOUBLE_ARROW, []byte("=>"))
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+		n.Expr.Accept(f)
+		n.SemiColonTkn = f.newSemicolonTkn()
+	default:
+		n.SemiColonTkn = f.newSemicolonTkn()
+	}
 }
 
 func (f *formatter) StmtClassMethod(n *ast.StmtClassMethod) {
@@ -484,6 +557,11 @@ func (f *formatter) StmtClassMethod(n *ast.StmtClassMethod) {
 }
 
 func (f *formatter) StmtConstList(n *ast.StmtConstList) {
+	for _, m := range n.AttrGroups {
+		m.Accept(f)
+		f.addFreeFloating(token.T_WHITESPACE, []byte("\n"))
+	}
+
 	n.ConstTkn = f.newToken(token.T_CONST, []byte("const"))
 	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
 
@@ -861,6 +939,10 @@ func (f *formatter) StmtProperty(n *ast.StmtProperty) {
 
 		n.Expr.Accept(f)
 	}
+
+	if n.Hooks != nil {
+		f.formatHooks(&n.OpenCurlyBracketTkn, n.Hooks, &n.CloseCurlyBracketTkn)
+	}
 }
 
 func (f *formatter) StmtPropertyList(n *ast.StmtPropertyList) {
@@ -880,7 +962,9 @@ func (f *formatter) StmtPropertyList(n *ast.StmtPropertyList) {
 
 	n.SeparatorTkns = f.formatList(n.Props, ',')
 
-	n.SemiColonTkn = f.newSemicolonTkn()
+	if !n.IsHooked() {
+		n.SemiColonTkn = f.newSemicolonTkn()
+	}
 }
 
 func (f *formatter) StmtReturn(n *ast.StmtReturn) {
@@ -1252,13 +1336,35 @@ func (f *formatter) ExprBrackets(n *ast.ExprBrackets) {
 func (f *formatter) ExprClassConstFetch(n *ast.ExprClassConstFetch) {
 	n.Class.Accept(f)
 	n.DoubleColonTkn = f.newToken(token.T_PAAMAYIM_NEKUDOTAYIM, []byte("::"))
+
+	// PHP 8.3 dynamic fetch `A::{expr}` uses braces, not parentheses.
+	if b, ok := n.Const.(*ast.ExprBrackets); ok {
+		b.OpenParenthesisTkn = f.newToken('{', []byte("{"))
+		b.Expr.Accept(f)
+		b.CloseParenthesisTkn = f.newToken('}', []byte("}"))
+		return
+	}
+
 	n.Const.Accept(f)
 }
 
 func (f *formatter) ExprClone(n *ast.ExprClone) {
 	n.CloneTkn = f.newToken(token.T_CLONE, []byte("clone"))
-	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
-	n.Expr.Accept(f)
+	if n.Expr != nil {
+		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+		n.Expr.Accept(f)
+		return
+	}
+
+	n.OpenParenthesisTkn = f.newToken('(', []byte("("))
+	n.SeparatorTkns = nil
+	if len(n.Args) > 0 {
+		n.SeparatorTkns = f.formatList(n.Args, ',')
+	}
+	if n.EllipsisTkn != nil {
+		n.EllipsisTkn = f.newToken(token.T_ELLIPSIS, []byte("..."))
+	}
+	n.CloseParenthesisTkn = f.newToken(')', []byte(")"))
 }
 
 func (f *formatter) ExprClosure(n *ast.ExprClosure) {
@@ -1472,10 +1578,14 @@ func (f *formatter) ExprNew(n *ast.ExprNew) {
 
 	n.Class.Accept(f)
 
+	// Keep an empty argument list: since PHP 8.4 `new Foo()->bar()` and
+	// `new Foo->bar()` mean different things.
+	hasParens := n.OpenParenthesisTkn != nil || len(n.Args) > 0
+
 	n.SeparatorTkns = nil
 	n.OpenParenthesisTkn = nil
 	n.CloseParenthesisTkn = nil
-	if len(n.Args) > 0 {
+	if hasParens {
 		n.OpenParenthesisTkn = f.newToken('(', []byte("("))
 		n.SeparatorTkns = f.formatList(n.Args, ',')
 		n.CloseParenthesisTkn = f.newToken(')', []byte(")"))
@@ -1870,6 +1980,16 @@ func (f *formatter) ExprBinaryCoalesce(n *ast.ExprBinaryCoalesce) {
 	n.Right.Accept(f)
 }
 
+func (f *formatter) ExprBinaryPipe(n *ast.ExprBinaryPipe) {
+	n.Left.Accept(f)
+
+	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+	n.OpTkn = f.newToken(token.T_PIPE, []byte("|>"))
+	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
+
+	n.Right.Accept(f)
+}
+
 func (f *formatter) ExprBinaryConcat(n *ast.ExprBinaryConcat) {
 	n.Left.Accept(f)
 
@@ -2112,6 +2232,12 @@ func (f *formatter) ExprCastString(n *ast.ExprCastString) {
 
 func (f *formatter) ExprCastUnset(n *ast.ExprCastUnset) {
 	n.CastTkn = f.newToken(token.T_UNSET_CAST, []byte("(unset)"))
+	n.Expr.Accept(f)
+}
+
+func (f *formatter) ExprCastVoid(n *ast.ExprCastVoid) {
+	n.CastTkn = f.newToken(token.T_VOID_CAST, []byte("(void)"))
+	f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
 	n.Expr.Accept(f)
 }
 

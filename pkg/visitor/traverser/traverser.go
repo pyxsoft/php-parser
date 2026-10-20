@@ -48,6 +48,10 @@ func (t *Traverser) Parameter(n *ast.Parameter) {
 	t.Traverse(n.Type)
 	t.Traverse(n.Var)
 	t.Traverse(n.DefaultValue)
+
+	for _, nn := range n.Hooks {
+		nn.Accept(t)
+	}
 }
 
 func (t *Traverser) Identifier(n *ast.Identifier) {
@@ -188,9 +192,27 @@ func (t *Traverser) StmtClassConstList(n *ast.StmtClassConstList) {
 	for _, nn := range n.Modifiers {
 		nn.Accept(t)
 	}
+	t.Traverse(n.Type)
 	for _, nn := range n.Consts {
 		nn.Accept(t)
 	}
+}
+
+func (t *Traverser) PropertyHook(n *ast.PropertyHook) {
+	n.Accept(t.v)
+
+	for _, nn := range n.AttrGroups {
+		nn.Accept(t)
+	}
+	for _, nn := range n.Modifiers {
+		nn.Accept(t)
+	}
+	t.Traverse(n.Name)
+	for _, nn := range n.Params {
+		nn.Accept(t)
+	}
+	t.Traverse(n.Expr)
+	t.Traverse(n.Stmt)
 }
 
 func (t *Traverser) StmtClassMethod(n *ast.StmtClassMethod) {
@@ -212,6 +234,10 @@ func (t *Traverser) StmtClassMethod(n *ast.StmtClassMethod) {
 
 func (t *Traverser) StmtConstList(n *ast.StmtConstList) {
 	n.Accept(t.v)
+
+	for _, nn := range n.AttrGroups {
+		nn.Accept(t)
+	}
 
 	for _, nn := range n.Consts {
 		nn.Accept(t)
@@ -402,6 +428,9 @@ func (t *Traverser) StmtProperty(n *ast.StmtProperty) {
 
 	t.Traverse(n.Var)
 	t.Traverse(n.Expr)
+	for _, nn := range n.Hooks {
+		nn.Accept(t)
+	}
 }
 
 func (t *Traverser) StmtPropertyList(n *ast.StmtPropertyList) {
@@ -623,6 +652,9 @@ func (t *Traverser) ExprClone(n *ast.ExprClone) {
 	n.Accept(t.v)
 
 	t.Traverse(n.Expr)
+	for _, nn := range n.Args {
+		nn.Accept(t)
+	}
 }
 
 func (t *Traverser) ExprClosure(n *ast.ExprClosure) {
@@ -1019,6 +1051,13 @@ func (t *Traverser) ExprBinaryCoalesce(n *ast.ExprBinaryCoalesce) {
 	t.Traverse(n.Right)
 }
 
+func (t *Traverser) ExprBinaryPipe(n *ast.ExprBinaryPipe) {
+	n.Accept(t.v)
+
+	t.Traverse(n.Left)
+	t.Traverse(n.Right)
+}
+
 func (t *Traverser) ExprBinaryConcat(n *ast.ExprBinaryConcat) {
 	n.Accept(t.v)
 
@@ -1203,6 +1242,12 @@ func (t *Traverser) ExprCastString(n *ast.ExprCastString) {
 }
 
 func (t *Traverser) ExprCastUnset(n *ast.ExprCastUnset) {
+	n.Accept(t.v)
+
+	t.Traverse(n.Expr)
+}
+
+func (t *Traverser) ExprCastVoid(n *ast.ExprCastVoid) {
 	n.Accept(t.v)
 
 	t.Traverse(n.Expr)

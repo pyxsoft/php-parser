@@ -40,7 +40,7 @@ func (lex *Lexer) Lex() *token.Token {
                 lex.newLines.Append(lex.p+1)
             }
 
-            if lex.data[lex.p] == '\r' && lex.data[lex.p+1] != '\n' {
+            if lex.data[lex.p] == '\r' && lex.at(lex.p+1) != '\n' {
                 lex.newLines.Append(lex.p+1)
             }
         }
@@ -135,7 +135,11 @@ func (lex *Lexer) Lex() *token.Token {
 
         html := |*
             any_line+ -- '<?' => {
-                lex.ungetStr("<")
+                // A trailing '<' may start '<?'; at EOF it cannot, and pushing
+                // it back would yield an empty token forever.
+                if lex.te < lex.pe {
+                    lex.ungetStr("<")
+                }
                 lex.setTokenPosition(tkn)
                 tok = token.T_INLINE_HTML;
                 fbreak;
@@ -357,7 +361,7 @@ func (lex *Lexer) Lex() *token.Token {
                 lex.setTokenPosition(tkn);
                 tok = token.T_START_HEREDOC;
 
-                if lex.isHeredocEnd(lex.p+1) {
+                if lex.heredocEndAhead(lex.p+1) {
                     fnext heredoc_end;
                 } else if lex.data[lblStart-1] == '\'' {
                     fnext nowdoc;
@@ -394,7 +398,7 @@ func (lex *Lexer) Lex() *token.Token {
         heredoc := |*
             "{$" => {lex.ungetCnt(1); lex.setTokenPosition(tkn); tok = token.T_CURLY_OPEN; lex.call(ftargs, fentry(php)); goto _out;};
             "${" => {lex.setTokenPosition(tkn); tok = token.T_DOLLAR_OPEN_CURLY_BRACES; lex.call(ftargs, fentry(string_var_name)); goto _out;};
-            "$"  => {lex.ungetCnt(1); fcall string_var;};
+            "$" varname_first => {lex.ungetCnt(2); fcall string_var;};
             any_line* when is_not_heredoc_end_or_var => {
                 lex.setTokenPosition(tkn);
                 tok = token.T_ENCAPSED_AND_WHITESPACE;
@@ -431,6 +435,7 @@ func (lex *Lexer) Lex() *token.Token {
         *|;
 
         heredoc_end := |*
+            [ \t]+         => {lex.addFreeFloatingToken(tkn, token.T_WHITESPACE, lex.ts, lex.te)};
             varname -- ";" => {
                 lex.setTokenPosition(tkn);
                 tok = token.T_END_HEREDOC;

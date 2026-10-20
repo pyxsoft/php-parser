@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## `v0.9.0` 2026-10-20
+
+First release of the `github.com/pyxsoft/php-parser` fork. The module path changed from
+`github.com/VKCOM/php-parser`.
+
+### Added
+
+- `php8.2`: DNF types (`(A&B)|null`)
+- `php8.3`: typed class constants, dynamic class constant fetch (`A::{$name}`), readonly anonymous classes
+- `php8.4`: property hooks (`ast.PropertyHook`, also on promoted constructor parameters), asymmetric
+  visibility (`public private(set)`), `new Foo()->bar()` without wrapping parentheses, `__PROPERTY__`
+- `php8.5`: pipe operator (`ast.ExprBinaryPipe`), `(void)` cast (`ast.ExprCastVoid`), `final` promoted
+  properties, attributes on global constants, `clone($obj, [...])` and `clone(...)`
+- PHP versions up to 8.5 are accepted (the range previously stopped at 8.1)
+- `conf.Config.SkipFreeFloating`
+- Hot-path benchmarks (`make bench-hot`) and a fuzz test for the parser
+
+### Changed
+
+- Curly brace offset access (`$a{0}`) is now a plain syntax error, as in php-src; it was removed in
+  PHP 8.0 and its rule conflicted with property hooks
+- New AST fields: `Intersection` parentheses, `StmtClassConstList.Type`, `StmtProperty`/`Parameter` hooks,
+  `StmtConstList.AttrGroups`, `ExprClone` argument list. `ast.Visitor` gained `PropertyHook`,
+  `ExprBinaryPipe` and `ExprCastVoid`: embed `visitor.Null` to stay forward compatible
+
+### Fixed
+
+- Lexer allocated on every byte of a heredoc body (version parsing and string conversions)
+- Integer literal classification allocated per literal
+- Token/position pools always allocated full blocks regardless of input size
+- Namespace resolver ignored union and intersection types
+- Formatter panicked on anonymous classes and on empty lists (e.g. `[]`), and dropped the empty
+  argument list of `new Foo()`
+
 ## `v0.8.2` 2022-26-06
 
 ### Added

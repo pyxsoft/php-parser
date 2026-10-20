@@ -387,10 +387,8 @@ func TestParseAndPrintArrayDimFetchPHP8(t *testing.T) {
 	FOO [ 1 ] ;
 	$a [ ] ;
 	$a [ 1 ] ;
-	$a { 1 } ;
 	new $a [ ] ;
 	new $a [ 1 ] ;
-	new $a { 1 } ;
 	"$a[1]test" ;
 	"${ a [ 1 ] }test" ;
 	`
@@ -2621,11 +2619,9 @@ A->length;
 A->length();
 A[0];
 A[0][1][2];
-A{0};
 
 A::B[0];
 A::B[0][1][2];
-A::B{0};
 A::B->length;
 A::B->length();
 A::B::C;

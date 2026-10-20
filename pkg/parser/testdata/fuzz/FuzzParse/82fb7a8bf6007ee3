@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("<?<<<A00\n$$x[}\n  [0]}\n  EEOT\n")

@@ -3,7 +3,6 @@ package php8
 import (
 	"bytes"
 	"math"
-	"strings"
 
 	"github.com/pyxsoft/php-parser/pkg/conf"
 	"github.com/pyxsoft/php-parser/pkg/errors"
@@ -88,21 +87,27 @@ func (lex *Lexer) addFreeFloatingToken(t *token.Token, id token.ID, ps, pe int) 
 	t.FreeFloating = append(t.FreeFloating, skippedTkn)
 }
 
+// at returns data[i], or 0 when i is out of range. Lookahead helpers run on
+// untrusted input and must never index past either end of it.
+func (lex *Lexer) at(i int) byte {
+	if i < 0 || i >= len(lex.data) {
+		return 0
+	}
+
+	return lex.data[i]
+}
+
 func (lex *Lexer) isNotStringVar() bool {
 	p := lex.p
-	if lex.data[p-1] == '\\' && lex.data[p-2] != '\\' {
+	if lex.at(p-1) == '\\' && lex.at(p-2) != '\\' {
 		return true
 	}
 
-	if len(lex.data) < p+1 {
-		return true
-	}
-
-	if lex.data[p] == '$' && (lex.data[p+1] == '{' || isValidVarNameStart(lex.data[p+1])) {
+	if lex.at(p) == '$' && (lex.at(p+1) == '{' || isValidVarNameStart(lex.at(p+1))) {
 		return false
 	}
 
-	if lex.data[p] == '{' && lex.data[p+1] == '$' {
+	if lex.at(p) == '{' && lex.at(p+1) == '$' {
 		return false
 	}
 
@@ -111,11 +116,11 @@ func (lex *Lexer) isNotStringVar() bool {
 
 func (lex *Lexer) isNotStringEnd(s byte) bool {
 	p := lex.p
-	if lex.data[p-1] == '\\' && lex.data[p-2] != '\\' {
+	if lex.at(p-1) == '\\' && lex.at(p-2) != '\\' {
 		return true
 	}
 
-	return !(lex.data[p] == s)
+	return lex.at(p) != s
 }
 
 func (lex *Lexer) isHeredocEnd(p int) bool {
@@ -127,7 +132,7 @@ func (lex *Lexer) isHeredocEnd(p int) bool {
 }
 
 func (lex *Lexer) isHeredocEndBefore73(p int) bool {
-	if lex.data[p-1] != '\r' && lex.data[p-1] != '\n' {
+	if lex.at(p-1) != '\r' && lex.at(p-1) != '\n' {
 		return false
 	}
 
@@ -148,15 +153,15 @@ func (lex *Lexer) isHeredocEndBefore73(p int) bool {
 }
 
 func (lex *Lexer) isHeredocEndSince73(p int) bool {
-	if lex.data[p-1] != '\r' && lex.data[p-1] != '\n' {
+	if lex.at(p-1) != '\r' && lex.at(p-1) != '\n' {
 		return false
 	}
 
-	if p == len(lex.data) {
+	if p >= len(lex.data) {
 		return false
 	}
 
-	for lex.data[p] == ' ' || lex.data[p] == '\t' {
+	for lex.at(p) == ' ' || lex.at(p) == '\t' {
 		p++
 	}
 
@@ -177,6 +182,16 @@ func (lex *Lexer) isHeredocEndSince73(p int) bool {
 	return false
 }
 
+// heredocEndAhead reports whether the closing label starts at p without
+// moving the cursor (isHeredocEnd skips indentation by advancing lex.p).
+func (lex *Lexer) heredocEndAhead(p int) bool {
+	saved := lex.p
+	ok := lex.isHeredocEnd(p)
+	lex.p = saved
+
+	return ok
+}
+
 func (lex *Lexer) isNotHeredocEnd(p int) bool {
 	return !lex.isHeredocEnd(p)
 }
@@ -188,19 +203,15 @@ func (lex *Lexer) growCallStack() {
 }
 
 func (lex *Lexer) isNotPhpCloseToken() bool {
-	if lex.p+1 == len(lex.data) {
-		return true
-	}
-
-	return lex.data[lex.p] != '?' || lex.data[lex.p+1] != '>'
+	return lex.at(lex.p) != '?' || lex.at(lex.p+1) != '>'
 }
 
 func (lex *Lexer) isNotNewLine() bool {
-	if lex.data[lex.p] == '\n' && lex.data[lex.p-1] == '\r' {
+	if lex.at(lex.p) == '\n' && lex.at(lex.p-1) == '\r' {
 		return true
 	}
 
-	return lex.data[lex.p-1] != '\n' && lex.data[lex.p-1] != '\r'
+	return lex.at(lex.p-1) != '\n' && lex.at(lex.p-1) != '\r'
 }
 
 func (lex *Lexer) call(state int, fnext int) {
@@ -214,17 +225,21 @@ func (lex *Lexer) call(state int, fnext int) {
 }
 
 func (lex *Lexer) ret(n int) {
-	lex.top = lex.top - n
-	if lex.top < 0 {
-		lex.top = 0
-	}
-	lex.cs = lex.stack[lex.top]
 	lex.p++
+
+	// An unbalanced '}' has no state to return to: stay in the current state,
+	// as php-src does, instead of indexing past the call stack.
+	if lex.top < n {
+		lex.top = 0
+		return
+	}
+
+	lex.top = lex.top - n
+	lex.cs = lex.stack[lex.top]
 }
 
 func (lex *Lexer) ungetStr(s string) {
-	tokenStr := string(lex.data[lex.ts:lex.te])
-	if strings.HasSuffix(tokenStr, s) {
+	if bytes.HasSuffix(lex.data[lex.ts:lex.te], []byte(s)) {
 		lex.ungetCnt(len(s))
 	}
 }
@@ -234,19 +249,17 @@ func (lex *Lexer) ungetCnt(n int) {
 	lex.te = lex.te - n
 }
 
+// ungetWhile shrinks the current token so that it ends right after the first
+// s at or after its start, pushing the rest back to the input.
 func (lex *Lexer) ungetWhile(s byte) {
-	for i := 0; i < 100; i++ {
-		v := lex.data[lex.te]
-		if v == s {
-			break
-		}
-
-		lex.te--
-		lex.p--
+	end := lex.ts
+	for end < lex.te-1 && lex.data[end] != s {
+		end++
 	}
 
-	lex.te++
-	lex.p++
+	n := lex.te - (end + 1)
+	lex.te -= n
+	lex.p -= n
 }
 
 func (lex *Lexer) error(msg string) {

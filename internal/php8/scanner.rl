@@ -38,7 +38,7 @@ func (lex *Lexer) Lex() *token.Token {
                 lex.newLines.Append(lex.p+1)
             }
 
-            if lex.data[lex.p] == '\r' && lex.data[lex.p+1] != '\n' {
+            if lex.data[lex.p] == '\r' && lex.at(lex.p+1) != '\n' {
                 lex.newLines.Append(lex.p+1)
             }
         }
@@ -134,7 +134,11 @@ func (lex *Lexer) Lex() *token.Token {
 
         html := |*
             any_line+ -- '<?' => {
-                lex.ungetStr("<")
+                // A trailing '<' may start '<?'; at EOF it cannot, and pushing
+                // it back would yield an empty token forever.
+                if lex.te < lex.pe {
+                    lex.ungetStr("<")
+                }
                 lex.setTokenPosition(tkn)
                 tok = token.T_INLINE_HTML;
                 fbreak;
@@ -247,6 +251,9 @@ func (lex *Lexer) Lex() *token.Token {
             'namespace'i                      => {lex.setTokenPosition(tkn); tok = token.T_NAMESPACE; fbreak;};
             'private'i                        => {lex.setTokenPosition(tkn); tok = token.T_PRIVATE; fbreak;};
             'public'i                         => {lex.setTokenPosition(tkn); tok = token.T_PUBLIC; fbreak;};
+            'public(set)'i                    => {lex.setTokenPosition(tkn); tok = token.T_PUBLIC_SET; fbreak;};
+            'protected(set)'i                 => {lex.setTokenPosition(tkn); tok = token.T_PROTECTED_SET; fbreak;};
+            'private(set)'i                   => {lex.setTokenPosition(tkn); tok = token.T_PRIVATE_SET; fbreak;};
             'print'i                          => {lex.setTokenPosition(tkn); tok = token.T_PRINT; fbreak;};
             'protected'i                      => {lex.setTokenPosition(tkn); tok = token.T_PROTECTED; fbreak;};
             'return'i                         => {lex.setTokenPosition(tkn); tok = token.T_RETURN; fbreak;};
@@ -275,6 +282,7 @@ func (lex *Lexer) Lex() *token.Token {
             '__NAMESPACE__'i                  => {lex.setTokenPosition(tkn); tok = token.T_NS_C; fbreak;};
             '__METHOD__'i                     => {lex.setTokenPosition(tkn); tok = token.T_METHOD_C; fbreak;};
             '__TRAIT__'i                      => {lex.setTokenPosition(tkn); tok = token.T_TRAIT_C; fbreak;};
+            '__PROPERTY__'i                   => {lex.setTokenPosition(tkn); tok = token.T_PROPERTY_C; fbreak;};
             '__halt_compiler'i                => {lex.setTokenPosition(tkn); tok = token.T_HALT_COMPILER; fnext halt_compiller_open_parenthesis; fbreak;};
             'new'i                            => {lex.setTokenPosition(tkn); tok = token.T_NEW; fbreak;};
             'and'i                            => {lex.setTokenPosition(tkn); tok = token.T_LOGICAL_AND; fbreak;};
@@ -286,6 +294,7 @@ func (lex *Lexer) Lex() *token.Token {
             '||'                              => {lex.setTokenPosition(tkn); tok = token.T_BOOLEAN_OR; fbreak;};
             '&='                              => {lex.setTokenPosition(tkn); tok = token.T_AND_EQUAL; fbreak;};
             '|='                              => {lex.setTokenPosition(tkn); tok = token.T_OR_EQUAL; fbreak;};
+            '|>'                              => {lex.setTokenPosition(tkn); tok = token.T_PIPE; fbreak;};
             '.='                              => {lex.setTokenPosition(tkn); tok = token.T_CONCAT_EQUAL; fbreak;};
             '*='                              => {lex.setTokenPosition(tkn); tok = token.T_MUL_EQUAL; fbreak;};
             '**='                             => {lex.setTokenPosition(tkn); tok = token.T_POW_EQUAL; fbreak;};
@@ -319,6 +328,7 @@ func (lex *Lexer) Lex() *token.Token {
             '(' whitespace* ('int'i|'integer'i) whitespace* ')'          => {lex.setTokenPosition(tkn); tok = token.T_INT_CAST; fbreak;};
             '(' whitespace* 'object'i whitespace* ')'                    => {lex.setTokenPosition(tkn); tok = token.T_OBJECT_CAST; fbreak;};
             '(' whitespace* ('string'i|'binary'i) whitespace* ')'        => {lex.setTokenPosition(tkn); tok = token.T_STRING_CAST; fbreak;};
+            '(' whitespace* 'void'i whitespace* ')'                      => {lex.setTokenPosition(tkn); tok = token.T_VOID_CAST; fbreak;};
             '(' whitespace* 'unset'i whitespace* ')'                     => {lex.error(fmt.Sprintf("The (unset) cast is no longer supported")); fbreak;};
 
             # For case '#\n'
@@ -380,7 +390,7 @@ func (lex *Lexer) Lex() *token.Token {
                 lex.setTokenPosition(tkn);
                 tok = token.T_START_HEREDOC;
 
-                if lex.isHeredocEnd(lex.p+1) {
+                if lex.heredocEndAhead(lex.p+1) {
                     fnext heredoc_end;
                 } else if lex.data[lblStart-1] == '\'' {
                     fnext nowdoc;
@@ -418,7 +428,7 @@ func (lex *Lexer) Lex() *token.Token {
         heredoc := |*
             "{$" => {lex.ungetCnt(1); lex.setTokenPosition(tkn); tok = token.T_CURLY_OPEN; lex.call(ftargs, fentry(php)); goto _out;};
             "${" => {lex.setTokenPosition(tkn); tok = token.T_DOLLAR_OPEN_CURLY_BRACES; lex.call(ftargs, fentry(string_var_name)); goto _out;};
-            "$"  => {lex.ungetCnt(1); fcall string_var;};
+            "$" varname_first => {lex.ungetCnt(2); fcall string_var;};
             any_line* when is_not_heredoc_end_or_var => {
                 lex.setTokenPosition(tkn);
                 tok = token.T_ENCAPSED_AND_WHITESPACE;
@@ -455,6 +465,7 @@ func (lex *Lexer) Lex() *token.Token {
         *|;
 
         heredoc_end := |*
+            [ \t]+         => {lex.addFreeFloatingToken(tkn, token.T_WHITESPACE, lex.ts, lex.te)};
             varname -- ";" => {
                 lex.setTokenPosition(tkn);
                 tok = token.T_END_HEREDOC;

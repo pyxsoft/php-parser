@@ -1,4 +1,6 @@
-> This is a fork of the [z7zmey](https://github.com/z7zmey) [parser](https://github.com/z7zmey/php-parser) that adds PHP 8 support.
+> Maintained fork of [VKCOM/php-parser](https://github.com/VKCOM/php-parser) (itself a fork of
+> [z7zmey/php-parser](https://github.com/z7zmey/php-parser)), updated to PHP 8.5 syntax and tuned for
+> high-volume parsing of untrusted code. Upstream has been inactive since 2023.
 
 PHP Parser written in Go
 ========================
@@ -14,7 +16,9 @@ This project uses [goyacc](https://godoc.org/golang.org/x/tools/cmd/goyacc) and 
 Features
 ---------
 
-- Fully support PHP 5, PHP 7 and PHP 8.0-8.2 syntax
+- Fully support PHP 5, PHP 7 and PHP 8.0-8.5 syntax (DNF types, typed class constants, property hooks,
+  asymmetric visibility, `new` without parentheses, pipe operator, `(void)` cast, `clone` with arguments, ...)
+- `conf.Config.SkipFreeFloating` for AST-only consumers: skips whitespace/comment tokens (fewer allocations)
 - Abstract syntax tree (AST) representation
 - Traversing AST
 - Resolving namespace names

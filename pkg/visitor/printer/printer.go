@@ -154,6 +154,9 @@ func (p *printer) Parameter(n *ast.Parameter) {
 	p.printNode(n.Var)
 	p.printToken(n.EqualTkn, p.ifNode(n.DefaultValue, []byte("=")))
 	p.printNode(n.DefaultValue)
+	p.printToken(n.OpenCurlyBracketTkn, p.ifNodeList(n.Hooks, []byte("{")))
+	p.printList(n.Hooks)
+	p.printToken(n.CloseCurlyBracketTkn, p.ifNodeList(n.Hooks, []byte("}")))
 }
 
 func (p *printer) Identifier(n *ast.Identifier) {
@@ -181,7 +184,9 @@ func (p *printer) Union(n *ast.Union) {
 }
 
 func (p *printer) Intersection(n *ast.Intersection) {
+	p.printToken(n.OpenParenthesisTkn, nil)
 	p.printSeparatedList(n.Types, n.SeparatorTkns, []byte("&"))
+	p.printToken(n.CloseParenthesisTkn, nil)
 }
 
 func (p *printer) Attribute(n *ast.Attribute) {
@@ -264,8 +269,25 @@ func (p *printer) StmtClassConstList(n *ast.StmtClassConstList) {
 	p.printList(n.AttrGroups)
 	p.printList(n.Modifiers)
 	p.printToken(n.ConstTkn, []byte("const"))
+	p.printNode(n.Type)
 	p.printSeparatedList(n.Consts, n.SeparatorTkns, []byte(","))
 	p.printToken(n.SemiColonTkn, []byte(";"))
+}
+
+func (p *printer) PropertyHook(n *ast.PropertyHook) {
+	p.printList(n.AttrGroups)
+	p.printList(n.Modifiers)
+	p.printToken(n.AmpersandTkn, nil)
+	p.printNode(n.Name)
+	p.printToken(n.OpenParenthesisTkn, p.ifNodeList(n.Params, []byte("(")))
+	p.printSeparatedList(n.Params, n.SeparatorTkns, []byte(","))
+	p.printToken(n.CloseParenthesisTkn, p.ifNodeList(n.Params, []byte(")")))
+	p.printToken(n.DoubleArrowTkn, p.ifNode(n.Expr, []byte("=>")))
+	p.printNode(n.Expr)
+	p.printNode(n.Stmt)
+	if n.Stmt == nil {
+		p.printToken(n.SemiColonTkn, []byte(";"))
+	}
 }
 
 func (p *printer) StmtClassMethod(n *ast.StmtClassMethod) {
@@ -283,6 +305,7 @@ func (p *printer) StmtClassMethod(n *ast.StmtClassMethod) {
 }
 
 func (p *printer) StmtConstList(n *ast.StmtConstList) {
+	p.printList(n.AttrGroups)
 	p.printToken(n.ConstTkn, []byte("const"))
 	p.printSeparatedList(n.Consts, n.SeparatorTkns, []byte(","))
 	p.printToken(n.SemiColonTkn, []byte(";"))
@@ -518,6 +541,9 @@ func (p *printer) StmtProperty(n *ast.StmtProperty) {
 	p.printNode(n.Var)
 	p.printToken(n.EqualTkn, p.ifNode(n.Expr, []byte("=")))
 	p.printNode(n.Expr)
+	p.printToken(n.OpenCurlyBracketTkn, p.ifNodeList(n.Hooks, []byte("{")))
+	p.printList(n.Hooks)
+	p.printToken(n.CloseCurlyBracketTkn, p.ifNodeList(n.Hooks, []byte("}")))
 }
 
 func (p *printer) StmtPropertyList(n *ast.StmtPropertyList) {
@@ -525,7 +551,9 @@ func (p *printer) StmtPropertyList(n *ast.StmtPropertyList) {
 	p.printList(n.Modifiers)
 	p.printNode(n.Type)
 	p.printSeparatedList(n.Props, n.SeparatorTkns, []byte(","))
-	p.printToken(n.SemiColonTkn, []byte(";"))
+	if !n.IsHooked() {
+		p.printToken(n.SemiColonTkn, []byte(";"))
+	}
 }
 
 func (p *printer) StmtReturn(n *ast.StmtReturn) {
@@ -731,6 +759,12 @@ func (p *printer) ExprClassConstFetch(n *ast.ExprClassConstFetch) {
 func (p *printer) ExprClone(n *ast.ExprClone) {
 	p.printToken(n.CloneTkn, []byte("clone"))
 	p.printNode(n.Expr)
+	if n.Expr == nil {
+		p.printToken(n.OpenParenthesisTkn, []byte("("))
+		p.printSeparatedList(n.Args, n.SeparatorTkns, []byte(","))
+		p.printToken(n.EllipsisTkn, nil)
+		p.printToken(n.CloseParenthesisTkn, []byte(")"))
+	}
 }
 
 func (p *printer) ExprClosure(n *ast.ExprClosure) {
@@ -1096,6 +1130,12 @@ func (p *printer) ExprBinaryCoalesce(n *ast.ExprBinaryCoalesce) {
 	p.printNode(n.Right)
 }
 
+func (p *printer) ExprBinaryPipe(n *ast.ExprBinaryPipe) {
+	p.printNode(n.Left)
+	p.printToken(n.OpTkn, []byte("|>"))
+	p.printNode(n.Right)
+}
+
 func (p *printer) ExprBinaryConcat(n *ast.ExprBinaryConcat) {
 	p.printNode(n.Left)
 	p.printToken(n.OpTkn, []byte("."))
@@ -1254,6 +1294,11 @@ func (p *printer) ExprCastString(n *ast.ExprCastString) {
 
 func (p *printer) ExprCastUnset(n *ast.ExprCastUnset) {
 	p.printToken(n.CastTkn, []byte("(unset)"))
+	p.printNode(n.Expr)
+}
+
+func (p *printer) ExprCastVoid(n *ast.ExprCastVoid) {
+	p.printToken(n.CastTkn, []byte("(void)"))
 	p.printNode(n.Expr)
 }
 

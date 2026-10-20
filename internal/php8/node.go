@@ -112,3 +112,53 @@ func (n *TraitMethodRef) Accept(v ast.Visitor) {
 func (n *TraitMethodRef) GetPosition() *position.Position {
 	return n.Position
 }
+
+// ParserParenthesizedList is a parenthesized, possibly empty, separated list
+// (e.g. property hook parameters).
+type ParserParenthesizedList struct {
+	Position            *position.Position
+	OpenParenthesisTkn  *token.Token
+	List                ast.Vertex
+	CloseParenthesisTkn *token.Token
+}
+
+func (n *ParserParenthesizedList) Accept(v ast.Visitor) {
+	// do nothing
+}
+
+func (n *ParserParenthesizedList) GetPosition() *position.Position {
+	return n.Position
+}
+
+// PropertyHookList is the `{ hook* }` block of a PHP 8.4 hooked property.
+type PropertyHookList struct {
+	Position             *position.Position
+	OpenCurlyBracketTkn  *token.Token
+	Hooks                []ast.Vertex
+	CloseCurlyBracketTkn *token.Token
+}
+
+func (n *PropertyHookList) Accept(v ast.Visitor) {
+	// do nothing
+}
+
+func (n *PropertyHookList) GetPosition() *position.Position {
+	return n.Position
+}
+
+// PropertyHookBody holds one of the three property hook body forms.
+type PropertyHookBody struct {
+	Position       *position.Position
+	DoubleArrowTkn *token.Token
+	Expr           ast.Vertex
+	Stmt           ast.Vertex
+	SemiColonTkn   *token.Token
+}
+
+func (n *PropertyHookBody) Accept(v ast.Visitor) {
+	// do nothing
+}
+
+func (n *PropertyHookBody) GetPosition() *position.Position {
+	return n.Position
+}

@@ -1582,3 +1582,165 @@ func (b *Builder) NewArgumentList(
 		CloseParenthesisTkn: CloseParenthesisTkn,
 	}
 }
+
+// NewDNFIntersection builds the parenthesized intersection of a PHP 8.2 DNF type.
+func (b *Builder) NewDNFIntersection(
+	OpenParenthesisTkn *token.Token,
+	Types ast.Vertex,
+	CloseParenthesisTkn *token.Token,
+) *ast.Intersection {
+	n := b.NewIntersectionType(Types)
+	n.Position = b.Pos.NewTokensPosition(OpenParenthesisTkn, CloseParenthesisTkn)
+	n.OpenParenthesisTkn = OpenParenthesisTkn
+	n.CloseParenthesisTkn = CloseParenthesisTkn
+
+	return n
+}
+
+func (b *Builder) NewPropertyHook(
+	AttrGroups []ast.Vertex,
+	Modifiers []ast.Vertex,
+	AmpersandTkn *token.Token,
+	NameTkn *token.Token,
+	Params ast.Vertex,
+	Body ast.Vertex,
+) *ast.PropertyHook {
+	var pos *position2.Position
+
+	switch {
+	case AttrGroups != nil:
+		pos = b.Pos.NewNodeListNodePosition(AttrGroups, Body)
+	case Modifiers != nil:
+		pos = b.Pos.NewNodeListNodePosition(Modifiers, Body)
+	case AmpersandTkn != nil:
+		pos = b.Pos.NewTokenNodePosition(AmpersandTkn, Body)
+	default:
+		pos = b.Pos.NewTokenNodePosition(NameTkn, Body)
+	}
+
+	body := Body.(*PropertyHookBody)
+	hook := &ast.PropertyHook{
+		Position:       pos,
+		AttrGroups:     AttrGroups,
+		Modifiers:      Modifiers,
+		AmpersandTkn:   AmpersandTkn,
+		Name:           b.NewIdentifier(NameTkn),
+		DoubleArrowTkn: body.DoubleArrowTkn,
+		Expr:           body.Expr,
+		Stmt:           body.Stmt,
+		SemiColonTkn:   body.SemiColonTkn,
+	}
+
+	if Params != nil {
+		params := Params.(*ParserParenthesizedList)
+		hook.OpenParenthesisTkn = params.OpenParenthesisTkn
+		hook.Params, hook.SeparatorTkns = b.SeparatedListItems(params.List)
+		if hook.Params == nil {
+			hook.Params = []ast.Vertex{}
+		}
+		hook.CloseParenthesisTkn = params.CloseParenthesisTkn
+	}
+
+	return hook
+}
+
+// NewHookedProperty builds a property declaration followed by a hook list.
+func (b *Builder) NewHookedProperty(
+	VarTkn *token.Token,
+	EqualTkn *token.Token,
+	Expr ast.Vertex,
+	HookList ast.Vertex,
+) *ast.StmtProperty {
+	hooks := HookList.(*PropertyHookList)
+
+	return &ast.StmtProperty{
+		Position: b.Pos.NewTokensPosition(VarTkn, hooks.CloseCurlyBracketTkn),
+		Var: &ast.ExprVariable{
+			Position: b.Pos.NewTokenPosition(VarTkn),
+			Name: &ast.Identifier{
+				Position:      b.Pos.NewTokenPosition(VarTkn),
+				IdentifierTkn: VarTkn,
+				Value:         VarTkn.Value,
+			},
+		},
+		EqualTkn:             EqualTkn,
+		Expr:                 Expr,
+		OpenCurlyBracketTkn:  hooks.OpenCurlyBracketTkn,
+		Hooks:                hooks.Hooks,
+		CloseCurlyBracketTkn: hooks.CloseCurlyBracketTkn,
+	}
+}
+
+// NewHookedPropertyList wraps a single hooked property; unlike a plain
+// property list it has no trailing semicolon.
+func (b *Builder) NewHookedPropertyList(
+	AttrGroups []ast.Vertex,
+	Modifiers []ast.Vertex,
+	Type ast.Vertex,
+	Prop ast.Vertex,
+) *ast.StmtPropertyList {
+	var pos *position2.Position
+
+	if AttrGroups != nil {
+		pos = b.Pos.NewNodeListNodePosition(AttrGroups, Prop)
+	} else {
+		pos = b.Pos.NewNodeListNodePosition(Modifiers, Prop)
+	}
+
+	return &ast.StmtPropertyList{
+		Position:   pos,
+		AttrGroups: AttrGroups,
+		Modifiers:  Modifiers,
+		Type:       Type,
+		Props:      []ast.Vertex{Prop},
+	}
+}
+
+// WithHooks attaches a PHP 8.4 hook list to a promoted constructor parameter.
+func (b *Builder) WithHooks(param *ast.Parameter, HookList ast.Vertex) *ast.Parameter {
+	hooks := HookList.(*PropertyHookList)
+
+	param.Position = b.Pos.NewNodeTokenPosition(param, hooks.CloseCurlyBracketTkn)
+	param.OpenCurlyBracketTkn = hooks.OpenCurlyBracketTkn
+	param.Hooks = hooks.Hooks
+	param.CloseCurlyBracketTkn = hooks.CloseCurlyBracketTkn
+
+	return param
+}
+
+// NewCloneWithArgs builds the PHP 8.5 function-like clone forms.
+func (b *Builder) NewCloneWithArgs(
+	CloneTkn *token.Token,
+	OpenParenthesisTkn *token.Token,
+	First ast.Vertex,
+	FirstCommaTkn *token.Token,
+	Rest ast.Vertex,
+	TrailingCommaTkn *token.Token,
+	EllipsisTkn *token.Token,
+	CloseParenthesisTkn *token.Token,
+) *ast.ExprClone {
+	n := &ast.ExprClone{
+		Position:            b.Pos.NewTokensPosition(CloneTkn, CloseParenthesisTkn),
+		CloneTkn:            CloneTkn,
+		OpenParenthesisTkn:  OpenParenthesisTkn,
+		EllipsisTkn:         EllipsisTkn,
+		CloseParenthesisTkn: CloseParenthesisTkn,
+	}
+
+	if First != nil {
+		n.Args = []ast.Vertex{b.NewArgument(First)}
+		n.SeparatorTkns = []*token.Token{FirstCommaTkn}
+	}
+
+	if Rest != nil {
+		args, sepTkns := b.SeparatedListItems(Rest)
+		n.Args = append(n.Args, args...)
+		n.SeparatorTkns = append(n.SeparatorTkns, sepTkns...)
+	}
+
+	if TrailingCommaTkn != nil {
+		n.SeparatorTkns = append(n.SeparatorTkns, TrailingCommaTkn)
+	}
+
+	return n
+}

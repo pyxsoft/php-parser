@@ -1960,6 +1960,8 @@ new class (name: $a, $b, ...$c) {};
 	}
 }
 
+// Curly brace offset access was removed in PHP 8.0; like php-src, it is now a
+// plain syntax error (the rule conflicted with PHP 8.4 property hooks).
 func TestCurlyBracesAccessParserError(t *testing.T) {
 	suite := tester.NewParserErrorTestSuite(t)
 	suite.UsePHP8()
@@ -1979,16 +1981,16 @@ new $a{10}; // Error
 
 	suite.Expected = []*errors.Error{
 		{
-			Msg: "Array and string offset access syntax with curly braces is no longer supported",
-			Pos: position.NewPosition(3, 3, 26, 27),
+			Msg: "syntax error: unexpected '{'",
+			Pos: position.NewPosition(3, 3, 23, 24),
 		},
 		{
-			Msg: "Array and string offset access syntax with curly braces is no longer supported",
-			Pos: position.NewPosition(9, 9, 97, 98),
+			Msg: "syntax error: unexpected '{'",
+			Pos: position.NewPosition(9, 9, 94, 95),
 		},
 		{
-			Msg: "Array and string offset access syntax with curly braces is no longer supported",
-			Pos: position.NewPosition(12, 12, 137, 138),
+			Msg: "syntax error: unexpected '{'",
+			Pos: position.NewPosition(12, 12, 135, 136),
 		},
 	}
 

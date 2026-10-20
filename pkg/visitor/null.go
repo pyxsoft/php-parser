@@ -86,6 +86,10 @@ func (v *Null) StmtClass(_ *ast.StmtClass) {
 	// do nothing
 }
 
+func (v *Null) PropertyHook(_ *ast.PropertyHook) {
+	// do nothing
+}
+
 func (v *Null) StmtClassConstList(_ *ast.StmtClassConstList) {
 	// do nothing
 }
@@ -510,6 +514,10 @@ func (v *Null) ExprBinaryBooleanOr(_ *ast.ExprBinaryBooleanOr) {
 	// do nothing
 }
 
+func (v *Null) ExprBinaryPipe(_ *ast.ExprBinaryPipe) {
+	// do nothing
+}
+
 func (v *Null) ExprBinaryCoalesce(_ *ast.ExprBinaryCoalesce) {
 	// do nothing
 }
@@ -619,6 +627,10 @@ func (v *Null) ExprCastObject(_ *ast.ExprCastObject) {
 }
 
 func (v *Null) ExprCastString(_ *ast.ExprCastString) {
+	// do nothing
+}
+
+func (v *Null) ExprCastVoid(_ *ast.ExprCastVoid) {
 	// do nothing
 }
 

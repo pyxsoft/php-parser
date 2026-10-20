@@ -164,6 +164,12 @@ import (
 %token <token> T_ENUM
 %token <token> T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG
 %token <token> T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG
+%token <token> T_PUBLIC_SET
+%token <token> T_PROTECTED_SET
+%token <token> T_PRIVATE_SET
+%token <token> T_PROPERTY_C
+%token <token> T_PIPE
+%token <token> T_VOID_CAST
 %token <token> '"'
 %token <token> '`'
 %token <token> '{'
@@ -213,13 +219,14 @@ import (
 %left T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG
 %nonassoc T_IS_EQUAL T_IS_NOT_EQUAL T_IS_IDENTICAL T_IS_NOT_IDENTICAL T_SPACESHIP
 %nonassoc '<' T_IS_SMALLER_OR_EQUAL '>' T_IS_GREATER_OR_EQUAL
+%left T_PIPE
 %left '.'
 %left T_SL T_SR
 %left '+' '-'
 %left '*' '/' '%'
 %right '!'
 %nonassoc T_INSTANCEOF
-%right '~' T_INC T_DEC T_INT_CAST T_DOUBLE_CAST T_STRING_CAST T_ARRAY_CAST T_OBJECT_CAST T_BOOL_CAST T_UNSET_CAST '@'
+%right '~' T_INC T_DEC T_INT_CAST T_DOUBLE_CAST T_STRING_CAST T_ARRAY_CAST T_OBJECT_CAST T_BOOL_CAST T_UNSET_CAST T_VOID_CAST '@'
 %right T_POW
 %right '['
 %nonassoc T_NEW T_CLONE
@@ -227,7 +234,7 @@ import (
 %left T_ELSEIF
 %left T_ELSE
 %left T_ENDIF
-%right T_STATIC T_ABSTRACT T_FINAL T_PRIVATE T_PROTECTED T_PUBLIC T_READONLY
+%right T_STATIC T_ABSTRACT T_FINAL T_PRIVATE T_PROTECTED T_PUBLIC T_READONLY T_PUBLIC_SET T_PROTECTED_SET T_PRIVATE_SET
 
 %type <token> optional_ref optional_arg_ref optional_ellipsis
 
@@ -271,6 +278,9 @@ import (
 %type <node> type_expr type union_type optional_return_type
 %type <node> type_expr_without_static type_without_static union_type_without_static optional_type_without_static
 %type <node> intersection_type intersection_type_without_static
+%type <node> union_type_element union_type_without_static_element
+%type <node> hooked_property property_hook property_hook_body property_hooks_block optional_hook_parameter_list
+%type <node> new_dereferencable
 
 %type <node> class_modifier
 %type <node> argument_list ctor_arguments
@@ -303,6 +313,7 @@ import (
 %type <list> optional_property_modifiers
 %type <list> non_empty_member_modifiers class_modifiers optional_class_modifiers
 %type <list> optional_attributes attributes
+%type <list> property_hooks
 
 %%
 
@@ -328,7 +339,7 @@ reserved_non_modifiers:
     | T_THROW {$$=$1} | T_USE {$$=$1} | T_INSTEADOF {$$=$1} | T_GLOBAL {$$=$1} | T_VAR {$$=$1} | T_UNSET {$$=$1} | T_ISSET {$$=$1} | T_EMPTY {$$=$1} | T_CONTINUE {$$=$1} | T_GOTO {$$=$1}
     | T_FUNCTION {$$=$1} | T_CONST {$$=$1} | T_RETURN {$$=$1} | T_PRINT {$$=$1} | T_YIELD {$$=$1} | T_LIST {$$=$1} | T_SWITCH {$$=$1} | T_ENDSWITCH {$$=$1} | T_CASE {$$=$1} | T_DEFAULT {$$=$1} | T_BREAK {$$=$1}
     | T_ARRAY {$$=$1} | T_CALLABLE {$$=$1} | T_EXTENDS {$$=$1} | T_IMPLEMENTS {$$=$1} | T_NAMESPACE {$$=$1} | T_TRAIT {$$=$1} | T_INTERFACE {$$=$1} | T_CLASS {$$=$1}
-    | T_CLASS_C {$$=$1} | T_TRAIT_C {$$=$1} | T_FUNC_C {$$=$1} | T_METHOD_C {$$=$1} | T_LINE {$$=$1} | T_FILE {$$=$1} | T_DIR {$$=$1} | T_NS_C {$$=$1} | T_FN {$$=$1} | T_MATCH {$$=$1} | T_ENUM {$$=$1}
+    | T_CLASS_C {$$=$1} | T_TRAIT_C {$$=$1} | T_FUNC_C {$$=$1} | T_METHOD_C {$$=$1} | T_LINE {$$=$1} | T_FILE {$$=$1} | T_DIR {$$=$1} | T_NS_C {$$=$1} | T_FN {$$=$1} | T_MATCH {$$=$1} | T_ENUM {$$=$1} | T_PROPERTY_C {$$=$1}
 ;
 
 semi_reserved:
@@ -467,6 +478,17 @@ top_statement:
                     SemiColonTkn:  $3,
                 }
             }
+    |   attributes T_CONST const_list ';'
+            {
+                $$ = &ast.StmtConstList{
+                    Position: yylex.(*Parser).builder.Pos.NewNodeListTokenPosition($1, $4),
+                    AttrGroups:    $1,
+                    ConstTkn:      $2,
+                    Consts:        $3.(*ParserSeparatedList).Items,
+                    SeparatorTkns: $3.(*ParserSeparatedList).SeparatorTkns,
+                    SemiColonTkn:  $4,
+                }
+            }
 ;
 
 use_type:
@@ -564,7 +586,15 @@ inner_statement:
             }
 
 statement:
-        '{' inner_statement_list '}'
+        T_VOID_CAST expr ';'
+            {
+                $$ = yylex.(*Parser).builder.NewExpressionStmt(&ast.ExprCastVoid{
+                    Position: yylex.(*Parser).builder.Pos.NewTokenNodePosition($1, $2),
+                    CastTkn: $1,
+                    Expr:    $2,
+                }, $3)
+            }
+    |   '{' inner_statement_list '}'
             {
                 $$ = &ast.StmtStmtList{
                     Position: yylex.(*Parser).builder.Pos.NewTokensPosition($1, $3),
@@ -1298,6 +1328,10 @@ property_modifier:
     |   T_PROTECTED               { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
     |   T_PRIVATE                 { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
     |   T_READONLY                { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_FINAL                   { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_PUBLIC_SET              { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_PROTECTED_SET           { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_PRIVATE_SET             { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
 ;
 
 parameter:
@@ -1307,6 +1341,12 @@ parameter:
     |   optional_attributes optional_property_modifiers optional_type_without_static
         optional_arg_ref optional_ellipsis plain_variable '=' expr
             { $$ = yylex.(*Parser).builder.NewParameter($1, $2, $3, $4, $5, $6, $7, $8, true) }
+    |   optional_attributes optional_property_modifiers optional_type_without_static
+        optional_arg_ref optional_ellipsis plain_variable property_hooks_block
+            { $$ = yylex.(*Parser).builder.WithHooks(yylex.(*Parser).builder.NewParameter($1, $2, $3, $4, $5, $6, nil, nil, false), $7) }
+    |   optional_attributes optional_property_modifiers optional_type_without_static
+        optional_arg_ref optional_ellipsis plain_variable '=' expr property_hooks_block
+            { $$ = yylex.(*Parser).builder.WithHooks(yylex.(*Parser).builder.NewParameter($1, $2, $3, $4, $5, $6, $7, $8, true), $9) }
 ;
 
 type_expr:
@@ -1327,15 +1367,27 @@ type_without_static:
     |   name                { $$ = $1 }
 ;
 
+union_type_element:
+        type                        { $$ = $1 }
+    |   '(' intersection_type ')'   { $$ = yylex.(*Parser).builder.NewDNFIntersection($1, $2, $3) }
+;
+
 union_type:
-        type '|' type       { $$ = yylex.(*Parser).builder.NewSeparatedListWithTwoElements($1, $2, $3) }
-    |   union_type '|' type { $$ = yylex.(*Parser).builder.AppendToSeparatedList($1, $2, $3) }
+        union_type_element '|' union_type_element
+            { $$ = yylex.(*Parser).builder.NewSeparatedListWithTwoElements($1, $2, $3) }
+    |   union_type '|' union_type_element
+            { $$ = yylex.(*Parser).builder.AppendToSeparatedList($1, $2, $3) }
+;
+
+union_type_without_static_element:
+        type_without_static                       { $$ = $1 }
+    |   '(' intersection_type_without_static ')'  { $$ = yylex.(*Parser).builder.NewDNFIntersection($1, $2, $3) }
 ;
 
 union_type_without_static:
-        type_without_static '|' type_without_static
+        union_type_without_static_element '|' union_type_without_static_element
             { $$ = yylex.(*Parser).builder.NewSeparatedListWithTwoElements($1, $2, $3) }
-    |   union_type_without_static '|' type_without_static
+    |   union_type_without_static '|' union_type_without_static_element
             { $$ = yylex.(*Parser).builder.AppendToSeparatedList($1, $2, $3) }
 ;
 
@@ -1466,8 +1518,16 @@ class_statement_list:
 class_statement:
         optional_attributes variable_modifiers optional_type_without_static property_list ';'
             { $$ = yylex.(*Parser).builder.NewPropertyList($1, $2, $3, $4, $5) }
+    |   optional_attributes variable_modifiers optional_type_without_static hooked_property
+            { $$ = yylex.(*Parser).builder.NewHookedPropertyList($1, $2, $3, $4) }
     |   optional_attributes method_modifiers T_CONST class_const_list ';'
             { $$ = yylex.(*Parser).builder.NewClassConstList($1, $2, $3, $4, $5) }
+    |   optional_attributes method_modifiers T_CONST type_expr class_const_list ';'
+            {
+                constList := yylex.(*Parser).builder.NewClassConstList($1, $2, $3, $5, $6)
+                constList.Type = $4
+                $$ = constList
+            }
     |   optional_attributes method_modifiers T_FUNCTION optional_ref identifier_ex '(' parameter_list ')' optional_return_type method_body
             { $$ = yylex.(*Parser).builder.NewClassMethod($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) }
     |   T_USE name_list trait_adaptations
@@ -1697,6 +1757,82 @@ member_modifier:
     |   T_ABSTRACT                 { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
     |   T_FINAL                    { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
     |   T_READONLY                 { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_PUBLIC_SET               { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_PROTECTED_SET            { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+    |   T_PRIVATE_SET              { $$ = yylex.(*Parser).builder.NewIdentifier($1) }
+;
+
+hooked_property:
+        plain_variable backup_doc_comment property_hooks_block
+            { $$ = yylex.(*Parser).builder.NewHookedProperty($1, nil, nil, $3) }
+    |   plain_variable '=' expr backup_doc_comment property_hooks_block
+            { $$ = yylex.(*Parser).builder.NewHookedProperty($1, $2, $3, $5) }
+;
+
+property_hooks_block:
+        '{' property_hooks '}'
+            {
+                $$ = &PropertyHookList{
+                    Position: yylex.(*Parser).builder.Pos.NewTokensPosition($1, $3),
+                    OpenCurlyBracketTkn:  $1,
+                    Hooks:                $2,
+                    CloseCurlyBracketTkn: $3,
+                }
+            }
+;
+
+property_hooks:
+        /* empty */                 { $$ = []ast.Vertex{} }
+    |   property_hooks property_hook { $$ = append($1, $2) }
+;
+
+property_hook:
+        optional_attributes method_modifiers optional_ref T_STRING optional_hook_parameter_list property_hook_body
+            { $$ = yylex.(*Parser).builder.NewPropertyHook($1, $2, $3, $4, $5, $6) }
+;
+
+optional_hook_parameter_list:
+        /* empty */                { $$ = nil }
+    |   '(' parameter_list ')'
+            {
+                $$ = &ParserParenthesizedList{
+                    Position: yylex.(*Parser).builder.Pos.NewTokensPosition($1, $3),
+                    OpenParenthesisTkn:  $1,
+                    List:                $2,
+                    CloseParenthesisTkn: $3,
+                }
+            }
+;
+
+property_hook_body:
+        ';'
+            {
+                $$ = &PropertyHookBody{
+                    Position: yylex.(*Parser).builder.Pos.NewTokenPosition($1),
+                    SemiColonTkn: $1,
+                }
+            }
+    |   '{' inner_statement_list '}'
+            {
+                $$ = &PropertyHookBody{
+                    Position: yylex.(*Parser).builder.Pos.NewTokensPosition($1, $3),
+                    Stmt: &ast.StmtStmtList{
+                        Position: yylex.(*Parser).builder.Pos.NewTokensPosition($1, $3),
+                        OpenCurlyBracketTkn:  $1,
+                        Stmts:                $2,
+                        CloseCurlyBracketTkn: $3,
+                    },
+                }
+            }
+    |   T_DOUBLE_ARROW expr ';'
+            {
+                $$ = &PropertyHookBody{
+                    Position: yylex.(*Parser).builder.Pos.NewTokensPosition($1, $3),
+                    DoubleArrowTkn: $1,
+                    Expr:           $2,
+                    SemiColonTkn:   $3,
+                }
+            }
 ;
 
 property_list:
@@ -1809,27 +1945,42 @@ anonymous_class:
         optional_attributes
         T_CLASS ctor_arguments extends_from implements_list '{' class_statement_list '}'
             { $$ = yylex.(*Parser).builder.NewAnonClass($1, $2, $3, $4, $5, $6, $7, $8) }
+    |   optional_attributes T_READONLY
+        T_CLASS ctor_arguments extends_from implements_list '{' class_statement_list '}'
+            {
+                class := yylex.(*Parser).builder.NewAnonClass($1, $3, $4, $5, $6, $7, $8, $9)
+                class.Modifiers = []ast.Vertex{yylex.(*Parser).builder.NewIdentifier($2)}
+                if $1 == nil {
+                    class.Position = yylex.(*Parser).builder.Pos.NewTokensPosition($2, $9)
+                }
+                $$ = class
+            }
 ;
 
 new_expr:
-        T_NEW class_name_reference ctor_arguments
+        new_dereferencable
+            { $$ = $1 }
+    |   T_NEW class_name_reference
             {
-                if $3 != nil {
-                    $$ = &ast.ExprNew{
-                        Position: yylex.(*Parser).builder.Pos.NewTokenNodePosition($1, $3),
-                        NewTkn:              $1,
-                        Class:               $2,
-                        OpenParenthesisTkn:  $3.(*ArgumentList).OpenParenthesisTkn,
-                        Args:                $3.(*ArgumentList).Arguments,
-                        SeparatorTkns:       $3.(*ArgumentList).SeparatorTkns,
-                        CloseParenthesisTkn: $3.(*ArgumentList).CloseParenthesisTkn,
-                    }
-                } else {
-                    $$ = &ast.ExprNew{
-                        Position: yylex.(*Parser).builder.Pos.NewTokenNodePosition($1, $2),
-                        NewTkn: $1,
-                        Class:  $2,
-                    }
+                $$ = &ast.ExprNew{
+                    Position: yylex.(*Parser).builder.Pos.NewTokenNodePosition($1, $2),
+                    NewTkn: $1,
+                    Class:  $2,
+                }
+            }
+;
+
+new_dereferencable:
+        T_NEW class_name_reference argument_list
+            {
+                $$ = &ast.ExprNew{
+                    Position: yylex.(*Parser).builder.Pos.NewTokenNodePosition($1, $3),
+                    NewTkn:              $1,
+                    Class:               $2,
+                    OpenParenthesisTkn:  $3.(*ArgumentList).OpenParenthesisTkn,
+                    Args:                $3.(*ArgumentList).Arguments,
+                    SeparatorTkns:       $3.(*ArgumentList).SeparatorTkns,
+                    CloseParenthesisTkn: $3.(*ArgumentList).CloseParenthesisTkn,
                 }
             }
     |   T_NEW anonymous_class
@@ -1937,6 +2088,12 @@ expr_without_variable:
                     Expr:     $2,
                 }
             }
+    |   T_CLONE '(' T_ELLIPSIS ')'
+            { $$ = yylex.(*Parser).builder.NewCloneWithArgs($1, $2, nil, nil, nil, nil, $3, $4) }
+    |   T_CLONE '(' expr ',' ')'
+            { $$ = yylex.(*Parser).builder.NewCloneWithArgs($1, $2, $3, $4, nil, nil, nil, $5) }
+    |   T_CLONE '(' expr ',' non_empty_argument_list optional_comma ')'
+            { $$ = yylex.(*Parser).builder.NewCloneWithArgs($1, $2, $3, $4, $5, $6, nil, $7) }
     |   variable T_PLUS_EQUAL expr
             {
                 $$ = &ast.ExprAssignPlus{
@@ -2125,6 +2282,15 @@ expr_without_variable:
     |   expr T_LOGICAL_XOR expr
             {
                 $$ = &ast.ExprBinaryLogicalXor{
+                    Position: yylex.(*Parser).builder.Pos.NewNodesPosition($1, $3),
+                    Left:  $1,
+                    OpTkn: $2,
+                    Right: $3,
+                }
+            }
+    |   expr T_PIPE expr
+            {
+                $$ = &ast.ExprBinaryPipe{
                     Position: yylex.(*Parser).builder.Pos.NewNodesPosition($1, $3),
                     Left:  $1,
                     OpTkn: $2,
@@ -2899,6 +3065,15 @@ class_constant:
                     },
                 }
             }
+    |   class_name_or_var T_PAAMAYIM_NEKUDOTAYIM '{' expr '}'
+            {
+                $$ = &ast.ExprClassConstFetch{
+                    Position: yylex.(*Parser).builder.Pos.NewNodeTokenPosition($1, $5),
+                    Class:          $1,
+                    DoubleColonTkn: $2,
+                    Const:          yylex.(*Parser).builder.NewBracket($3, $4, $5),
+                }
+            }
 ;
 
 constant:
@@ -2911,6 +3086,7 @@ constant:
     |   T_FUNC_C              { $$ = yylex.(*Parser).builder.NewScalarMagicConstant($1) }
     |   T_NS_C                { $$ = yylex.(*Parser).builder.NewScalarMagicConstant($1) }
     |   T_CLASS_C             { $$ = yylex.(*Parser).builder.NewScalarMagicConstant($1) }
+    |   T_PROPERTY_C          { $$ = yylex.(*Parser).builder.NewScalarMagicConstant($1) }
 ;
 
 expr:
@@ -2927,7 +3103,8 @@ fully_dereferencable:
         variable              { $$ = $1 }
     |   '(' expr ')'          { $$ = yylex.(*Parser).builder.NewBracket($1, $2, $3) }
     |   dereferencable_scalar { $$ = $1 }
-    | class_constant          { $$ = $1 }
+    |   class_constant        { $$ = $1 }
+    |   new_dereferencable    { $$ = $1 }
 ;
 
 array_object_dereferencable:
@@ -2939,6 +3116,7 @@ callable_expr:
         callable_variable     { $$ = $1 }
     |   '(' expr ')'          { $$ = yylex.(*Parser).builder.NewBracket($1, $2, $3) }
     |   dereferencable_scalar { $$ = $1 }
+    |   new_dereferencable    { $$ = $1 }
 ;
 
 callable_variable:
@@ -2946,18 +3124,6 @@ callable_variable:
             { $$ = $1 }
     |   array_object_dereferencable '[' optional_expr ']'
             {
-                $$ = &ast.ExprArrayDimFetch{
-                    Position: yylex.(*Parser).builder.Pos.NewNodeTokenPosition($1, $4),
-                    Var:             $1,
-                    OpenBracketTkn:  $2,
-                    Dim:             $3,
-                    CloseBracketTkn: $4,
-                }
-            }
-    |   array_object_dereferencable '{' expr '}'
-            {
-                yylex.(*Parser).Error("Array and string offset access syntax with curly braces is no longer supported")
-
                 $$ = &ast.ExprArrayDimFetch{
                     Position: yylex.(*Parser).builder.Pos.NewNodeTokenPosition($1, $4),
                     Var:             $1,
@@ -3036,18 +3202,6 @@ new_variable:
             }
     |   new_variable '[' optional_expr ']'
             {
-                $$ = &ast.ExprArrayDimFetch{
-                    Position: yylex.(*Parser).builder.Pos.NewNodeTokenPosition($1, $4),
-                    Var:             $1,
-                    OpenBracketTkn:  $2,
-                    Dim:             $3,
-                    CloseBracketTkn: $4,
-                }
-            }
-    |   new_variable '{' expr '}'
-            {
-                yylex.(*Parser).Error("Array and string offset access syntax with curly braces is no longer supported")
-
                 $$ = &ast.ExprArrayDimFetch{
                     Position: yylex.(*Parser).builder.Pos.NewNodeTokenPosition($1, $4),
                     Var:             $1,

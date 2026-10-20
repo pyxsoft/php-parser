@@ -5837,11 +5837,11 @@ CAD;
 					},
 					CloseHeredocTkn: &token.Token{
 						ID:    token.T_END_HEREDOC,
-						Value: []byte("AD"),
+						Value: []byte("CAD"),
 						Position: &position.Position{
 							StartLine: 2,
 							EndLine:   2,
-							StartPos:  11,
+							StartPos:  10,
 							EndPos:    13,
 						},
 					},
@@ -56569,11 +56569,11 @@ CAD;
 					},
 					CloseHeredocTkn: &token.Token{
 						ID:    token.T_END_HEREDOC,
-						Value: []byte("AD"),
+						Value: []byte("CAD"),
 						Position: &position.Position{
 							StartLine: 3,
 							EndLine:   3,
-							StartPos:  13,
+							StartPos:  12,
 							EndPos:    15,
 						},
 					},

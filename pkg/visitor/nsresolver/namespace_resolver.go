@@ -141,6 +141,18 @@ func (nsr *NamespaceResolver) StmtPropertyList(n *ast.StmtPropertyList) {
 	}
 }
 
+func (nsr *NamespaceResolver) StmtClassConstList(n *ast.StmtClassConstList) {
+	if n.Type != nil {
+		nsr.ResolveType(n.Type)
+	}
+}
+
+func (nsr *NamespaceResolver) PropertyHook(n *ast.PropertyHook) {
+	for _, parameter := range n.Params {
+		nsr.ResolveType(parameter.(*ast.Parameter).Type)
+	}
+}
+
 func (nsr *NamespaceResolver) StmtConstList(n *ast.StmtConstList) {
 	for _, constant := range n.Consts {
 		nsr.AddNamespacedName(constant, string(constant.(*ast.StmtConstant).Name.(*ast.Identifier).Value))
@@ -264,6 +276,14 @@ func (nsr *NamespaceResolver) ResolveType(n ast.Vertex) {
 		nsr.ResolveName(n, "")
 	case *ast.NameFullyQualified:
 		nsr.ResolveName(n, "")
+	case *ast.Union:
+		for _, t := range nn.Types {
+			nsr.ResolveType(t)
+		}
+	case *ast.Intersection:
+		for _, t := range nn.Types {
+			nsr.ResolveType(t)
+		}
 	}
 }
 

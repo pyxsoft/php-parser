@@ -201,6 +201,9 @@ func (v *Dumper) Parameter(n *ast.Parameter) {
 	v.dumpVertex("Var", n.Var)
 	v.dumpToken("EqualTkn", n.EqualTkn)
 	v.dumpVertex("DefaultValue", n.DefaultValue)
+	v.dumpToken("OpenCurlyBracketTkn", n.OpenCurlyBracketTkn)
+	v.dumpVertexList("Hooks", n.Hooks)
+	v.dumpToken("CloseCurlyBracketTkn", n.CloseCurlyBracketTkn)
 
 	v.indent--
 	v.print(v.indent, "},\n")
@@ -266,8 +269,10 @@ func (v *Dumper) Intersection(n *ast.Intersection) {
 	v.indent++
 
 	v.dumpPosition(n.Position)
+	v.dumpToken("OpenParenthesisTkn", n.OpenParenthesisTkn)
 	v.dumpVertexList("Types", n.Types)
 	v.dumpTokenList("SeparatorTkns", n.SeparatorTkns)
+	v.dumpToken("CloseParenthesisTkn", n.CloseParenthesisTkn)
 
 	v.indent--
 	v.print(v.indent, "},\n")
@@ -418,8 +423,31 @@ func (v *Dumper) StmtClassConstList(n *ast.StmtClassConstList) {
 	v.dumpVertexList("AttrGroups", n.AttrGroups)
 	v.dumpVertexList("Modifiers", n.Modifiers)
 	v.dumpToken("ConstTkn", n.ConstTkn)
+	v.dumpVertex("Type", n.Type)
 	v.dumpVertexList("Consts", n.Consts)
 	v.dumpTokenList("SeparatorTkns", n.SeparatorTkns)
+	v.dumpToken("SemiColonTkn", n.SemiColonTkn)
+
+	v.indent--
+	v.print(v.indent, "},\n")
+}
+
+func (v *Dumper) PropertyHook(n *ast.PropertyHook) {
+	v.print(0, "&ast.PropertyHook{\n")
+	v.indent++
+
+	v.dumpPosition(n.Position)
+	v.dumpVertexList("AttrGroups", n.AttrGroups)
+	v.dumpVertexList("Modifiers", n.Modifiers)
+	v.dumpToken("AmpersandTkn", n.AmpersandTkn)
+	v.dumpVertex("Name", n.Name)
+	v.dumpToken("OpenParenthesisTkn", n.OpenParenthesisTkn)
+	v.dumpVertexList("Params", n.Params)
+	v.dumpTokenList("SeparatorTkns", n.SeparatorTkns)
+	v.dumpToken("CloseParenthesisTkn", n.CloseParenthesisTkn)
+	v.dumpToken("DoubleArrowTkn", n.DoubleArrowTkn)
+	v.dumpVertex("Expr", n.Expr)
+	v.dumpVertex("Stmt", n.Stmt)
 	v.dumpToken("SemiColonTkn", n.SemiColonTkn)
 
 	v.indent--
@@ -453,6 +481,7 @@ func (v *Dumper) StmtConstList(n *ast.StmtConstList) {
 	v.indent++
 
 	v.dumpPosition(n.Position)
+	v.dumpVertexList("AttrGroups", n.AttrGroups)
 	v.dumpToken("ConstTkn", n.ConstTkn)
 	v.dumpVertexList("Consts", n.Consts)
 	v.dumpTokenList("SeparatorTkns", n.SeparatorTkns)
@@ -817,6 +846,9 @@ func (v *Dumper) StmtProperty(n *ast.StmtProperty) {
 	v.dumpVertex("Var", n.Var)
 	v.dumpToken("EqualTkn", n.EqualTkn)
 	v.dumpVertex("Expr", n.Expr)
+	v.dumpToken("OpenCurlyBracketTkn", n.OpenCurlyBracketTkn)
+	v.dumpVertexList("Hooks", n.Hooks)
+	v.dumpToken("CloseCurlyBracketTkn", n.CloseCurlyBracketTkn)
 
 	v.indent--
 	v.print(v.indent, "},\n")
@@ -1215,6 +1247,11 @@ func (v *Dumper) ExprClone(n *ast.ExprClone) {
 	v.dumpPosition(n.Position)
 	v.dumpToken("CloneTkn", n.CloneTkn)
 	v.dumpVertex("Expr", n.Expr)
+	v.dumpToken("OpenParenthesisTkn", n.OpenParenthesisTkn)
+	v.dumpVertexList("Args", n.Args)
+	v.dumpTokenList("SeparatorTkns", n.SeparatorTkns)
+	v.dumpToken("EllipsisTkn", n.EllipsisTkn)
+	v.dumpToken("CloseParenthesisTkn", n.CloseParenthesisTkn)
 
 	v.indent--
 	v.print(v.indent, "},\n")
@@ -1977,6 +2014,19 @@ func (v *Dumper) ExprBinaryCoalesce(n *ast.ExprBinaryCoalesce) {
 	v.print(v.indent, "},\n")
 }
 
+func (v *Dumper) ExprBinaryPipe(n *ast.ExprBinaryPipe) {
+	v.print(0, "&ast.ExprBinaryPipe{\n")
+	v.indent++
+
+	v.dumpPosition(n.Position)
+	v.dumpVertex("Left", n.Left)
+	v.dumpToken("OpTkn", n.OpTkn)
+	v.dumpVertex("Right", n.Right)
+
+	v.indent--
+	v.print(v.indent, "},\n")
+}
+
 func (v *Dumper) ExprBinaryConcat(n *ast.ExprBinaryConcat) {
 	v.print(0, "&ast.ExprBinaryConcat{\n")
 	v.indent++
@@ -2324,6 +2374,18 @@ func (v *Dumper) ExprCastString(n *ast.ExprCastString) {
 
 func (v *Dumper) ExprCastUnset(n *ast.ExprCastUnset) {
 	v.print(0, "&ast.ExprCastUnset{\n")
+	v.indent++
+
+	v.dumpPosition(n.Position)
+	v.dumpToken("CastTkn", n.CastTkn)
+	v.dumpVertex("Expr", n.Expr)
+
+	v.indent--
+	v.print(v.indent, "},\n")
+}
+
+func (v *Dumper) ExprCastVoid(n *ast.ExprCastVoid) {
+	v.print(0, "&ast.ExprCastVoid{\n")
 	v.indent++
 
 	v.dumpPosition(n.Position)

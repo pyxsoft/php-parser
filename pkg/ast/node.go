@@ -52,9 +52,11 @@ func (n *Union) GetPosition() *position.Position {
 
 // Intersection node is Expr&Expr1&...
 type Intersection struct {
-	Position      *position.Position
-	Types         []Vertex
-	SeparatorTkns []*token.Token
+	Position            *position.Position
+	OpenParenthesisTkn  *token.Token // set when part of a PHP 8.2 DNF type
+	Types               []Vertex
+	SeparatorTkns       []*token.Token
+	CloseParenthesisTkn *token.Token
 }
 
 func (n *Intersection) Accept(v Visitor) {
@@ -67,15 +69,18 @@ func (n *Intersection) GetPosition() *position.Position {
 
 // Parameter node
 type Parameter struct {
-	Position     *position.Position
-	AttrGroups   []Vertex
-	Modifiers    []Vertex
-	Type         Vertex
-	AmpersandTkn *token.Token
-	VariadicTkn  *token.Token
-	Var          Vertex
-	EqualTkn     *token.Token
-	DefaultValue Vertex
+	Position             *position.Position
+	AttrGroups           []Vertex
+	Modifiers            []Vertex
+	Type                 Vertex
+	AmpersandTkn         *token.Token
+	VariadicTkn          *token.Token
+	Var                  Vertex
+	EqualTkn             *token.Token
+	DefaultValue         Vertex
+	OpenCurlyBracketTkn  *token.Token // PHP 8.4 property hooks of a promoted property
+	Hooks                []Vertex
+	CloseCurlyBracketTkn *token.Token
 }
 
 func (n *Parameter) Accept(v Visitor) {
@@ -424,12 +429,39 @@ func (n *StmtClass) GetPosition() *position.Position {
 	return n.Position
 }
 
+// PropertyHook node is a PHP 8.4 property hook (get/set). Exactly one body form is set:
+// `;` (SemiColonTkn), `=> expr;` (DoubleArrowTkn, Expr, SemiColonTkn) or a block (Stmt).
+type PropertyHook struct {
+	Position            *position.Position
+	AttrGroups          []Vertex
+	Modifiers           []Vertex
+	AmpersandTkn        *token.Token
+	Name                Vertex
+	OpenParenthesisTkn  *token.Token
+	Params              []Vertex
+	SeparatorTkns       []*token.Token
+	CloseParenthesisTkn *token.Token
+	DoubleArrowTkn      *token.Token
+	Expr                Vertex
+	Stmt                Vertex
+	SemiColonTkn        *token.Token
+}
+
+func (n *PropertyHook) Accept(v Visitor) {
+	v.PropertyHook(n)
+}
+
+func (n *PropertyHook) GetPosition() *position.Position {
+	return n.Position
+}
+
 // StmtClassConstList node
 type StmtClassConstList struct {
 	Position      *position.Position
 	AttrGroups    []Vertex
 	Modifiers     []Vertex
 	ConstTkn      *token.Token
+	Type          Vertex // PHP 8.3 typed class constants
 	Consts        []Vertex
 	SeparatorTkns []*token.Token
 	SemiColonTkn  *token.Token
@@ -471,6 +503,7 @@ func (n *StmtClassMethod) GetPosition() *position.Position {
 // StmtConstList node
 type StmtConstList struct {
 	Position      *position.Position
+	AttrGroups    []Vertex // PHP 8.5 attributes on constants
 	ConstTkn      *token.Token
 	Consts        []Vertex
 	SeparatorTkns []*token.Token
@@ -899,10 +932,13 @@ func (n *StmtNop) GetPosition() *position.Position {
 
 // StmtProperty node
 type StmtProperty struct {
-	Position *position.Position
-	Var      Vertex
-	EqualTkn *token.Token
-	Expr     Vertex
+	Position             *position.Position
+	Var                  Vertex
+	EqualTkn             *token.Token
+	Expr                 Vertex
+	OpenCurlyBracketTkn  *token.Token // PHP 8.4 property hooks
+	Hooks                []Vertex
+	CloseCurlyBracketTkn *token.Token
 }
 
 func (n *StmtProperty) Accept(v Visitor) {
@@ -914,6 +950,8 @@ func (n *StmtProperty) GetPosition() *position.Position {
 }
 
 // StmtPropertyList node
+// StmtPropertyList node. A hooked property (PHP 8.4) is always alone in its
+// list and has no SemiColonTkn; see IsHooked.
 type StmtPropertyList struct {
 	Position      *position.Position
 	AttrGroups    []Vertex
@@ -930,6 +968,15 @@ func (n *StmtPropertyList) Accept(v Visitor) {
 
 func (n *StmtPropertyList) GetPosition() *position.Position {
 	return n.Position
+}
+
+// IsHooked reports whether the list declares a property with hooks.
+func (n *StmtPropertyList) IsHooked() bool {
+	if len(n.Props) == 0 {
+		return false
+	}
+	prop, ok := n.Props[len(n.Props)-1].(*StmtProperty)
+	return ok && prop.Hooks != nil
 }
 
 // StmtReturn node
@@ -1374,10 +1421,18 @@ func (n *ExprClassConstFetch) GetPosition() *position.Position {
 }
 
 // ExprClone node
+// ExprClone is `clone $expr`. The PHP 8.5 function-like forms with more than
+// one argument (`clone($obj, [...])`) or `clone(...)` leave Expr nil and fill
+// the argument list instead.
 type ExprClone struct {
-	Position *position.Position
-	CloneTkn *token.Token
-	Expr     Vertex
+	Position            *position.Position
+	CloneTkn            *token.Token
+	Expr                Vertex
+	OpenParenthesisTkn  *token.Token
+	Args                []Vertex
+	SeparatorTkns       []*token.Token
+	EllipsisTkn         *token.Token
+	CloseParenthesisTkn *token.Token
 }
 
 func (n *ExprClone) Accept(v Visitor) {
@@ -2063,6 +2118,21 @@ func (n *ExprCastString) GetPosition() *position.Position {
 	return n.Position
 }
 
+// ExprCastVoid node is the PHP 8.5 `(void)` cast.
+type ExprCastVoid struct {
+	Position *position.Position
+	CastTkn  *token.Token
+	Expr     Vertex
+}
+
+func (n *ExprCastVoid) Accept(v Visitor) {
+	v.ExprCastVoid(n)
+}
+
+func (n *ExprCastVoid) GetPosition() *position.Position {
+	return n.Position
+}
+
 // ExprCastUnset node
 type ExprCastUnset struct {
 	Position *position.Position
@@ -2412,6 +2482,22 @@ func (n *ExprBinaryCoalesce) Accept(v Visitor) {
 }
 
 func (n *ExprBinaryCoalesce) GetPosition() *position.Position {
+	return n.Position
+}
+
+// ExprBinaryPipe node is the PHP 8.5 pipe operator `|>`.
+type ExprBinaryPipe struct {
+	Position *position.Position
+	Left     Vertex
+	OpTkn    *token.Token
+	Right    Vertex
+}
+
+func (n *ExprBinaryPipe) Accept(v Visitor) {
+	v.ExprBinaryPipe(n)
+}
+
+func (n *ExprBinaryPipe) GetPosition() *position.Position {
 	return n.Position
 }
 

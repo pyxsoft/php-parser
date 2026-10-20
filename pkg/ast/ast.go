@@ -25,6 +25,7 @@ type Visitor interface {
 	StmtEnum(n *StmtEnum)
 	EnumCase(n *EnumCase)
 	StmtClass(n *StmtClass)
+	PropertyHook(n *PropertyHook)
 	StmtClassConstList(n *StmtClassConstList)
 	StmtClassMethod(n *StmtClassMethod)
 	StmtConstList(n *StmtConstList)
@@ -137,6 +138,7 @@ type Visitor interface {
 	ExprBinaryBooleanAnd(n *ExprBinaryBooleanAnd)
 	ExprBinaryBooleanOr(n *ExprBinaryBooleanOr)
 	ExprBinaryCoalesce(n *ExprBinaryCoalesce)
+	ExprBinaryPipe(n *ExprBinaryPipe)
 	ExprBinaryConcat(n *ExprBinaryConcat)
 	ExprBinaryDiv(n *ExprBinaryDiv)
 	ExprBinaryEqual(n *ExprBinaryEqual)
@@ -166,6 +168,7 @@ type Visitor interface {
 	ExprCastObject(n *ExprCastObject)
 	ExprCastString(n *ExprCastString)
 	ExprCastUnset(n *ExprCastUnset)
+	ExprCastVoid(n *ExprCastVoid)
 
 	ScalarDnumber(n *ScalarDnumber)
 	ScalarEncapsed(n *ScalarEncapsed)
