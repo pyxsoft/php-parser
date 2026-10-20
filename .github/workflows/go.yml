@@ -16,7 +16,7 @@
         {
           // The generated scanner/parser must match the committed .rl/.y sources.
           name: "Generated code is up to date",
-          run: "touch internal/*/*.rl internal/*/*.y && make compile && gofmt -s -w internal && git diff --exit-code -- internal",
+          run: "touch internal/*/*.rl internal/*/*.y && make compile && go generate ./internal/php8 && gofmt -s -w internal && git diff --exit-code -- internal",
         },
         {name: "Tests", run: "go test ./..."},
         {name: "Fuzz (short)", run: "go test ./pkg/parser -run '^$' -fuzz FuzzParse -fuzztime 60s"},
