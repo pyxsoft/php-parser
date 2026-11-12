@@ -53,6 +53,9 @@ func NewLexer(data []byte, config conf.Config) *Lexer {
 	}
 
 	initLexer(lex)
+	if config.StartInPHP {
+		lex.cs = lexer_en_php
+	}
 
 	return lex
 }

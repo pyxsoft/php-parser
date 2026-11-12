@@ -81,6 +81,9 @@ func newLexer(
 	}
 
 	initLexer(lex)
+	if config.StartInPHP {
+		lex.cs = lexer_en_php
+	}
 
 	return lex
 }

@@ -14,4 +14,9 @@ type Config struct {
 	// lexer allocations for consumers that only inspect the AST; the printer
 	// can no longer reproduce the original source exactly.
 	SkipFreeFloating bool
+
+	// StartInPHP lexes the input as PHP code from its first byte, as eval
+	// runs its argument, instead of as HTML until an open tag. It spares
+	// callers from copying code to put "<?php " before it.
+	StartInPHP bool
 }
