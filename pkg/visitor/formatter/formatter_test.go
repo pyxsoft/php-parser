@@ -6800,3 +6800,34 @@ func TestFormatter_NameNamePart(t *testing.T) {
 		t.Errorf("\nexpected: %s\ngot: %s\n", expected, actual)
 	}
 }
+
+// Nodes the parser leaves without a child: $a[] and the hole in list(, $b).
+func TestFormatter_NilChildren(t *testing.T) {
+	for _, tc := range []struct {
+		n        ast.Vertex
+		expected string
+	}{
+		{
+			n: &ast.ExprArrayDimFetch{
+				Var: &ast.ExprVariable{Name: &ast.Identifier{Value: []byte("$a")}},
+			},
+			expected: `$a[]`,
+		},
+		{
+			n: &ast.ExprList{
+				Items: []ast.Vertex{
+					&ast.ExprArrayItem{},
+					&ast.ExprArrayItem{Val: &ast.ExprVariable{Name: &ast.Identifier{Value: []byte("$b")}}},
+				},
+			},
+			expected: `list(, $b)`,
+		},
+	} {
+		o := bytes.NewBufferString("")
+		tc.n.Accept(formatter.NewFormatter().WithState(formatter.FormatterStatePHP).WithIndent(1))
+		tc.n.Accept(printer.NewPrinter(o).WithState(printer.PrinterStatePHP))
+		if actual := o.String(); actual != tc.expected {
+			t.Errorf("\nexpected: %s\ngot: %s\n", tc.expected, actual)
+		}
+	}
+}

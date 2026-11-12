@@ -1257,7 +1257,9 @@ func (f *formatter) ExprArray(n *ast.ExprArray) {
 func (f *formatter) ExprArrayDimFetch(n *ast.ExprArrayDimFetch) {
 	n.Var.Accept(f)
 	n.OpenBracketTkn = f.newToken('[', []byte("["))
-	n.Dim.Accept(f)
+	if n.Dim != nil { // $a[] = 1
+		n.Dim.Accept(f)
+	}
 	n.CloseBracketTkn = f.newToken(']', []byte("]"))
 }
 
@@ -1273,7 +1275,9 @@ func (f *formatter) ExprArrayItem(n *ast.ExprArrayItem) {
 		f.addFreeFloating(token.T_WHITESPACE, []byte(" "))
 	}
 
-	n.Val.Accept(f)
+	if n.Val != nil { // the hole in list(, $b)
+		n.Val.Accept(f)
+	}
 }
 
 func (f *formatter) ExprArrowFunction(n *ast.ExprArrowFunction) {
